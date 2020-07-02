@@ -36,7 +36,7 @@ import angular from "angular";
 // });
 import singleSpaAngularJS from "single-spa-angularjs";
 
-window.BCMLegacy = singleSpaAngularjs({
+window.BCMLegacy = singleSpaAngularJS({
   angular,
   mainAngularModule: "account-settings",
   uiRouter: true,
