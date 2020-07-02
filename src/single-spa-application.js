@@ -29,13 +29,15 @@
 //         template: "<account-settings />",
 //       });
 
+import angular from "angular";
 //       _export(angularjsLifecycles);
 //     },
 //   };
 // });
+import singleSpaAngularJS from "single-spa-angularjs";
 
 window.BCMLegacy = singleSpaAngularjs({
-  angular: window.angular,
+  angular,
   mainAngularModule: "account-settings",
   uiRouter: true,
   preserveGlobal: false,
