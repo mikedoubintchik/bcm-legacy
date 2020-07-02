@@ -1,4 +1,5 @@
 import singleSpaAngularJS from "single-spa-angularjs";
+import uiRouter from "angular-ui-router";
 
 const BCMLegacy = singleSpaAngularJS({
   angular: window.angular,

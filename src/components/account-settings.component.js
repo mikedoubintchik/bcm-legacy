@@ -1,5 +1,3 @@
-angular
-.module('account-settings')
-.component('accountSettings', {
-  templateUrl: () => window.accountSettingsBaseDir + 'components/account-settings.template.html',
-})
+angular.module("account-settings").component("accountSettings", {
+  template: require("./components/account-settings.template.html"),
+});
