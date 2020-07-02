@@ -2,7 +2,7 @@
   "name": "@bcm/bcm-legacy",
   "description": "The account settings single-spa application",
   "version": "1.0.0",
-  "main": "dist/polyglot-mf-account-settings.js",
+  "main": "index.js",
   "scripts": {
     "build": "gulp",
     "start": "concurrently yarn:watch yarn:serve",
