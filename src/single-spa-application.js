@@ -1,8 +1,7 @@
-import angular from "angular";
 import singleSpaAngularJS from "single-spa-angularjs";
 
 const BCMLegacy = singleSpaAngularJS({
-  angular,
+  angular: window.angular,
   mainAngularModule: "account-settings",
   uiRouter: true,
   preserveGlobal: false,
