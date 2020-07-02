@@ -36500,7 +36500,7 @@ $provide.value("$locale", {
  *         This causes it to be incompatible with plugins that depend on @uirouter/core.
  *         We recommend switching to the ui-router-core.js and ui-router-angularjs.js bundles instead.
  *         For more information, see https://ui-router.github.io/blog/uirouter-for-angularjs-umd-bundles
- * @version v1.0.25
+ * @version v1.0.26
  * @link https://ui-router.github.io
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -36519,8 +36519,8 @@ $provide.value("$locale", {
      *
      * These utility functions are exported, but are subject to change without notice.
      *
-     * @module common_hof
-     */ /** */
+     * @packageDocumentation @module common_hof
+     */
     var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
         for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
         for (var r = Array(s), k = 0, i = 0; i < il; i++)
@@ -36742,8 +36742,8 @@ $provide.value("$locale", {
      * These predicates return true/false based on the input.
      * Although these functions are exported, they are subject to change without notice.
      *
-     * @module common_predicates
-     */ /** */
+     * @packageDocumentation @module common_predicates
+     */
     var toStr = Object.prototype.toString;
     var tis = function (t) { return function (x) { return typeof x === t; }; };
     var isUndefined = tis('undefined');
@@ -37315,7 +37315,7 @@ $provide.value("$locale", {
     var silenceUncaughtInPromise = function (promise) { return promise.catch(function (e) { return 0; }) && promise; };
     var silentRejection = function (error) { return silenceUncaughtInPromise(services.$q.reject(error)); };
 
-    /** @publicapi @module core */
+    /** @packageDocumentation @publicapi @module core */
     /**
      * Matches state names using glob-like pattern strings.
      *
@@ -37394,7 +37394,7 @@ $provide.value("$locale", {
         return Glob;
     }());
 
-    /** @publicapi @module common */ /** */
+    /** @packageDocumentation @publicapi @module common */
     var Queue = /** @class */ (function () {
         function Queue(_items, _limit) {
             if (_items === void 0) { _items = []; }
@@ -37442,7 +37442,7 @@ $provide.value("$locale", {
         return Queue;
     }());
 
-    /** @publicapi @module transition */ /** */
+    /** @packageDocumentation @publicapi @module transition */
 
     (function (RejectType) {
         /**
@@ -37558,8 +37558,8 @@ $provide.value("$locale", {
      *
      * Although these functions are exported, they are subject to change without notice.
      *
-     * @module common_strings
-     */ /** */
+     * @packageDocumentation @module common_strings
+     */
     /**
      * Returns a string shortened to a maximum length
      *
@@ -37685,7 +37685,10 @@ $provide.value("$locale", {
         return pushR(acc, x);
     }
 
-    /** workaround for missing console object in IE9 when dev tools haven't been opened o_O */
+    /**
+     * workaround for missing console object in IE9 when dev tools haven't been opened o_O
+     * @packageDocumentation @module core
+     */
     var noopConsoleStub = { log: noop, error: noop, table: noop };
     function ie9Console(console) {
         var bound = function (fn) { return Function.prototype.bind.call(fn, console); };
@@ -37748,7 +37751,7 @@ $provide.value("$locale", {
      * app.run($trace => $trace.enable());
      * ```
      *
-     * @publicapi @module trace
+     * @packageDocumentation @publicapi @module trace
      */
     /** @hidden */
     function uiViewString(uiview) {
@@ -37951,7 +37954,7 @@ $provide.value("$locale", {
      */
     var trace = new Trace();
 
-    /** @publicapi @module params */ /** */
+    /** @packageDocumentation @publicapi @module params */
     /**
      * An internal class which implements [[ParamTypeDefinition]].
      *
@@ -38097,7 +38100,7 @@ $provide.value("$locale", {
         });
     }
 
-    /** @publicapi @module params */ /** */
+    /** @packageDocumentation @publicapi @module params */
     /** @hidden */
     var hasOwn = Object.prototype.hasOwnProperty;
     /** @hidden */
@@ -38297,7 +38300,7 @@ $provide.value("$locale", {
         return Param;
     }());
 
-    /** @publicapi @module params */ /** */
+    /** @packageDocumentation @publicapi @module params */
     /**
      * A registry for parameter types.
      *
@@ -38451,7 +38454,7 @@ $provide.value("$locale", {
     }
     initDefaultTypes();
 
-    /** @publicapi @module params */ /** */
+    /** @packageDocumentation @publicapi @module params */
     /** @internalapi */
     var StateParams = /** @class */ (function () {
         function StateParams(params) {
@@ -38487,7 +38490,7 @@ $provide.value("$locale", {
         return StateParams;
     }());
 
-    /** @internalapi @module path */ /** */
+    /** @packageDocumentation @internalapi @module path */
     /**
      * A node in a [[TreeChanges]] path
      *
@@ -38560,7 +38563,7 @@ $provide.value("$locale", {
         return PathNode;
     }());
 
-    /** @publicapi @module state */ /** */
+    /** @packageDocumentation @publicapi @module state */
     /**
      * Encapsulate the target (destination) state/params/options of a [[Transition]].
      *
@@ -38694,11 +38697,13 @@ $provide.value("$locale", {
             return new TargetState(this._stateRegistry, this._identifier, this._params, newOpts);
         };
         /** Returns true if the object has a state property that might be a state or state name */
-        TargetState.isDef = function (obj) { return obj && obj.state && (isString(obj.state) || isString(obj.state.name)); };
+        TargetState.isDef = function (obj) {
+            return obj && obj.state && (isString(obj.state) || (isObject(obj.state) && isString(obj.state.name)));
+        };
         return TargetState;
     }());
 
-    /** @internalapi @module path */ /** */
+    /** @packageDocumentation @internalapi @module path */
     /**
      * This class contains functions which convert TargetStates, Nodes and paths from one type to another.
      */
@@ -38874,7 +38879,7 @@ $provide.value("$locale", {
         },
     };
 
-    /** @publicapi @module resolve */ /** */
+    /** @packageDocumentation @publicapi @module resolve */
     // TODO: explicitly make this user configurable
     var defaultResolvePolicy = {
         when: 'LAZY',
@@ -38980,7 +38985,7 @@ $provide.value("$locale", {
         return Resolvable;
     }());
 
-    /** @publicapi @module resolve */ /** */
+    /** @packageDocumentation @publicapi @module resolve */
     var whens = resolvePolicies.when;
     var ALL_WHENS = [whens.EAGER, whens.LAZY];
     var EAGER_WHENS = [whens.EAGER];
@@ -39173,7 +39178,7 @@ $provide.value("$locale", {
         return UIInjectorImpl;
     }());
 
-    /** @publicapi @module state */ /** */
+    /** @packageDocumentation @publicapi @module state */
     var parseUrl = function (url) {
         if (!isString(url))
             return false;
@@ -39555,12 +39560,14 @@ $provide.value("$locale", {
         StateObject.isStateClass = function (stateDecl) {
             return isFunction(stateDecl) && stateDecl['__uiRouterState'] === true;
         };
+        /** Predicate which returns true if the object is a [[StateDeclaration]] object */
+        StateObject.isStateDeclaration = function (obj) { return isFunction(obj['$$state']); };
         /** Predicate which returns true if the object is an internal [[StateObject]] object */
         StateObject.isState = function (obj) { return isObject(obj['__stateObjectCache']); };
         return StateObject;
     }());
 
-    /** @publicapi @module state */ /** */
+    /** @packageDocumentation @publicapi @module state */
     var StateMatcher = /** @class */ (function () {
         function StateMatcher(_states) {
             this._states = _states;
@@ -39617,7 +39624,7 @@ $provide.value("$locale", {
         return StateMatcher;
     }());
 
-    /** @publicapi @module state */ /** */
+    /** @packageDocumentation @publicapi @module state */
     /** @internalapi */
     var StateQueueManager = /** @class */ (function () {
         function StateQueueManager(router, states, builder, listeners) {
@@ -39703,7 +39710,7 @@ $provide.value("$locale", {
         return StateQueueManager;
     }());
 
-    /** @publicapi @module state */ /** */
+    /** @packageDocumentation @publicapi @module state */
     var StateRegistry = /** @class */ (function () {
         /** @internalapi */
         function StateRegistry(router) {
@@ -39864,7 +39871,7 @@ $provide.value("$locale", {
         TransitionHookScope[TransitionHookScope["STATE"] = 1] = "STATE";
     })(exports.TransitionHookScope || (exports.TransitionHookScope = {}));
 
-    /** @publicapi @module transition */ /** */
+    /** @packageDocumentation @publicapi @module transition */
     var defaultOptions = {
         current: noop,
         transition: null,
@@ -40053,7 +40060,7 @@ $provide.value("$locale", {
         return TransitionHook;
     }());
 
-    /** @publicapi @module transition */ /** */
+    /** @packageDocumentation @publicapi @module transition */
     /**
      * Determines if the given state matches the matchCriteria
      *
@@ -40202,7 +40209,7 @@ $provide.value("$locale", {
         return hookRegistrationFn;
     }
 
-    /** @publicapi @module transition */ /** */
+    /** @packageDocumentation @publicapi @module transition */
     /**
      * This class returns applicable TransitionHooks for a specific Transition instance.
      *
@@ -40314,7 +40321,7 @@ $provide.value("$locale", {
         };
     }
 
-    /** @publicapi @module transition */ /** */
+    /** @packageDocumentation @publicapi @module transition */
     /** @hidden */
     var stateSelf = prop('self');
     /**
@@ -40973,7 +40980,7 @@ $provide.value("$locale", {
         return Transition;
     }());
 
-    /** @publicapi @module url */ /** */
+    /** @packageDocumentation @publicapi @module url */
     /** @hidden */
     function quoteRegExp(str, param) {
         var surroundPattern = ['', ''], result = str.replace(/[\\\[\]\^$*+?.()|{}]/g, '\\$&');
@@ -41596,7 +41603,6 @@ $provide.value("$locale", {
         return UrlMatcherFactory;
     }());
 
-    /** @publicapi @module url */ /** */
     /**
      * Creates a [[UrlRule]]
      *
@@ -41617,11 +41623,11 @@ $provide.value("$locale", {
         };
         UrlRuleFactory.prototype.create = function (what, handler) {
             var _this = this;
-            var isState = StateObject.isState;
+            var isState = StateObject.isState, isStateDeclaration = StateObject.isStateDeclaration;
             var makeRule = pattern([
                 [isString, function (_what) { return makeRule(_this.compile(_what)); }],
                 [is(UrlMatcher), function (_what) { return _this.fromUrlMatcher(_what, handler); }],
-                [isState, function (_what) { return _this.fromState(_what, _this.router); }],
+                [or(isState, isStateDeclaration), function (_what) { return _this.fromState(_what, _this.router); }],
                 [is(RegExp), function (_what) { return _this.fromRegExp(_what, handler); }],
                 [isFunction, function (_what) { return new BaseUrlRule(_what, handler); }],
             ]);
@@ -41702,7 +41708,8 @@ $provide.value("$locale", {
          * // Starts a transition to 'foo' with params: { fooId: '123', barId: '456' }
          * ```
          */
-        UrlRuleFactory.prototype.fromState = function (state, router) {
+        UrlRuleFactory.prototype.fromState = function (stateOrDecl, router) {
+            var state = StateObject.isStateDeclaration(stateOrDecl) ? stateOrDecl.$$state() : stateOrDecl;
             /**
              * Handles match by transitioning to matched state
              *
@@ -41789,7 +41796,7 @@ $provide.value("$locale", {
         return BaseUrlRule;
     }());
 
-    /** @publicapi @module url */ /** */
+    /** @packageDocumentation @publicapi @module url */
     /** @hidden */
     function appendBasePath(url, isHtml5, absolute, baseHref) {
         if (baseHref === '/')
@@ -41922,7 +41929,7 @@ $provide.value("$locale", {
         return UrlRouter;
     }());
 
-    /** @publicapi @module view */ /** */
+    /** @packageDocumentation @publicapi @module view */
     /**
      * The View service
      *
@@ -42208,7 +42215,7 @@ $provide.value("$locale", {
         return ViewService;
     }());
 
-    /** @publicapi @module core */ /** */
+    /** @packageDocumentation @publicapi @module core */
     /**
      * Global router state
      *
@@ -42991,7 +42998,7 @@ $provide.value("$locale", {
         return UrlService;
     }());
 
-    /** @publicapi @module core */ /** */
+    /** @packageDocumentation @publicapi @module core */
     /** @hidden */
     var _routerInstance = 0;
     /** @hidden */
@@ -43166,7 +43173,7 @@ $provide.value("$locale", {
         return UIRouter;
     }());
 
-    /** @internalapi @module hooks */ /** */
+    /** @packageDocumentation @internalapi @module hooks */
     function addCoreResolvables(trans) {
         trans.addResolvable(Resolvable.fromData(UIRouter, trans.router), '');
         trans.addResolvable(Resolvable.fromData(Transition, trans), '');
@@ -43198,7 +43205,7 @@ $provide.value("$locale", {
         });
     };
 
-    /** @internalapi @module hooks */ /** */
+    /** @packageDocumentation @internalapi @module hooks */
     /**
      * A [[TransitionHookFn]] that redirects to a different state or params
      *
@@ -43285,7 +43292,7 @@ $provide.value("$locale", {
         return transitionService.onEnter({ entering: function (state) { return !!state.onEnter; } }, onEnterHook);
     };
 
-    /** @internalapi @module hooks */ /** */
+    /** @packageDocumentation @internalapi @module hooks */
     var RESOLVE_HOOK_PRIORITY = 1000;
     /**
      * A [[TransitionHookFn]] which resolves all EAGER Resolvables in the To Path
@@ -43337,7 +43344,7 @@ $provide.value("$locale", {
         return transitionService.onFinish({}, resolveRemaining, { priority: RESOLVE_HOOK_PRIORITY });
     };
 
-    /** @internalapi @module hooks */ /** */
+    /** @packageDocumentation @internalapi @module hooks */
     /**
      * A [[TransitionHookFn]] which waits for the views to load
      *
@@ -43554,7 +43561,7 @@ $provide.value("$locale", {
         return TransitionEventType;
     }());
 
-    /** @internalapi @module hooks */ /** */
+    /** @packageDocumentation @internalapi @module hooks */
     /**
      * A [[TransitionHookFn]] that skips a transition if it should be ignored
      *
@@ -43581,7 +43588,7 @@ $provide.value("$locale", {
         return transitionService.onBefore({}, ignoredHook, { priority: -9999 });
     };
 
-    /** @internalapi @module hooks */ /** */
+    /** @packageDocumentation @internalapi @module hooks */
     /**
      * A [[TransitionHookFn]] that rejects the Transition if it is invalid
      *
@@ -43598,7 +43605,7 @@ $provide.value("$locale", {
         return transitionService.onBefore({}, invalidTransitionHook, { priority: -10000 });
     };
 
-    /** @publicapi @module transition */ /** */
+    /** @packageDocumentation @publicapi @module transition */
     /**
      * The default [[Transition]] options.
      *
@@ -43798,7 +43805,7 @@ $provide.value("$locale", {
         TransitionService.prototype._definePathType = function (name, hookScope) {
             this._criteriaPaths[name] = { name: name, scope: hookScope };
         };
-        /** * @hidden */
+        /** @hidden */
         // tslint:disable-next-line
         TransitionService.prototype._getPathTypes = function () {
             return this._criteriaPaths;
@@ -43836,7 +43843,7 @@ $provide.value("$locale", {
         return TransitionService;
     }());
 
-    /** @publicapi @module state */ /** */
+    /** @packageDocumentation @publicapi @module state */
     /**
      * Provides state related service functions
      *
@@ -44388,7 +44395,7 @@ $provide.value("$locale", {
         return StateService;
     }());
 
-    /** @internalapi @module vanilla */ /** */
+    /** @packageDocumentation @internalapi @module vanilla */
     /**
      * An angular1-like promise api
      *
@@ -44442,7 +44449,7 @@ $provide.value("$locale", {
         },
     };
 
-    /** @internalapi @module vanilla */ /** */
+    /** @packageDocumentation @internalapi @module vanilla */
     // globally available injectables
     var globals = {};
     var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
@@ -44535,7 +44542,7 @@ $provide.value("$locale", {
         },
     };
 
-    /** @internalapi @module vanilla */ /** */
+    /** @packageDocumentation @internalapi @module vanilla */
     var keyValsToObjectR = function (accum, _a) {
         var key = _a[0], val = _a[1];
         if (!accum.hasOwnProperty(key)) {
@@ -44588,7 +44595,7 @@ $provide.value("$locale", {
         };
     }
 
-    /** @internalapi @module vanilla */ /** */
+    /** @packageDocumentation @internalapi @module vanilla */
     /** A base `LocationServices` */
     var BaseLocationServices = /** @class */ (function () {
         function BaseLocationServices(router, fireAfterUpdate) {
@@ -44778,7 +44785,7 @@ $provide.value("$locale", {
         return MemoryLocationConfig;
     }());
 
-    /** @internalapi @module vanilla */
+    /** @packageDocumentation @internalapi @module vanilla */
     /** A `LocationConfig` that delegates to the browser's `location` object */
     var BrowserLocationConfig = /** @class */ (function () {
         function BrowserLocationConfig(router, _isHtml5) {
@@ -44823,7 +44830,7 @@ $provide.value("$locale", {
         return BrowserLocationConfig;
     }());
 
-    /** @internalapi @module vanilla */ /** */
+    /** @packageDocumentation @internalapi @module vanilla */
     function servicesPlugin(router) {
         services.$injector = $injector;
         services.$q = $q;
@@ -44836,14 +44843,6 @@ $provide.value("$locale", {
     /** A `UIRouterPlugin` that gets/sets the current location from an in-memory object */
     var memoryLocationPlugin = locationPluginFactory('vanilla.memoryLocation', false, MemoryLocationService, MemoryLocationConfig);
 
-    /**
-     * # Core classes and interfaces
-     *
-     * The classes and interfaces that are core to ui-router and do not belong
-     * to a more specific subsystem (such as resolve).
-     *
-     * @preferred @publicapi @module core
-     */ /** */
     /** @internalapi */
     var UIRouterPluginBase = /** @class */ (function () {
         function UIRouterPluginBase() {
@@ -44852,7 +44851,7 @@ $provide.value("$locale", {
         return UIRouterPluginBase;
     }());
 
-    /** @publicapi @module common */ /** */
+    /** @packageDocumentation @publicapi @module common */
 
     var index = /*#__PURE__*/Object.freeze({
         __proto__: null,
@@ -47275,7 +47274,7 @@ $provide.value("$locale", {
     var element;
 
     if (opts.domElementGetter) {
-      element = opts.domElementGetter();
+      element = opts.domElementGetter(props);
     } else {
       var htmlId = "single-spa-application:".concat(props.name || props.appName);
       element = document.getElementById(htmlId);
@@ -47295,35 +47294,64 @@ $provide.value("$locale", {
   }
 });
 //# sourceMappingURL=single-spa-angularjs.js.map
-System.register([], function(_export, _context) {
-  window.accountSettingsBaseDir = _context.meta.url.slice(0, _context.meta.url.lastIndexOf('/') + 1);
+// System.register([], function (_export, _context) {
+//   window.accountSettingsBaseDir = _context.meta.url.slice(
+//     0,
+//     _context.meta.url.lastIndexOf("/") + 1
+//   );
 
-  return {
-    execute() {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = accountSettingsBaseDir + 'account-settings.css'
-      document.head.appendChild(link)
+//   return {
+//     execute() {
+//       const link = document.createElement("link");
+//       link.rel = "stylesheet";
+//       link.href = accountSettingsBaseDir + "account-settings.css";
+//       document.head.appendChild(link);
 
-      angular.module('account-settings').config(['$sceDelegateProvider', function ($sceDelegateProvider) {
-        $sceDelegateProvider.resourceUrlWhitelist([
-          'self',
-          window.accountSettingsBaseDir + '**',
-        ]);
-      }])
+//       angular.module("account-settings").config([
+//         "$sceDelegateProvider",
+//         function ($sceDelegateProvider) {
+//           $sceDelegateProvider.resourceUrlWhitelist([
+//             "self",
+//             window.accountSettingsBaseDir + "**",
+//           ]);
+//         },
+//       ]);
 
-      const angularjsLifecycles = singleSpaAngularjs.default({
-        angular: window.angular,
-        mainAngularModule: 'account-settings',
-        uiRouter: true,
-        preserveGlobal: true,
-        template: '<account-settings />'
-      });
+//       const angularjsLifecycles = singleSpaAngularjs.default({
+//         angular: window.angular,
+//         mainAngularModule: "account-settings",
+//         uiRouter: true,
+//         preserveGlobal: true,
+//         template: "<account-settings />",
+//       });
 
-      _export(angularjsLifecycles);
-    }
-  }
-})
+//       _export(angularjsLifecycles);
+//     },
+//   };
+// });
+
+window.BCMLegacy = singleSpaAngularjs({
+  angular: window.angular,
+  mainAngularModule: "account-settings",
+  uiRouter: true,
+  preserveGlobal: false,
+  template: "<account-settings />",
+});
+
+angular.module("account-settings").config([
+  "$sceDelegateProvider",
+  function ($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+      "self",
+      window.accountSettingsBaseDir + "**",
+    ]);
+  },
+]);
+
+export const bootstrap = window.BCMLegacy.bootstrap;
+export const mount = window.BCMLegacy.mount;
+export const unmount = window.BCMLegacy.unmount;
+
 angular.module('account-settings', [
   'ui.router'
 ]);
