@@ -47327,12 +47327,16 @@ angular
     template: '<settings-home></settings-home>'
   })
 }])
+import * as accountSettingsTemplate from "./components/account-settings.template.html";
+
 angular.module("account-settings").component("accountSettings", {
-  template: require("./components/account-settings.template.html"),
+  template: accountSettingsTemplate.default,
 });
 
+import * as settingsHomeTemplate from "./components/settings-home.template.html";
+
 angular.module("account-settings").component("settingsHome", {
-  template: require("./components/settings-home.template.html"),
+  template: settingsHomeTemplate.default,
   controller: [
     "$rootScope",
     function ($rootScope) {

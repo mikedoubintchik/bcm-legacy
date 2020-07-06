@@ -1,3 +1,5 @@
+import * as accountSettingsTemplate from "./components/account-settings.template.html";
+
 angular.module("account-settings").component("accountSettings", {
-  template: require("./components/account-settings.template.html"),
+  template: accountSettingsTemplate.default,
 });

@@ -1,5 +1,7 @@
+import * as settingsHomeTemplate from "./components/settings-home.template.html";
+
 angular.module("account-settings").component("settingsHome", {
-  template: require("./components/settings-home.template.html"),
+  template: settingsHomeTemplate.default,
   controller: [
     "$rootScope",
     function ($rootScope) {
