@@ -47304,6 +47304,10 @@ const BCMLegacy = singleSpaAngularJS({
   uiRouter: true,
   preserveGlobal: false,
   template: "<account-settings />",
+  domElementGetter: function() {
+    require('./account-settings.css');
+    return document.getElementById('angularjs-container');
+  },
 });
 
 export const bootstrap = BCMLegacy.bootstrap;
