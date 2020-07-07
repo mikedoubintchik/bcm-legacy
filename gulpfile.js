@@ -1,18 +1,16 @@
 const gulp = require('gulp');
 const concat = require('gulp-concat');
-const del = require('del')
+const del = require('del');
 
 function buildJs() {
   return gulp.src([
-    'node_modules/angular/angular.js',
-    'node_modules/angular-ui-router/release/angular-ui-router.js',
     'node_modules/single-spa-angularjs/lib/single-spa-angularjs.js',
     'src/single-spa-application.js',
     'src/account-settings.module.js',
     'src/**/*.js'
   ])
-  .pipe(concat('polyglot-mf-account-settings.js'))
-  .pipe(gulp.dest('dist/'));
+    .pipe(concat('polyglot-mf-account-settings.js'))
+    .pipe(gulp.dest('dist/'));
 }
 
 function copyStatic() {
@@ -20,7 +18,7 @@ function copyStatic() {
     'src/**/*.html',
     'src/**/*.css',
   ])
-  .pipe(gulp.dest('dist/'))
+    .pipe(gulp.dest('dist/'))
 }
 
 function watch() {
