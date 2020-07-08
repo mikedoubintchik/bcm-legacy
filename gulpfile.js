@@ -6,8 +6,7 @@ function buildJs() {
   return gulp.src([
     'node_modules/single-spa-angularjs/lib/single-spa-angularjs.js',
     'src/single-spa-application.js',
-    'src/app.js',
-    'src/**/*.js'
+    'src/compiled_js/*.js',
   ])
     .pipe(concat('legacy-port.js'))
     .pipe(gulp.dest('dist/'));
