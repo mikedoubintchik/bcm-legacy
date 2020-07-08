@@ -1,0 +1,16 @@
+<div class="col-sm-8 col-sm-offset-2 medicare-footnotes-container">
+  <div ng-repeat="item in medicareFootnotesDetails.mainData" ng-if="medicareFootnotesDetails.policy.active == true">
+    <div>
+      <div class="item-container">
+        <div class="item-title" ng-bind="item.title"></div>
+        <div class="item-data" ng-bind-html="item.topData"></div>
+        <div class="item-data bottom-data" ng-bind-html="item.bottomData" ng-class="{'close-div': !expandedDiv, 'open-div': expandedDiv}"></div>
+        <div class="footnotes-button" ng-click="toggleItem()">
+          <span class="footnotes-button-text" ng-bind="item.footnotesButtonText"></span>
+          <i class="fc-plus-expand fc-lg white" ng-if="!expandedDiv"></i>
+          <i class="fc-minus-collapse fc-lg white" ng-if="expandedDiv"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

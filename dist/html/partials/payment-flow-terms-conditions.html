@@ -1,0 +1,31 @@
+<div ng-form="paymentFlowTermsConditions" class="flex-column">
+  <payment-flow-title-bar title="{{::loc.BP_TITLE_TERMS_CONDITIONS}}"></payment-flow-title-bar>
+
+  <pf-error-message ng-show="paymentFlowTermsConditions.acceptedAgreement.$invalid &&
+    paymentFlowTermsConditions.acceptedAgreement.$dirty">
+    {{::loc.BP_YOU_MUST_AGREE_TO_THE_TERMS_AND_CONDITIONS}}
+  </pf-error-message>
+
+  <pf-checkbox value="checkboxValue">
+    <p>
+      {{::loc.BP_PAPERLESS_BILLING_AGREEMENT_READ_AND_AGREE}}
+      <br>
+      <span
+        pf-modal-open="termsConditions"
+        class="link"
+        ng-bind="loc.BP_PAYMENT_TERMS_CONDITIONS">
+    </span>
+    </p>
+  </pf-checkbox>
+  <input class="hidden"
+    type="checkbox"
+    name="acceptedAgreement"
+    ng-model="checkboxValue"
+    required>
+  <pf-divider></pf-divider>
+  <pf-modal name="termsConditions" modal-title="{{::loc.BP_PAYMENT_TERMS_AND_CONDITIONS}}" modal-button="{{::loc.BP_AGREE}}" agreement-button="acceptTermsFn()">
+    <p ng-bind="::loc.BP_PAYMENT_TERMS_CONDITIONS_MODAL"></p>
+    <p ng-bind="::loc.BP_PAYMENT_TERMS_CONDITIONS_MODAL_CREDIT"></p>
+    <p ng-bind="::loc.BP_PAYMENT_TERMS_CONDITIONS_MODAL_AUTHORIZATION"></p>
+  </pf-modal>
+</div>

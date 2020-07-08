@@ -1,0 +1,36 @@
+<div class="fund-container">
+
+  <div ng-if='funds.policyActive && funds.fundsStatusCode != 400'>
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2" ng-if="(funds.funds == null || funds.length == 0)  && funds.FundsStatusCode != 400">
+      <div class="blue-bar-label fund-blue-bar-detail">
+        <label ng-bind="loc.SPENDING_ACCOUNTS"></label>
+        <help-icon class="funds-help" file-name="'help/funds-help'" track-action="{action: 'benefitsSpendingAccountsTooltip', section: analyticConstants.BENEFITS_SECTION}"></help-icon>
+      </div>
+      <!-- error message for funds not available -->
+      <div class="benefit-error" ng-bind="funds.fundsError" ng-if='(funds.funds == null || funds.length == 0) && funds.fundsStatusCode == 404'></div>
+    </div>
+  </div>
+  <div ng-if='funds.policyActive && (funds.funds != null || funds.length > 0) '>
+    <div class="blue-bar-label fund-blue-bar-detail">
+      <label ng-bind="loc.SPENDING_ACCOUNTS"></label>
+      <help-icon class="funds-help" file-name="'help/funds-help'" track-action="{action: 'benefitsSpendingAccountsTooltip', section: analyticConstants.BENEFITS_SECTION}"></help-icon>
+    </div>
+  <div ng-repeat="fundBalance in funds.funds">
+    <div class="gray-box">
+      <div>
+        <span class="fund-type" ng-bind="loc.HSA_BALANCE" ng-if="fundBalance.fundingAccountTypeCode == 'HSA'"></span>
+        <span class="fund-type" ng-bind="loc.HRA_BALANCE" ng-if="fundBalance.fundingAccountTypeCode == 'HRA'"></span>
+        <span class="fund-type" ng-bind="loc.FSA_BALANCE" ng-if="fundBalance.fundingAccountTypeCode == 'FSA'"></span>
+        <span class="fund-type" ng-bind="loc.DCRA_BALANCE" ng-if="fundBalance.fundingAccountTypeCode == 'DCRA'"></span>
+      </div>
+      <div class="text-right">
+        <div class="fund-amount" ng-bind="fundBalance.fundAmount | currency "></div>
+      </div>
+    </div>
+  </div>
+  <button class="heq-button btn btn-default btn-block" ng-click="goToHEQ();" track-action="{action: 'benefitsHealthEquity', section: analyticConstants.BENEFITS_SECTION}" ng-if="funds.funds != null || funds.length > 0">
+    <span ng-bind="funds.heqButtonText"></span>
+    <i class="fc-external-link light-gray"></i>
+  </button>
+</div>
+</div>

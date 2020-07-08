@@ -1,0 +1,22 @@
+<div class="home-card home-card-other-languages">
+  <div class="home-card-header">
+    <div>
+      <h3>
+        <i class="fc-circlefill fc-xl fc-underlay white"></i>
+        <i class="fc-globe fc-xl fc-overlay"></i>
+      </h3>
+    </div>
+    <div class="home-card-header-text">
+      <p><strong ng-bind="loc.INFORMATION_OTHER_LANGUAGES"></strong></p>
+    </div>
+  </div>
+  <div class="home-card-body">
+    <div class="other-languages-items" ng-repeat="item in otherLanguages">
+      <div
+        ng-bind="item.title"
+        ng-click="handleLink(item.link)"
+        track-action="{action: 'homeNondiscriminationPolicy', section: analyticConstants.HOME_SECTION}">
+      </div>
+    </div>
+  </div>
+</div>

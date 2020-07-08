@@ -1,0 +1,80 @@
+<div class="faq col-sm-8 col-sm-offset-2">
+  <div class="faq-logo">
+    <span ng-bind="faqDetails.title" ng-if="!faqDetails.image"></span>
+    <img class="navbar-menu-header-image" ng-src="images/{{faqDetails.image}}" ng-if="faqDetails.image"></img>
+  </div>
+  <find-doctor-zip-alert-modal open-modal-fn-alias="openModal" confirm-fn="confirmFunc" modal-info="modalObj"></find-doctor-zip-alert-modal>
+  <find-doctor-unavailable-alert-modal open-modal-fn-alias="openAlertModal" modal-info="alertModalObj"></find-doctor-unavailable-alert-modal>
+  <div class="faq-content" ng-repeat="items in faqDetails.buttons">
+    <div class="faq-logo" ng-if="items.title1">
+      <span ng-bind="items.title1"></span>
+      <img class="navbar-menu-header-image"></img>
+    </div>
+    <div id="accordion" ng-class="{'state': items.state, 'nostate': items.nostate, 'medical': items.medical, 'dental': items.dental, 'pharmacy': items.pharmacy}">
+      <div class="panel"  ng-repeat="item in items.categories" ng-if="item.questions.length || item.categoryId === 'GLOSSARY_OF_TERMS'">
+  <div class="faq-content">
+    <div id="accordion" ng-class="{'state': faqDetails.state, 'nostate': faqDetails.nostate, 'medical': faqDetails.medical, 'dental': faqDetails.dental, 'pharmacy': faqDetails.pharmacy}">
+        <div class="panel-heading" track-action="{action: 'faq{{item.category}}', section: analyticConstants.FAQ_SECTION}">
+          <div class="panel-title category-item" ng-click="toggleItem(item, $index, $event)" ng-if="item.icon !== 'info'">
+            <i class="heading-icon fc-{{item.icon}} fc-lg white"></i>
+            <a ng-bind="item.category"></a>
+            <i ng-class="{'fc-plus-expand': !item.expandedDiv, 'fc-minus-collapse': item.expandedDiv}" class="expand pull-right"></i>
+          </div>
+          <div>
+            <help-icon class="panel-title" file-name="'partials/glossary-of-terms'" item="item" data="faqDetails.terms" header="faqDetails.glossaryHeader" ng-if="item.icon === 'info'"></help-icon>
+          </div>
+        </div>
+        <div ng-class="{'close-div': !item.expandedDiv, 'open-div': item.expandedDiv}">
+          <div id="answers">
+            <div class="answer-default"  ng-repeat="q in item.questions" ng-class="{'state-item': q.state, 'nostate-item': q.nostate, 'medical-item': q.medical, 'dental-item': q.dental, 'pharmacy-item': q.pharmacy, 'override-item': q.override}">
+              <div class="answer-panel question{{q.id}}" track-action="{action: 'faq{{q.question}}', section: analyticConstants.FAQ_SECTION}">
+                <div class="answer-title" ng-click="toggleInnerItem(q, $parent.$index, $index, $event)">
+                  <a ng-bind="q.question"></a>
+                  <i ng-class="{'fc-plus-expand': !q.expandedDiv, 'fc-minus-collapse': q.expandedDiv}" class="expand pull-right"></i>
+                </div>
+              </div>
+              <div ng-class="{'close-div': !q.expandedDiv, 'open-div': q.expandedDiv}" class="answer">
+                <span ng-bind-html="q.answer"></span>
+                <button class="btn btn-default btn-block" ng-if="q.url2" ng-click="gotoNavigatedPage(q.url2, q.searchTerm, faqDetails.planDetails)">
+                  <span ng-bind="q.tab"></span>
+                </button>
+
+                <button class="btn btn-default btn-block" ng-if="q.tab && q.url" ng-click="gotoView(q.url)">
+                    <span ng-bind="q.tab"></span>
+                </button>
+
+                <button class="btn btn-default btn-block" ng-if="q.tab && q.externalLink" ng-click="openInBrowser(q.externalLink)">
+                  <span ng-bind="q.tab"></span>
+                  <i class="{{q.icon}} dark-blue" ng-if="q.icon"></i>
+                </button>
+
+                <button class="btn btn-default btn-block" ng-if="q.tab && q.ssoExternalLink" ng-click="openInSecureBrowser(q.ssoExternalLink)">
+                  <span ng-bind="q.tab"></span>
+                  <i class="{{q.icon}} dark-blue" ng-if="q.icon"></i>
+                </button>
+
+                <button class="btn btn-default btn-block" ng-if="q.tab1 && q.url1" ng-click="gotoView(q.url1)">
+                  <span ng-bind="q.tab1"></span>
+                  <i class="{{q.icon1}} dark-blue" ng-if="q.icon1"></i>
+                </button>
+
+                <button class="btn btn-default btn-block" ng-if="q.openBenefitsFunction" ng-click="checkBenefitsLink()">
+                  <span ng-bind="q.tab1"></span>
+                  <i class="{{q.icon1}} dark-blue" ng-if="q.icon1"></i>
+                </button>
+
+                <button class="btn btn-default btn-block" ng-if="q.tab1 && q.externalLink1" ng-click="openInBrowser(q.externalLink1)">
+                  <span ng-bind="q.tab1"></span>
+                  <i class="{{q.icon1}} dark-blue" ng-if="q.icon1"></i>
+                </button>
+
+                <button class="btn btn-default btn-block" ng-if="q.tab1 && q.ssoExternalLink1" ng-click="openInSecureBrowser(q.ssoExternalLink1)">
+                  <span ng-bind="q.tab1"></span>
+                  <i class="{{q.icon1}} dark-blue" ng-if="q.icon1"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>

@@ -1,0 +1,39 @@
+<div ng-init="customerServiceDetails; openHours">
+  <div class="customer-service-card" ng-repeat="customerService in customerServiceDetails track by $index" ng-init="cardIndex=$index">
+    <div class="customer-service-header">
+      <h6 ng-bind-html="customerService.title"></h6>
+    </div>
+    <div class="customer-service-card-body">
+      <div class="customer-service-hours">
+        <div class="hours-label" ng-bind="localization.hours + ':'" ng-if="!openHours(customerService)[1][1]"></div>
+        <div ng-repeat="hours in openHours(customerService, cardIndex)[0]">
+          <div class="hours-text mt1" ng-if="!customerService.openEveryday">
+            <div>{{hours}} {{localization.timeZone}}</div>
+          </div>
+        </div>
+        <div class="hours-text" ng-if="customerService.openEveryday">
+          <span>24/7</span>
+        </div>
+        <div class="mt3" ng-bind-html="customerService.mainContent" ng-if="customerService.mainContent"></div>
+        <div class="question-types mt1" ng-bind-html="customerService.questionTypes" ng-if="customerService.mainContent"></div>
+      </div>
+    </div>
+    <div ng-if="!openHours(customerService)[1][1]">
+      <div class="service-closed" ng-bind="localization.closedNow" ng-if="!hideClosedNowHoursUnavailable && !openRightNow[cardIndex] && !customerService.openEveryday"></div>
+      <div class="send-secure-message" ng-click="gotoView(customerService.url)" ng-if="!openRightNow[cardIndex] && !customerService.openEveryday && secureInbox">
+        <div class="send-secure-text" ng-bind="loc.SEND_SECURE_MESSAGE"></div>
+        <i class="fa fa-angle-right fa-2x"></i>
+      </div>
+    </div>
+    <div class="customer-service-footer" track-action="{action: 'callCustomerService:{{customerService.title}}', section: analyticConstants.HELP_SECTION}">
+      <div class="tty-text" ng-if="customerService.tty" ng-bind="localization.ttyText"></div>
+      <div class="{{customerService.class}} phone-container">
+        <div class="tty-number-title" ng-if="customerService.tty" ng-bind="localization.ttyNumberTitle"></div>
+        <i class="{{customerService.icon}} fc-lg"></i>
+        <a href="tel://{{customerService.phones}}">
+          <span class="customer-service-phone" ng-bind="customerService.phones" ng-class="{'customer-service-phone-inactive': !openRightNow}"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

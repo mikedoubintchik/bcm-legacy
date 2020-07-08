@@ -1,0 +1,12 @@
+<div class="text-center total-remaining-balance">
+  <h4 ng-if="planDetails.selectedPolicy.sourceSystem != 'Amisys'"  class="total-remaining-balance-text med-gray" ng-bind="::loc.BP_TOTAL_REMAINING_BALANCE"></h4>
+  
+  <h4 ng-if="planDetails.selectedPolicy.sourceSystem == 'Amisys'" class="total-remaining-balance-text med-gray">
+    <span class="payment-due-text-pending"
+    ng-bind="loc.BP_TOTAL_INCLUDES_PASTDUE_AMOUNT_FROM + ' '">
+  </span>
+  <span class="past-due-date"
+    ng-bind="paymentDetails.previousStartMonth">
+  </span>
+  </h4>
+</div>

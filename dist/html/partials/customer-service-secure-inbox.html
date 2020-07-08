@@ -1,0 +1,12 @@
+<div class="secure-inbox-container">
+  <div class="blue-bar-label">
+    <label ng-bind="customerServiceSecureInboxDetails.title"></label>
+  </div>
+  <div class="secure-card-button" ng-class="{'top-border': $index > 0}" ng-repeat="button in customerServiceSecureInboxDetails.buttons" ng-click="gotoView(button.url);">
+    <div class="secure-card-button-icon">
+      <i class="fc-{{button.icon}} fc-lg"></i>
+    </div>
+    <div class="secure-card-button-title" ng-bind="button.title"></div>
+    <i class="fa fa-angle-right fa-2x secure-card-button-arrow"></i>
+  </div>
+</div>

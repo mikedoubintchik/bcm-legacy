@@ -1,0 +1,50 @@
+<div class="modal fad-zip-alert-modal" ng-click="detectClickElement($event)" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" id="{{ pcp ? 'locationzipCodeModalBlock' : 'locationModalZip'}}">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="alertModal.result(false)">
+                    <i class="fc-close fc-lg" id="closeButton"></i>
+                </button>
+                <h4 class="modal-title" ng-bind="::loc.DISTANCE_AND_ZIP_CODE"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert-text-wrapper fd-distance-alert">
+                    <div class="error-text" ng-bind="errorText" ng-if="!isZipValid"></div>
+                    <div class="input-box-container">
+                        <div class="locationWidth">
+                            <div class="input-label" ng-class="{'label-es': $root.language == 'es'}">
+                                <label class="mb0 pl2" ng-bind="::loc.DISTANCE"></label>
+                            </div>
+                            <div class="input-box">
+                                <div class="arrow-row"><i class="fa fc-dropdown"></i></div>
+                                <select name="distance" ng-model="alertModal.values.distance" ng-options="item + ' ' + loc.MILES for item in alertModal.values.distanceDetails.distance_options">
+
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="locationWidth">
+                            <div class="input-label" ng-class="{'label-es': $root.language == 'es'}">
+                                <label class="mb0 pl2 pr2" ng-bind="::loc.FROM_CITY_COUNTY_OR_ZIP_CODE"></label>
+                            </div>
+
+                            <div class="input-box position-relative" ng-class="{'error-input': !isZipValid}">
+                                <lookup-cities-input city="alertModal.values.city" class="lookup-cities-input" ng-blur="detectClickElement($event)"></lookup-cities-input>
+                                <div class="location-icon" ng-if="!alertModal.locationBlocked && alertModal.values.locationNotFound">
+                                    <i class="fa fc-current-location-outline arrow-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div><label class="blockedMsg" ng-bind="alertModal.locationMsg" ng-if="alertModal.locationBlocked"></label></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="alert-btn alert-btn-50 cancel-btn" id="cancelButton" ng-click="alertModal.result(false)"
+                    ng-bind="alertModal.cancelButton.title" ng-if="alertModal.cancelButton"></div>
+                <div class="alert-btn alert-btn-50 confirm-btn alert-btn-blue" ng-click="validateCity() && alertModal.result(true)"
+                    ng-bind="alertModal.confirmButton.title"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<div
+  ng-class="{ 'green-2-background': trackerInfo.step === 'CONFIRMATION', 'green-3-border-1': trackerInfo.step === 'CONFIRMATION', 'blue-8-background': trackerInfo.step !== 'CONFIRMATION', 'blue-9-border-1': trackerInfo.step !== 'CONFIRMATION' }"
+  class="payment-flow row m0 pl2 pr2 payment-flow-tracker">
+    <div class="" ng-cloak="">
+        <article class="col-xs-12 no-padding margin-bottom-2">
+
+        <!--dashed line-->
+            <div class="pl3 pr3">
+              <div
+                ng-class="{ 'green-3-border-bottom-dashed-1': trackerInfo.step === 'CONFIRMATION', 'blue-9-border-bottom-dashed-1': trackerInfo.step !== 'CONFIRMATION' }"
+                class="col-xs-12 no-padding">
+              </div>
+            </div>
+
+        <!-- payment flowtrackerInfo.steps/chart/diagram -->
+            <div class="row m0 p0 background-none">
+                <div class="col-xs-12 pl7 pr7">
+                    <div class="flow-line col-xs-12 pl0 pr0"></div>
+                    <div ng-if="trackerInfo.step === 'DETAILS' || trackerInfo.step === 'REVIEW' || trackerInfo.step === 'CONFIRMATION'" class="flow-line dark col-xs-4 pl0 pr0"></div>
+                    <div ng-if="trackerInfo.step === 'REVIEW'|| trackerInfo.step === 'CONFIRMATION'" class="flow-line dark col-xs-4 pl0 pr0"></div>
+                    <div ng-if="trackerInfo.step === 'CONFIRMATION'" class="flow-line dark col-xs-4 pl0 pr0"></div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="float-left width-100">
+                        <div ng-class="{ 'active': trackerInfo.step === 'METHOD', 'complete': (trackerInfo.step === 'DETAILS' || trackerInfo.step === 'REVIEW' || trackerInfo.step === 'CONFIRMATION') }" class="flow-circle">
+                          <i class="fa fa-check" aria-hidden="true"></i>
+                        </div>
+                        <div ng-if="trackerInfo.step === 'METHOD'" class="flow-circle-active"></div>
+                        <p
+                          ng-class="{ 'blue-5-text pt2 bold-text': trackerInfo.step === 'METHOD' }"
+                          class="text-center pt1">
+                          <span ng-bind="flowIsAutopay ? loc.BP_PROGRESS_BAR_AUTOPAY_METHOD_LINE1 : loc.BP_PROGRESS_BAR_PAYMENT_METHOD_LINE1"></span>
+                          <br />
+                          <span ng-bind="flowIsAutopay ? loc.BP_PROGRESS_BAR_PAYMENT_METHOD_LINE2 : loc.BP_PROGRESS_BAR_PAYMENT_METHOD_LINE2"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div ng-class="{ 'active': trackerInfo.step === 'DETAILS', 'complete': trackerInfo.step === 'REVIEW' || trackerInfo.step === 'CONFIRMATION' }" class="flow-circle">
+                      <i class="fa fa-check" aria-hidden="true"></i>
+                    </div>
+                    <div ng-if="trackerInfo.step === 'DETAILS'" class="flow-circle-active"></div>
+                    <p
+                      ng-class="{ 'blue-5-text pt2 bold-text': trackerInfo.step === 'DETAILS' }"
+                      class="text-center pt1">
+                      <span ng-bind="flowIsAutopay ? loc.BP_PROGRESS_BAR_AUTOPAY_DETAILS_LINE1 :loc.BP_PROGRESS_BAR_PAYMENT_DETAILS_LINE1"></span>
+                      <br />
+                      <span ng-bind="flowIsAutopay ? loc.BP_PROGRESS_BAR_PAYMENT_DETAILS_LINE2 :loc.BP_PROGRESS_BAR_PAYMENT_DETAILS_LINE2"></span>
+                    </p>
+                </div>
+                <div class="col-xs-3">
+                    <div ng-class="{ 'active': trackerInfo.step === 'REVIEW', 'complete': trackerInfo.step === 'CONFIRMATION' }" class="flow-circle">
+                      <i class="fa fa-check" aria-hidden="true"></i>
+                    </div>
+                    <div ng-if="trackerInfo.step === 'REVIEW'" class="flow-circle-active"></div>
+                    <p
+                      ng-class="{ 'blue-5-text pt2 bold-text': trackerInfo.step === 'REVIEW' }"
+                      class="text-center pt1">
+                      <span ng-bind="flowIsAutopay ? loc.BP_PROGRESS_BAR_AUTOPAY_REVIEW_LINE1 :loc.BP_PROGRESS_BAR_PAYMENT_REVIEW_LINE1"></span>
+                      <br />
+                      <span ng-bind="flowIsAutopay ? loc.BP_PROGRESS_BAR_PAYMENT_REVIEW_LINE2 :loc.BP_PROGRESS_BAR_PAYMENT_REVIEW_LINE2"></span>
+                    </p>
+                </div>
+                <div class="col-xs-3">
+                    <div class="float-right width-100">
+                        <div ng-class="{ 'active': trackerInfo.step === 'CONFIRMATION' }" class="flow-circle">
+                          <i class="fa fa-check" aria-hidden="true"></i>
+                        </div>
+                        <div ng-if="trackerInfo.step === 'CONFIRMATION'" class="flow-circle-active"></div>
+                        <p
+                          ng-class="{ 'blue-5-text pt1 bold-text': trackerInfo.step === 'CONFIRMATION' }"
+                          class="text-center pt1">
+                          <span ng-bind="flowIsAutopay ? loc.BP_PROGRESS_BAR_AUTOPAY_CONFIRMATION_LINE1 : loc.BP_PROGRESS_BAR_PAYMENT_CONFIRMATION_LINE1"></span>
+                          <br />
+                          <span ng-bind="flowIsAutopay ? loc.BP_PROGRESS_BAR_PAYMENT_CONFIRMATION_LINE2 : loc.BP_PROGRESS_BAR_PAYMENT_CONFIRMATION_LINE2"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>

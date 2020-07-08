@@ -1,0 +1,19 @@
+<div class="col-sm-8 col-sm-offset-2 medicare-supp-plan-container">
+    <list-messaging class="medicare-error-message" ng-bind="loc.MED_INFO_ABOUT_PLAN_NO_LONGER_AVAILABLE" ng-if="policy.active == false"></list-messaging>
+    <div id="accordion" class="" ng-repeat="item in medicareSuppPlanDetails" ng-if="policy.active == true">
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <label class="more-info-title" ng-bind="item.title"></label>
+        </div>
+      </div>
+      <div id="accordionItems">
+        <div class="med-supp-plan-text" ng-bind="item.mainText"></div>
+        <button class="button-med-link" ng-click="openInSecureBrowser(item.url)" >
+          <span ng-bind="item.buttonText"></span>
+          <i class="{{item.icon}}"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+
+<div class="payment-container" ng-form="paymentMethodForm" ng-submit="validateForm(paymentMethodForm)">
+  <payment-flow-page
+    ng-if="billingInfo && step"
+    localization="loc"
+    step="step"
+    tracker-info="trackerInfo"
+    billing-info="billingInfo"
+    validate-form="validateForm"
+    navbar-details="navbarDetails"
+  >
+  </payment-flow-page>
+</div>

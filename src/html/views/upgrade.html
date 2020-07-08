@@ -1,0 +1,15 @@
+<div class="login-container">
+  <div>
+    <img class="full-width landing-page-logo" src="images/logo.svg"></img>
+  </div>
+  <div>
+    <div class="list-messaging store-messaging">
+      <div ng-bind="device==='iOS'? loc.LOCATION_INSTRUCTION_MESSAGE_IOS: loc.LOCATION_INSTRUCTION_MESSAGE_ANDROID">
+      </div>
+      <button class="btn btn-default btn-block"
+        ng-bind="device==='iOS'? loc.STORE_IOS: loc.STORE_ANDROID"
+        ng-click="gotoStore(device)">
+      </button>
+  </div>
+</div>
+</div>

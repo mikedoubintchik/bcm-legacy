@@ -1,0 +1,12 @@
+<div class="bottom-modal" ng-class="{'open': open}">
+    <div class="modal-nav">
+      <i class="fc-back fc-lg" ng-click="closeModal()"></i>
+      <h2>{{title}}</h2>
+    </div>
+    <div class="modal-body">
+      <ng-transclude></ng-transclude>
+      <div ng-if="acceptModal && button" class="button-row flex-row flex-center-center">
+        <button ng-click="acceptModal()">{{button}}</button>
+      </div>
+    </div>
+</div>

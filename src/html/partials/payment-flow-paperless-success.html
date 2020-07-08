@@ -1,0 +1,21 @@
+<div class="payment-flow-paperless-success">
+    <div class="pl6 pr6 pt5">
+        <div class="pb3 flex-row">
+            <i class="fc-paperless-billing-leaf"></i><span class="payment-flow-paperless" ng-bind="::loc.BP_PAPERLESS_BILLING_SUCCESS"></span>
+        </div>
+        <div class="pb4">
+            <span ng-bind="::loc.BP_PAPERLESS_BILLING_SUCCESS_CHANGE"></span>
+            <span class="payment-flow-secondary-action" ng-bind="::loc.BP_PAPERLESS_BILLING_SUCCESS_LINK" ng-click="gotoView('/billing-preferences')"></span>
+        </div>
+        <payment-flow-input
+                ng-if="::userSetData.billingMethod === 'email'"
+                type="email"
+                value="::userSetData.preferences.emailAddress"
+                form-label="memberEmail"
+                title="{{::loc.BP_BILLING_EMAIL_ADDRESS}}"
+                disabled="true">
+        </payment-flow-input>
+    </div>
+
+</div>
+

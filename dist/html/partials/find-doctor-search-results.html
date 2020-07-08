@@ -1,0 +1,137 @@
+<div class="find-doctor-search-results">
+    <list-messaging  ng-bind="::loc.ERROR_SERVICE_NOT_AVAILABLE" ng-if="pcpError"></list-messaging>
+    <div ng-if="!pcpError">
+    <div>
+        <div class="btn-group-nav-container">
+            <div class="btn-group-nav-item" ng-class="activeTab === 'list' ? 'active' : ''" ng-click="switchTab('list')"
+                track-action="{action: 'healthNavListView', section: analyticConstants.HEALTHNAV_SECTION}">
+                <div class="item-content" ng-bind="::loc.LIST_VIEW"></div>
+            </div>
+            <div class="btn-group-nav-item" ng-class="activeTab === 'map' ? 'active' : ''" ng-click="switchTab('map')"
+                track-action="{action: 'healthNavMapView', section: analyticConstants.HEALTHNAV_SECTION}">
+                <div class="item-content" ng-bind="::loc.MAP_VIEW"></div>
+            </div>
+        </div>
+    </div>
+    <!-- NOTE: This is only sample template -->
+    <div class="results-count bg-darkest-blue white pl3 pt1 pb1" ng-bind="searchResultsDetails.summary"
+        ng-if="activeTab === 'list'"></div>
+    <div class="bg-dark-blue white pl3 pt1 pb1"
+        ng-if="searchResultsDetails.metadata.cost && !noResultsFound && (activeTab === 'list') && !mustBeNCZipError">
+        <div ng-if="searchResultsDetails.metadata.cost.average.member_cost" class="bold">
+            <span ng-bind="loc.SEARCH_RESULTS_ESTIMATE_TO_YOU"></span>
+            <span
+                ng-bind="'{{searchResultsDetails.metadata.cost.average.member_cost.lower | currency:'$':0}}' + '-' + '{{searchResultsDetails.metadata.cost.average.member_cost.upper | currency:'$':0}}'"></span>
+        </div>
+        <div ng-if="searchResultsDetails.metadata.cost.average.procedure_cost" class="bold">
+            <span ng-bind="::loc.SEARCH_RESULTS_ESTIMATE_TO_YOUR_INSURANCE"></span>
+            <span
+                ng-bind="'{{searchResultsDetails.metadata.cost.average.procedure_cost.lower | currency:'$':0}}' + '-' + '{{searchResultsDetails.metadata.cost.average.procedure_cost.upper | currency:'$':0}}'"></span>
+        </div>
+    </div>
+    <div class="find-doctor-search-results-details" ng-class="{'no-y-scroll': isTypeAheadOn}"
+        ng-if="activeTab === 'list'">
+        <div class="list-messaging" ng-if="outOfNC">
+            <p class="mt2"><span>{{loc.UNAUTHENTICATED_NO_RESULTS_LINE_1}} {{loc.SEARCH_MUST_BE_NC_LOCATION}}</span></p>
+        </div>
+        <div class="list-messaging-results" ng-if="noResultsFound && !outOfNC">
+            <b class="mt2" ng-bind="::loc.UNAUTHENTICATED_NO_RESULTS_LINE_1"></b>
+            <p class="mt2" ng-if="!searchResultsDetails.isCustomNetwork"
+                ng-bind="::loc.UNAUTHENTICATED_NO_RESULTS_LINE_2"></p>
+            <p class="mt2" ng-if="searchResultsDetails.isCustomNetwork">{{loc.CUSTOM_NETWORKS_NO_RESULTS_LINE_2}}</p>
+            <div class="no-results-container pb2" ng-if="searchResultsDetails.isCustomNetwork">
+                <hr>
+                <button type="button" class="btn btn-block btn-primary no-results-btn"
+                    ng-click="openInBrowser(searchResultsDetails.externalLink, '_blank', {})">
+                    <span class="text-container">{{loc.FAD_NATIONAL_NETWORKS}}<i
+                            class="fc-external-link white"></i></span>
+                </button>
+            </div>
+        </div>
+    <!-- recommendation results-->
+    <div ng-if="searchResultsDetails.medicareRecommendationListDetails">
+
+        <!-- if vendor source is sapphire-->
+      <div class="black browser-item-card"
+      ng-repeat="providerList in searchResultsDetails.medicareRecommendationListDetails"
+      ng-if="providerList.vendorSource === 'Sapphire'" ng-click="gotoDetailsPage(providerList)">
+      <div class="pcp-home-card-provider-title" ng-bind="providerList.fullName + ', ' + providerList.designation">
+      </div>
+      <div class="mt2"><span class="tier p1" ng-class="providerList.tier.style"
+          ng-bind="providerList.tier.label"></span>
+      </div>
+      <i class="card-right-text fa fa-caret-right light-gray p3 pr1" />
+      <div class="mt2 card-description med-gray" id="sapphire-address">
+        <div ng-bind="providerList.practiceName"></div>
+        <div ng-bind="providerList.addressLine1"></div>
+        <div ng-bind="providerList.city + ', ' + providerList.state + ' ' + providerList.zipCode">
+        </div>
+      </div>
+    </div>
+    <!-- End vendor source is sapphire-->
+    <!-- If vendor source is Nuna-->
+    <div id="nuna{{providerList.sequenceNumber}}" class="black browser-item-card"
+      ng-repeat="providerList in searchResultsDetails.medicareRecommendationListDetails"
+      ng-if="providerList.vendorSource === 'Nuna'" ng-click="gotoDetailsPage(providerList)">
+      <div class="pcp-home-card-provider-title"
+        ng-bind="providerList.firstName + ' ' + providerList.middleInitial + '. ' + providerList.lastName + ', ' + providerList.designation">
+      </div>
+      <div class="mt2"><span class="p1 nuna-tier-label" ng-class="providerList.tier.style"
+          ng-bind="providerList.tier.label"></span>
+      </div>
+      <i class="card-right-text fa fa-caret-right light-gray p3 pr1" />
+      <div class="mt2 card-description med-gray" id="nuna-address">
+        <div ng-bind-html="providerList.fullAddress"></div>
+      </div>
+    </div>
+</div>
+    <!-- End vendor source is Nuna-->
+    <!-- End of recommendation results-->
+    <!-- sapphire results-->
+        <div class="browser-item-card" ng-repeat="item in searchResultsDetails.results"
+            id="search-results-card-{{$index}}"
+            ng-click="resultsDetailsPage($index, item.procedureName || item.providerName, item.preposition, {label: item.label, style: item.style}, item, item.smartShopperIncentiveAmount || null)">
+            <div class="card-right-text" ng-bind="'(' + item.distance + item.distanceLabel + ')'"></div>
+            <div class="card-title">
+                <span ng-if="item.procedureName" ng-bind="item.procedureName"></span>
+                <span ng-if="item.procedureName" ng-bind="item.preposition"></span>
+                <span ng-bind="item.providerName"></span>
+                <span class="degrees" ng-bind="item.degrees"></span>
+            </div>
+            <div ng-if="item.label !== null && !noMatchPlanFound" class="label-spacing">
+                <span class="tier p1" ng-class="item.style" ng-bind="item.label"></span>
+                <i ng-if="item.label === loc.CLEAR_PRICING_PROJECT_PROVIDERS" class="fc-circle-feature-info fc-es info-icon-blue" ng-click="openModal($event)"></i>
+            </div>
+            <i class="card-right-text fa fa-caret-right light-gray p3 pr1" />
+            <div class="card-description">{{item.providerName !== item.title ? (item.title) : ('')}}</div>
+            <div class="card-description" ng-bind="item.address1"></div>
+            <div class="card-description" ng-bind="item.address2"></div>
+            
+            <div ng-if="item.costToMember" class="med-blue mt2">
+                {{loc.SEARCH_RESULTS_ESTIMATE_TO_YOU_UPPER_CASE}}<b>{{item.costToMember | currency:'$':0}}</b></div>
+            <div ng-if="isSmartShopperEligible && item.smartShopperIncentiveAmount" class="mt2">
+                <i class="fc-smartshopper-solid fc-lg icon-margin med-green"></i>
+                {{loc.SMARTSHOPPER_SEARCH_RESULTS_LIST_REWARD}}<b
+                    class="med-green">{{item.smartShopperIncentiveAmount | currency:'$':0}}</b></div>
+        </div>
+        <div class="load-more-results-container" ng-if="loadMoreResults">
+            <button type="button" class="btn btn-block more-results-button" ng-click="fetchAdditionalResults()"
+                ng-bind="::loc.LOAD_MORE_RESULTS"></button>
+        </div>
+    </div>
+    <div class="find-doctor-search-results-map-container" ng-if="activeTab === 'map'">
+        <div id="_search-button" class="list-messaging results-text-map" ng-click="searchThisArea()"
+            ng-if="searchAgain">
+            <span class="med-light-blue">{{loc.SEARCH_THIS_AREA}}</span>
+        </div>
+        <div class="list-messaging results-text-map" ng-if="noResultsFoundMapView && !mustBeNCZipError">
+            <span class="med-light-blue">{{loc.NO_RESULTS_FOUND}}</span>
+        </div>
+        <div class="list-messaging results-text-map" ng-if="mustBeNCZipError">
+            <span class="med-light-blue">{{loc.NO_RESULTS}}{{loc.MUST_BE_NC_LOCATION}}</span>
+        </div>
+        <div id="find-doctor-search-results-map-view" class="find-doctor-search-results-map">
+        </div>
+    </div>
+</div>
+</div>

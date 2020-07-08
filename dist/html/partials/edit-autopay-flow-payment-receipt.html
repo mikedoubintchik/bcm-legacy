@@ -1,0 +1,18 @@
+<div class="row payment-receipt-container m0 pl4 pt6 pb2 pr4 bg-lightest-gray">
+  <div class="col-xs-12 payment-receipt-body pt1 pl2 pr2 pb4 bg-white">
+    <payment-flow-receipt-row label="{{::loc.BP_POLICY_NUMBER}}" value="{{::serviceResponse.account.policyMembership.policyId}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row label="{{::loc.SUBSCRIBER_ID}}" value="{{::serviceResponse.account.policyMembership.fullExternalId}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row label="{{::loc.BP_TITLE_PAYMENT_FREQUENCY}}" value="{{::loc.BP_MONTHLY_AUTOPAY}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row label="{{::loc.BP_MONTHLY_DRAFT_DATE}}" value="{{::loc.BP_MONTHLY_DRAFT}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row label="{{::loc.BP_MONTHLY_PREMIUM_AMOUNT}}" value="{{::serviceResponse.account.currentInvoice.billedAmount | currency}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row label="{{::loc.BP_HEADER_PAYMENT_METHOD}}" value="{{::paymentMethodDisplayValue}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="localizedBillingMethod && serviceResponse.preferences.billingMethod !== 'EMAIL'" label="{{::loc.BP_TITLE_BILLING_METHOD}}" value="{{::localizedBillingMethod}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod === 'bankdraft'" label="{{::loc.BP_NAME_ON_ACCOUNT}}" value="{{::userSetData.accountHolderName}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod === 'bankdraft'" label="{{::loc.BP_ACCOUNT_TYPE}}" value="{{::accountTypeDisplayValue}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod === 'bankdraft'" label="{{::loc.BP_ROUTING_NUMBER}}" value="{{::userSetData.routingNumber}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod === 'bankdraft'" label="{{::loc.BP_BANK_ACCOUNT_NUMBER}}" value="{{::userSetData.accountNumber | maskAccount}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod != 'bankdraft'" label="{{::loc.BP_NAME_ON_CARD}}" value="{{::userSetData.creditCardDetails.firstName}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod != 'bankdraft'" label="{{::loc.BP_CARD_NUMBER}}" value="{{::userSetData.creditCardDetails.lastFour | maskAccount}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod != 'bankdraft'" label="{{::loc.BP_EXPIRATION_DATE}}" value="{{::userSetData.creditCardDetails.month}}/{{::userSetData.creditCardDetails.year}}"></payment-flow-receipt-row>
+  </div>
+</div>

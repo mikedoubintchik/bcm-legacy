@@ -1,0 +1,11 @@
+<div class="policy-header-gray">
+  <div class="header-text">
+  <div class="icon-display">
+    <i ng-class="{'fc-health-only': selectedPolicy.isMedical, 'fc-dental-only': selectedPolicy.isDental, 'fc-Vision': selectedPolicy.isVision}"></i>
+   <div>
+    <h5 class="univers-cn" ng-bind="::getPolicyPlanTitle(selectedPolicy)"></h5>
+    <h5 class="univers-cn" ng-bind="::getPolicyDates(selectedPolicy)"></h5>
+  </div>
+  </div>
+</div>
+</div>

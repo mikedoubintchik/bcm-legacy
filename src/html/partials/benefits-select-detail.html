@@ -1,0 +1,266 @@
+<div class="benefits-container col-sm-8 col-sm-offset-2">
+  <div id='bencardtop{{benefits.memberIndex}}' ng-repeat="benefits in benefitsData.itemDTO"
+    class="benefit-details benefits-card">
+    <div class="benefits-body small-padding">
+      <div class="benefits-details-heading">
+        <i class="fc-circle-group benefits-icon" ng-if="benefits.relationship === 'family'"></i>
+        <i class="fc-subscriber benefits-icon" ng-if="benefits.relationship === 'SUB'"></i>
+        <i class="fc-user benefits-icon"
+          ng-if="benefits.relationship !== 'SUB' && benefits.relationship !== 'family'"></i>
+        <div class="family-summary" ng-bind="benefits.headerText"></div>
+        <div class="family-progress-text" ng-bind="benefits.subHeaderText"></div>
+        <hr/>
+      </div>
+      <div class="graph-container-stacked" ng-show="benefits.cardExpanded">
+        <div class="select-in-overall-benefit" ng-show="benefits.graphData.flags.OOPMet">
+          <i class="fc-check-only"></i> <span ng-bind="benefits.graphData.inFullBenefit_Label1"></span><br>
+          <span ng-bind="benefits.graphData.inFullBenefit_Label2"> </span>
+        </div>
+        <div class="area-heading" ng-bind="benefits.graphData.deductibleArea.headingLabel"></div>
+        <div class="area-subheading" ng-bind="benefits.graphData.deductibleArea.subheadingLabel"></div>
+        <div class="title" ng-show="!benefits.graphData.flags.deductibleMet">
+          <div class="title-name" ng-bind="benefits.graphData.deductibleArea.titleName"></div>
+          <div class="title-value">
+            {{benefits.graphData.deductibleArea.titleValue | currency:"$":2}}
+          </div>
+        </div>
+        <div class="titleMet" ng-show="benefits.graphData.flags.deductibleMet">
+          <div class="title-name" ng-bind="benefits.graphData.deductibleArea.titleNameMet"></div>
+          <div class="title-value">
+            <i class="fc-check-only"></i>
+            {{benefits.graphData.deductibleArea.titleValue | currency:"$":2}}
+          </div>
+        </div>
+        <div class="in-overall-benefit" ng-show="benefits.graphData.isFullBenefit">
+          <div style="text-align:center;">
+            <i class="fc-check-only"></i>
+            <span ng-bind="benefits.graphData.fullBenefit_Label_Top">
+            </span>
+          </div>
+          <div style="text-align:center;" ng-bind="benefits.graphData.fullBenefit_Label_Bottom"></div>
+        </div>
+        <div>
+          <vertical-bar-graph graph-height={{benefits.graphData.deductibleGraph.graphHeight}}
+            graph-values="benefits.graphData.deductibleGraph">
+          </vertical-bar-graph>
+        </div>
+        <help-link class="footer" ng-show="!benefits.graphData.flags.OOPMet"
+          data="benefits.graphData.deductibleArea.footerLabel" file-name="'help/benefits-select-plus-help'"></help-link>
+        <hr>
+        <div>
+          <div class="area-heading" ng-bind="benefits.graphData.oopArea.headingLabel"></div>
+          <div class="area-subheading" ng-bind="benefits.graphData.oopArea.subheadingLabel"></div>
+          <div class="title" ng-show="!benefits.graphData.flags.OOPMet">
+            <div class="title-name" ng-bind="benefits.graphData.oopArea.titleName"></div>
+            <div class="title-value">
+              {{benefits.graphData.oopArea.titleValue | currency:"$":2}}
+            </div>
+          </div>
+          <div class="titleMet" ng-show="benefits.graphData.flags.OOPMet">
+            <div class="title-name" ng-bind="benefits.graphData.oopArea.titleNameMet"></div>
+            <div class="title-value">
+              <i class="fc-check-only"></i>
+              {{benefits.graphData.oopArea.titleValue | currency:"$":2}}
+            </div>
+          </div>
+          <vertical-bar-graph graph-height={{benefits.graphData.oopGraph.graphHeight}}
+            graph-values="benefits.graphData.oopGraph">
+          </vertical-bar-graph>
+          <help-link class="footer" data="benefits.graphData.oopArea.footerLabel"
+            file-name="'help/benefits-select-plus-help'" ng-show="!benefits.graphData.flags.OOPMet"></help-link>
+        </div>
+      </div>
+
+      <!-- small view-->
+      <div class="benefit-table" ng-show="!benefits.cardExpanded">
+        <div class="benefit-row" ng-show="!benefits.graphData.flags.standardOOP">
+          <help-link class="benefit-pref-deduct-replace-text" data="benefits.deductibleReplacementText"
+            file-name="'help/benefits-select-plus-help'" ng-show="benefits.graphData.flags.preferredDeductible">
+          </help-link>
+          <div class="benefit-detail-text" ng-bind="benefits.amountRemainingToMeetPreferredCareDeductibleLabel"
+            ng-show="!benefits.graphData.flags.preferredDeductible"> </div>
+          <div class="benefit-detail-amount"
+            ng-bind="benefits.amountRemainingToMeetPreferredCareDeductibleAmount | currency:'$'"
+            ng-show="!benefits.graphData.flags.preferredDeductible"> </div>
+        </div>
+        <div class="benefit-row" ng-show="!benefits.graphData.flags.standardDeductible">
+          <div class="benefit-detail-text" ng-bind="benefits.amountRemainingToMeetStandardCareDeductibleLabel"> </div>
+          <div class="benefit-detail-amount"
+            ng-bind="benefits.amountRemainingToMeetStandardCareDeductibleAmount | currency:'$'"> </div>
+        </div>
+        <div class="benefit-row" ng-show="!benefits.graphData.flags.standardOOP">
+          <help-link class="benefit-pref-deduct-replace-text" data="benefits.outOfPocketReplacementText"
+            file-name="'help/benefits-select-plus-help'" ng-show="benefits.graphData.flags.preferredOOP"> </help-link>
+          <div class="benefit-detail-text" ng-bind-html="benefits.amountRemainingToMeetPreferredCareOOPLabel"
+            ng-show="!benefits.graphData.flags.preferredOOP"> </div>
+          <div class="benefit-detail-amount"
+            ng-bind="benefits.amountRemainingToMeetPreferredCareOOPAmount | currency:'$'"
+            ng-show="!benefits.graphData.flags.preferredOOP"> </div>
+        </div>
+        <div class="benefit-row" ng-show="!benefits.graphData.flags.standardOOP"`>
+          <div class="benefit-detail-text" ng-bind-html="benefits.amountRemainingToMeetStandardCareOOPLabel"> </div>
+          <div class="benefit-detail-amount"
+            ng-bind="benefits.amountRemainingToMeetStandardCareOOPAmount | currency:'$'"> </div>
+        </div>
+        <div class="benefit-row" ng-show="benefits.graphData.flags.standardOOP"`>
+        <help-link class="benefit-pref-deduct-replace-text" data="benefits.allMetReplacementText"
+        file-name="'help/benefits-select-plus-help'" ng-show="benefits.graphData.flags.standardOOP"> </help-link>
+        </div>
+      </div>
+      
+      <div ng-show="!benefits.cardExpanded">
+        <hr />
+        <a class="btn btn-default btn-block graph-details-button"
+          ng-click="toggleBenefitsTable($event,benefits.memberIndex)"
+          track-action="{action: 'benefitsToggleTables', section: analyticConstants.BENEFITS_SECTION}">
+          <i class="fc-graph-details benefits-icon"></i> <span class="show-hide-benefits"
+            ng-bind="loc.SHOW_BENEFIT_GRAPH_DETAILS"></span>
+          <i class="fc-plus-expand benefits-icon"></i>
+        </a>
+      </div>
+      <!-- small view-->
+
+      <!-- expanded view -->
+      <div class="benefit-table" ng-show="benefits.cardExpanded">
+        <div class="metadata-heading blue-row" ng-bind="benefits.amountRemainingAreaLabel"></div>
+        <div class="benefit-row blue-row" ng-show="!benefits.graphData.flags.standardOOP">
+          <help-link class="benefit-pref-deduct-replace-text" data="benefits.deductibleReplacementText"
+            file-name="'help/benefits-select-plus-help'" ng-show=" benefits.graphData.flags.preferredDeductible">
+          </help-link>
+          <div class="benefit-detail-text" ng-bind="benefits.amountRemainingToMeetPreferredCareDeductibleLabel"
+            ng-show="!benefits.graphData.flags.preferredDeductible"> </div>
+          <div class="benefit-detail-amount"
+            ng-bind="benefits.amountRemainingToMeetPreferredCareDeductibleAmount | currency:'$'"
+            ng-show="!benefits.graphData.flags.preferredDeductible"> </div>
+        </div>
+        <div class="benefit-row blue-row" ng-show="!benefits.graphData.flags.standardDeductible">
+          <div class="benefit-detail-text" ng-bind="benefits.amountRemainingToMeetStandardCareDeductibleLabel"> </div>
+          <div class="benefit-detail-amount"
+            ng-bind="benefits.amountRemainingToMeetStandardCareDeductibleAmount | currency:'$'"> </div>
+        </div>
+        <div class="benefit-row blue-row" ng-show="!benefits.graphData.flags.standardOOP">
+          <help-link class="benefit-pref-deduct-replace-text" data="benefits.outOfPocketReplacementText"
+            file-name="'help/benefits-select-plus-help'" ng-show="benefits.graphData.flags.preferredOOP"> </help-link>
+          <div class="benefit-detail-text" ng-bind-html="benefits.amountRemainingToMeetPreferredCareOOPLabel"
+            ng-show="!benefits.graphData.flags.preferredOOP"> </div>
+          <div class="benefit-detail-amount"
+            ng-bind="benefits.amountRemainingToMeetPreferredCareOOPAmount | currency:'$'"
+            ng-show="!benefits.graphData.flags.preferredOOP"> </div>
+        </div>
+        <div class="benefit-row blue-row">
+          <help-link class="benefit-pref-deduct-replace-text" data="benefits.allMetReplacementText"
+            file-name="'help/benefits-select-plus-help'" ng-show="benefits.graphData.flags.standardOOP"> </help-link>
+          <div class="benefit-detail-text" ng-bind-html="benefits.amountRemainingToMeetStandardCareOOPLabel"
+            ng-show="!benefits.graphData.flags.standardOOP"> </div>
+          <div class="benefit-detail-amount"
+            ng-bind="benefits.amountRemainingToMeetStandardCareOOPAmount | currency:'$'"
+            ng-show="!benefits.graphData.flags.standardOOP"> </div>
+        </div>
+        <div class="metadata-heading" ng-bind="benefits.expensesAppliedAreaLabel"></div>
+        <div class="benefit-row">
+          <div class="benefit-detail-text" ng-bind="benefits.expensesAppliedTowardsDeductibleLabel"> </div>
+          <div class="benefit-detail-amount"
+            ng-bind="benefits.expensesAppliedTowardsDeductibleAmount.toFixed(2) | currency:'$'"> </div>
+        </div>
+        <!-- remove ng-show for 80/20
+        <div class="benefit-row" ng-show="!benefits.hideCoinsurance"> -->
+        <div class="benefit-row">
+          <div class="benefit-detail-text" ng-bind="benefits.coInsCoPayExpensesLabel"> </div>
+          <div class="benefit-detail-amount" ng-bind="benefits.coInsCoPayExpensesAmount.toFixed(2) | currency:'$'">
+          </div>
+        </div>
+        <div class="benefit-row">
+          <div class="benefit-detail-text" ng-bind="benefits.expensesCombinedOOPLimitLabel"> </div>
+          <div class="benefit-detail-amount"
+            ng-bind="benefits.expensesCombinedOOPLimitAmount.toFixed(2) | currency:'$'"> </div>
+        </div>
+
+        <div class="metadata-heading gray-row-no-border" ng-bind="benefits.maximumYouPayAreaLabel"></div>
+        <div class="benefit-row gray-row">
+          <div class="benefit-detail-text" ng-bind="benefits.maximumPreferredCareDeductibleYouPayLabel"> </div>
+          <div class="benefit-detail-amount">
+            <span class="benefit-detail-value" ng-bind="benefits.maximumPreferredCareDeductibleYouPay.member"></span>
+            <span ng-bind="benefits.maximumPreferredCareDeductibleYouPay.memberLabel"></span>
+          </div>
+          <div class="benefit-detail-amount">
+            <span class="benefit-detail-value" ng-bind="benefits.maximumPreferredCareDeductibleYouPay.family"></span>
+            <span ng-bind="benefits.maximumPreferredCareDeductibleYouPay.familyLabel"></span>
+          </div>
+        </div>
+        <div class="benefit-row gray-row">
+          <div class="benefit-detail-text" ng-bind="benefits.maximumStandardCareDeductibleYouPayLabel"> </div>
+          <div class="benefit-detail-amount">
+            <span class="benefit-detail-value" ng-bind="benefits.maximumStandardCareDeductibleYouPay.member"></span>
+            <span ng-bind="benefits.maximumStandardCareDeductibleYouPay.memberLabel"></span>
+          </div>
+          <div class="benefit-detail-amount">
+            <span class="benefit-detail-value" ng-bind="benefits.maximumStandardCareDeductibleYouPay.family"></span>
+            <span ng-bind="benefits.maximumStandardCareDeductibleYouPay.familyLabel"></span>
+          </div>
+        </div>
+        <div class="benefit-row gray-row">
+          <div class="benefit-detail-text" ng-bind-html="benefits.maximumPreferredCareOOPYouPayLabel"> </div>
+          <div class="benefit-detail-amount" ng-show="!benefits.isUnlimited">
+            <span class="benefit-detail-value" ng-bind="benefits.maximumPreferredCareOOPYouPay.member"></span>
+            <span ng-bind="benefits.maximumPreferredCareOOPYouPay.memberLabel"></span>
+          </div>
+          <div class="benefit-detail-amount" ng-show="!benefits.isUnlimited">
+            <span class="benefit-detail-value" ng-bind="benefits.maximumPreferredCareOOPYouPay.family"></span>
+            <span ng-bind="benefits.maximumPreferredCareOOPYouPay.familyLabel"></span>
+          </div>
+          <div class="benefit-detail-amount" ng-show="benefits.isUnlimited">
+            <span ng-bind="benefits.maximumPreferredCareOOPYouPay.member"></span>
+          </div>
+        </div>
+        <div class="benefit-row gray-row gray-row-no-border">
+          <div class="benefit-detail-text" ng-bind-html="benefits.maximumStandardCareOOPYouPayLabel"> </div>
+          <div class="benefit-detail-amount" ng-show="!benefits.isUnlimited">
+            <span class="benefit-detail-value" ng-bind="benefits.maximumStandardCareOOPYouPay.member"></span>
+            <span ng-bind="benefits.maximumStandardCareOOPYouPay.memberLabel"></span>
+          </div>
+          <div class="benefit-detail-amount" ng-show="!benefits.isUnlimited">
+            <span class="benefit-detail-value" ng-bind="benefits.maximumStandardCareOOPYouPay.family"></span>
+            <span ng-bind="benefits.maximumStandardCareOOPYouPay.familyLabel"></span>
+          </div>
+          <div class="benefit-detail-amount" ng-show="benefits.isUnlimited">
+            <span ng-bind="benefits.maximumStandardCareOOPYouPay.member"></span>
+          </div>
+        </div>
+        <div class="graph-details-button-container">
+          <button class="btn btn-default btn-block claims-button " ng-bind="benefits.claimsBtnLabel"
+            ng-click="gotoView(benefits.claimsBtnUrl);">
+          </button>
+        </div>
+      </div>
+      <div ng-show="benefits.cardExpanded">
+        <hr />
+        <a class="btn btn-default btn-block graph-details-button"
+          ng-click="toggleBenefitsTable($event,benefits.memberIndex)"
+          track-action="{action: 'benefitsToggleTables', section: analyticConstants.BENEFITS_SECTION}">
+          <i class="fc-graph-details benefits-icon"></i>
+          <span class="show-hide-benefits" ng-bind="loc.HIDE_BENEFIT_GRAPH_DETAILS"></span>
+          <i class="fc-minus-collapse benefits-icon"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="benefit-details benefits-card bottom-padding">
+    <div class="benefits-body small-padding">
+      <div class="benefits-footer-heading-text">
+        <div class="family-summary" ng-bind="loc.FOOTNOTES">
+
+        </div>
+        <hr />
+      </div>
+      <div ng-bind-html="footnotes" class="footnotes"></div>
+      <div>
+        <hr />
+        <a class="btn btn-default btn-block graph-details-button" ng-click="toggleFootnotes()"
+          track-action="{action: 'benefitsToggleFootnotes', section: analyticConstants.BENEFITS_SECTION}">
+          <span class="show-hide-benefits" ng-bind="FootnotesDetailButton"></span>
+          <i class="fc-{{collapseExpandIcon}} benefits-icon"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

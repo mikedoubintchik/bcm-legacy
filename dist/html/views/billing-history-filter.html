@@ -1,0 +1,51 @@
+<div class="payment-container bg-dark-blue"> 
+<basic-navbar class="basic-navbar-dark" navbar-details="navbarDetails.display" left-click="navbarDetails.onLeftClick()" right-click="basicNavbarRightClick()"></basic-navbar>
+<div ng-form="billingHistoryFilterForm" id="pf-scrollable-section" class="policy-header-margin bg-dark-blue payment-flow-phone-scroll">
+    <policy-header-blue></policy-header-blue>
+    <form name="billingHistoryFilterForm" ng-submit="filterClaims()">
+        <payment-flow-title-bar ng-if="!isMedicareSSA" title="{{::loc.BP_RESULT_TYPE}}"></payment-flow-title-bar>
+        <div ng-if="!isMedicareSSA">
+            <payment-flow-radio-group group-value="historyTypeSelected">
+                <payment-flow-radio-button class="blue" value="A">{{::loc.BP_SHOW_ALL}}</payment-flow-radio-button>
+                <payment-flow-radio-button class="blue" value="P">{{::loc.BP_PAYMENTS}}</payment-flow-radio-button>
+                <payment-flow-radio-button class="blue" value="I">{{::loc.BP_INVOICES}}</payment-flow-radio-button>
+            </payment-flow-radio-group>
+            <input type="text" ng-model="historyTypeSelected" name="historyTypeSelected" class="hidden" required>
+        </div>
+        <payment-flow-title-bar class="pt4 pb4" title="{{::loc.BP_SELECT_TIME_PERIOD}}"></payment-flow-title-bar>
+        <div>
+            <payment-flow-radio-group group-value="dateRangeSelected">
+                <payment-flow-radio-button class="blue" value=3>{{::loc.BP_LAST_3_MONTHS}}</payment-flow-radio-button>
+                <payment-flow-radio-button class="blue" value=6>{{::loc.BP_LAST_6_MONTHS}}</payment-flow-radio-button>
+                <payment-flow-radio-button class="blue" value=12>{{::loc.BP_LAST_12_MONTHS}}</payment-flow-radio-button>
+                <payment-flow-radio-button class="blue" value=24>{{::loc.BP_LAST_24_MONTHS}}</payment-flow-radio-button>
+                <payment-flow-radio-button class="blue" value=0>{{::loc.BP_LAST_YEARS_PLAN}}</payment-flow-radio-button>
+                <payment-flow-radio-button class="blue top" value="99">
+                    <div class="filter-dates">
+                        <div class="gray-box date-area">
+                            <div><label ng-bind="::loc.FILTER_CLAIMS_DATE_FROM"></label></div>
+                            <select ng-model="startDate" ng-change="validateDateRange(startDate, endDate)"
+                                    ng-options="month.label for month in startDates | billingHistoryFromDateFilter:endDate"
+                                    ng-click="selectButton()"></select>
+                            <input type="text" ng-model="startDate" name="startDate" class="hidden">
+                        </div>
+                        <div class="gray-box date-area">
+                            <div><label ng-bind="::loc.FILTER_CLAIMS_DATE_TO"></label></div>
+                            <select ng-model="endDate" ng-change="validateDateRange(startDate, endDate)"
+                                    ng-options="month.label for month in endDates | billingHistoryToDateFilter:startDate"
+                                    ng-click="selectButton()"></select>
+                            <input type="text" ng-model="endDate" name="endDate" class="hidden">
+                        </div>
+                    </div>
+                </payment-flow-radio-button>
+            </payment-flow-radio-group>
+            <input type="text" ng-model="dateRangeSelected" name="dateRangeSelected" class="hidden" required>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 filter-date-range">
+            <div class="claims-filter-submit-button">
+                <button type="button" class="btn btn-default btn-block" ng-bind="::loc.FILTER_CLAIMS_APPLY_FILTER_BUTTON" ng-click="validateBillingHistory(billingHistoryFilterForm)" track-action="{action: 'billingHistoryFilter:applyFilter', section: analyticConstants.BILLING_SECTION}"></button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>

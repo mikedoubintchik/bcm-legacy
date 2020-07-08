@@ -1,0 +1,138 @@
+<div class="home-card home-card-id-card" id="home-card-pcp">
+  <div class="home-card-header">
+    <div>
+      <h3>
+        <i class="fc-circlefill fc-xl fc-underlay white"></i>
+        <i class="fc-circle-doctor fc-xl fc-overlay"></i>
+      </h3>
+    </div>
+    <div class="home-card-header-text">
+      <p><strong ng-bind="pcpDetails.header"></strong></p>
+      <p ng-bind="getPolicyPlanTitle(policy) + ' ' + getPolicyDates(policy)" class="policy-description"></p>
+    </div>
+  </div>
+  <div class="home-card-body" ng-hide="pcpDetails.displayErrorMessage">
+    <div class="black p3" ng-if="!pcpDetails.providerInvalidNetwork && !pcpDetails.noPCP">
+      <span ng-bind="pcpDetails.pcpInformation.string1"></span>
+      <span ng-bind="pcpDetails.pcpInformation.pcpInfoModalLink" class="pcp-home-card-info-link"
+        ng-click="openInformationModal(pcpDetails.pcpInformation)"
+        track-action="{action: 'homePCPInformation', section: analyticConstants.HOME_SECTION}"></span>
+      <div ng-bind="pcpDetails.pcpInformation.string2"></div>
+    </div>
+    <div class="p1" ng-if="pcpDetails.providerInvalidNetwork || pcpDetails.noPCP">
+      <div id="provider-no-longer-valid-message" class="pcp-message-box med-dark-gray m2 p3 bg-beige">
+        <span ng-bind-html="::loc.PCP_COMMERCIAL_HOMECARD_NO_LONGER_VALID_PCP1"
+          ng-if="pcpDetails.providerInvalidNetwork"></span>
+        <span ng-bind-html="::loc.PCP_COMMERCIAL_HOMECARD_NO_PCP1" ng-if="pcpDetails.noPCP"></span>
+        <span ng-bind="pcpDetails.pcpInformation.pcpInfoModalLink" class="pcp-home-card-info-link"
+          ng-click="openInformationModal(pcpDetails.pcpInformation)" 
+          track-action="{action: 'homePCPInformation', section: analyticConstants.HOME_SECTION}"></span>
+        <span ng-bind-html="::loc.PCP_COMMERCIAL_HOMECARD_NO_LONGER_VALID_PCP2"
+          ng-if="pcpDetails.providerInvalidNetwork"></span>
+        <span ng-bind-html="::loc.PCP_COMMERCIAL_HOMECARD_NO_PCP2" ng-if="pcpDetails.noPCP"></span>
+      </div>
+    </div>
+    <div class="black pl3 pr3 pcp-text-position pcp-text-transform"
+      ng-if="!pcpDetails.providerInvalidNetwork && !pcpDetails.noPCP">
+      <div class="pcp-home-card-provider-title" ng-bind="pcpDetails.providerData.pcpFullName"></div>
+      <div ng-if="pcpDetails.tierLabel"><span class="tier p1" ng-class="pcpDetails.tierLabel[0].style"
+          ng-bind="pcpDetails.tierLabel[0].label"></span></div>
+      <div class="pcp-help help-icon" ng-click="openInformationModal(pcpDetails.pcpAmisysInformationIcon)"
+        ng-if="pcpDetails.tierLabel">
+        <i class="fc-feature-info fc-ml"></i>
+      </div>
+      <hr class="mb2 mt2" />
+      <div class="pcp-home-card-provider-address med-gray">
+        <div ng-bind="pcpDetails.providerData.providerOrganizationName"></div>
+        <div ng-bind="pcpDetails.providerData.providerAddressLine1"></div>
+        <div
+          ng-bind="pcpDetails.providerData.providerCity + ', ' + pcpDetails.providerData.providerStateCode + ' ' + pcpDetails.providerData.providerZipCode">
+        </div>
+      </div>
+    </div>
+    <div class="p3 med-light-blue" ng-if="!pcpDetails.providerInvalidNetwork && !pcpDetails.noPCP"
+      ng-click="gotoDetailsPage()"
+      track-action="{action: 'homeViewPCPDetails', section: analyticConstants.HOME_SECTION}">
+      <span ng-bind="::loc.PCP_MEDICARE_HOMECARD_VIEWPCPDETAILS"></span>
+      <i class="fc-arrow-right"></i>
+    </div>
+    <div class="small-padding" ng-if="!medicareUser && !pcpDetails.providerInvalidNetwork && !pcpDetails.noPCP">
+      <button class="btn btn-default btn-block" ng-click="otherPcpSearch(pcpDetails.searchInput)"
+        track-action="{action: 'homeSearchOtherPCPs', section: analyticConstants.HOME_SECTION}">
+        <span ng-bind="loc.PCP_MEDICARE_HOMECARD_SEARCHOTHERPCPS"></span>
+      </button>
+    </div>
+    <div class="small-padding" ng-if="!medicareUser && (pcpDetails.providerInvalidNetwork || pcpDetails.noPCP)">
+      <button class="btn btn-default btn-block" ng-click="otherPcpSearch(pcpDetails.searchInput)"
+        track-action="{action: 'homeSearchPCP', section: analyticConstants.HOME_SECTION}">
+        <span ng-bind="loc.PCP_COMMERCIAL_SEARCH_PCP"></span>
+      </button>
+    </div>
+    <div class="small-padding pt0" ng-if="policyMembersList.length > 1 && pcpDetails.showManageDepPCP">
+      <button id="home-card-pcp-manage-dependents" class="btn btn-default btn-block" ng-click="gotoManageDependentPcp()"
+        track-action="{action: 'homeManageDependentPCP', section: analyticConstants.HOME_SECTION}">
+        <span ng-bind="loc.PCP_COMMERCIAL_MANAGE_DEPENDENT_PCP"></span>
+      </button>
+    </div>
+    <div class="pr3 pl3 pb3 med-light-blue" id="medicare-change-my-pcp" ng-if="medicareUser"
+      ng-click="expandRecommendationList()">
+      <hr />
+      <span ng-bind="loc.PCP_COMMERCIAL_BUTTON_CHANGEMYPCP"></span>
+      <i ng-class="{'arrow-up': expandRecommendations, 'arrow-down': !expandRecommendations}"
+        class="fc-arrow-right pull-right"></i>
+    </div>
+    <!-- Medicare Change PCP-->
+    <div ng-class="{'close-expand-div': !expandRecommendations, 'open-expand-div': expandRecommendations}">
+      <!-- if vendor source is sapphire-->
+      <div class="black pl3 pr3 pcp-text-position pcp-text-transform"
+        ng-repeat="providerList in pcpDetails.medicareRecommendationListDetails"
+        ng-if="providerList.vendorSource === 'Sapphire'" ng-click="gotoDetailsPage(providerList)">
+        <div class="pcp-home-card-provider-title" ng-bind="providerList.fullName + ', ' + providerList.designation">
+        </div>
+        <div class="mt2"><span class="tier p1" ng-class="pcpDetails.tierLabel[0].style"
+            ng-bind="pcpDetails.tierLabel[0].label"></span>
+          <i class="fc-arrow-right pull-right"></i>
+        </div>
+        <div class="mt2 pcp-home-card-provider-address med-gray">
+          <div ng-bind="providerList.practiceName"></div>
+          <div ng-bind="providerList.addressLine1"></div>
+          <div ng-bind="providerList.city + ', ' + providerList.state + ' ' + providerList.zipCode">
+          </div>
+        </div>
+        <hr class="mb2 mt2" />
+      </div>
+      <!-- End vendor source is sapphire-->
+      <!-- If vendor source is Nuna-->
+      <div id="nuna{{providerList.sequenceNumber}}" class="black pl3 pr3 pcp-text-position pcp-text-transform"
+        ng-repeat="providerList in pcpDetails.medicareRecommendationListDetails"
+        ng-if="providerList.vendorSource === 'Nuna'" ng-click="gotoDetailsPage(providerList)">
+        <div class="pcp-home-card-provider-title"
+          ng-bind="providerList.firstName + ' ' + providerList.middleInitial + '. ' + providerList.lastName + ', ' + providerList.designation">
+        </div>
+        <div class="mt2"><span class="p1 nuna-tier-label" ng-class="pcpDetails.tierLabel[1].style"
+            ng-bind="pcpDetails.tierLabel[1].label"></span>
+          <i class="fc-arrow-right pull-right"></i>
+        </div>
+        <div class="mt2 pcp-home-card-provider-address med-gray">
+          <div ng-bind-html="providerList.fullAddress"></div>
+        </div>
+        <hr class="mb2 mt2" ng-if="!$last" />
+      </div>
+      <!-- End vendor source is Nuna-->
+      <div class="small-padding">
+        <button class="btn btn-default btn-block" ng-click="otherPcpSearch(pcpDetails.searchInput)"
+          track-action="{action: 'homeSearchOtherPCPs', section: analyticConstants.HOME_SECTION}">
+          <span ng-bind="loc.PCP_MEDICARE_HOMECARD_SEARCHOTHERPCPS"></span>
+        </button>
+      </div>
+    </div>
+    <!-- End of Medicare Change PCP-->
+    <find-doctor-zip-alert-modal ng-hide="pcpDetails.displayErrorMessage" open-modal-fn-alias="openModal"
+      confirm-fn="confirmFunc" modal-info="modalObj">
+    </find-doctor-zip-alert-modal>
+  </div>
+
+  <div class="home-card-body" ng-if="pcpDetails.displayErrorMessage">
+    <p class="mb0 home-card-no-secure-messages" ng-bind="pcpDetails.errMessage"></p>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="id-card-info-container">
+  <div class="gray-box id-card-info">
+    <dynamic-help-icon class="id-card-help" info="memberDetails[1].infoHtml"></dynamic-help-icon>
+    <div>
+      <label class="id-card-label" ng-bind="loc.EFFECTIVE_DATES"></label>
+      <div class="id-card-info-text">
+      <span ng-bind="memberDetails[0].effectiveDate | date : 'MM/dd/yy' + '-'"></span>
+      <span ng-bind="memberDetails[0].expirationDate | date : 'MM/dd/yy'"></span>
+    </div>
+    </div>
+    <hr>
+    <div>
+      <label ng-bind="loc.PLAN"></label>
+      <div class="id-card-info-text">
+      <span ng-bind="memberDetails[0].plan"></span>
+    </div>
+    </div>
+    <hr>
+    <div>
+      <label ng-bind="loc.SUBSCRIBER_NAME"></label>
+      <div class="id-card-info-text">
+      <span ng-bind="memberDetails[0].subscriberName"></span>
+        <span ng-bind="' ( ' + loc.MEMBER_CODE +' '+ memberDetails[0].dependentNumber + ' ) '"></span>
+      </div>
+    </div>
+    <hr ng-if= "memberDetails[0].dependentName">
+    <div ng-if= "memberDetails[0].dependentName">
+      <label ng-bind="loc.ID_CARD_DEPENDENT_NAME"></label>
+      <div class="id-card-info-text">
+        <span ng-bind="memberDetails[0].dependentName"></span>
+          <span ng-bind="' ( ' + loc.MEMBER_CODE +' '+ memberDetails[0].loggedInMemberCode + ' ) '"></span>
+      </div>
+    </div>
+    <hr>
+    <div>
+      <label ng-bind="loc.SUBSCRIBER_ID"></label>
+      <div class="id-card-info-text" ng-bind="memberDetails[0].subscriberId"></div>
+    </div>
+    <hr ng-if = "memberDetails[0].coveredMembers">
+    <div ng-if = "memberDetails[0].coveredMembers">
+      <label ng-bind="loc.COVERED_MEMBERS"></label>
+      <div class="id-card-info-text" ng-repeat="member in memberDetails[0].coveredMembers">
+        <span ng-bind="member.fullName"></span>
+        <span ng-bind="' ( ' + loc.MEMBER_CODE +' '+ member.dependentNumber + ' ) '"></span>
+      </div>
+    </div>
+</div>

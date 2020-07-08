@@ -1,0 +1,70 @@
+<div class="col-sm-8 col-sm-offset-2 dental-only-container">
+  <div class="main-bucket top-container">
+    <!--Dental coverage-->
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label panel-title-padding">
+          <label class="more-info-title" ng-bind="data[0].title"></label>
+          <help-icon class="coverage-help" file-name="'help/benefits-low-cost-dental-help'" header="loc.INFORMATION"></help-icon>
+        </div>
+      </div>
+      <div id="subBucket">
+        <div>
+          <div class="list-messaging">
+            <div class="main-text" ng-bind="data[0].mainText"></div>
+            <button class="btn btn-default btn-block button-view-info" ng-click="openInBrowser(data[0].url);">
+              <span ng-bind="data[0].buttonText"></span>
+              <i class="{{data[0].icon}}"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-bucket bottom-container">
+      <!--More info about your plan-->
+      <div class="panel">
+          <div class="panel-heading">
+            <div class="panel-title blue-bar-label panel-title-padding">
+              <label class="more-info-title" ng-bind="data[1].title"></label>
+              <help-icon class="coverage-help" file-name="'help/benefits-low-cost-dental-help'" header="loc.INFORMATION"></help-icon>
+            </div>
+          </div>
+          <div id="subBucket">
+            <div>
+              <div class="buttons-container" ng-repeat="item in data[1].buttons">
+                <button class="btn btn-default btn-block {{item.class}}" ng-if="item.ssoUrl" ng-click="openInBrowser(item.ssoUrl);">
+                  <span ng-bind="item.buttonText"></span>
+                  <i class="{{item.icon}}"></i>
+                </button>
+                <button class="btn btn-default btn-block {{item.class}}" ng-if="item.url" ng-click="gotoNavigatedPage(item.url, item.description)">
+                  <span ng-bind="item.buttonText"></span>
+                  <i class="{{item.icon}}"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+  <find-doctor-zip-alert-modal open-modal-fn-alias="openModal" confirm-fn="confirmFunc" modal-info="modalObj"></find-doctor-zip-alert-modal>
+    <!--Annual Maximum -->
+    <div class="panel">
+      <div class="panel-heading" ng-click="toggleItem()">
+        <div class="panel-title blue-bar-label panel-title-padding">
+          <label class="more-info-title" ng-bind="loc.SUMMARY_OF_BENEFITS"></label>
+          <help-icon class="coverage-help" file-name="'help/benefits-low-cost-dental-help'" header="loc.INFORMATION"></help-icon>
+        </div>
+      </div>
+      <div id="subBucket" class="annual-maximum-items bg-white">
+        <div ng-repeat="item in data[2].data" class="{{item.class}} low-cost-dental-summary-section ">
+          <div class="{{item.class}} low-cost-dental-summary-title low-cost-dental-summary-title-bold" ng-if="item.title" ng-bind-html="item.title"></div>
+          <div class="{{item.class}} low-cost-dental-summary-title" ng-if="item.value" ng-bind="item.value"></div>
+        </div>
+      </div>
+      <div class="low-cost-information-text">
+          <div class="med-light-blue" ng-bind-html="data[3].informationTitle1"></div>
+          <div class="med-light-blue" ng-bind-html="data[3].informationTitle2"></div>
+      </div>
+    </div>
+  </div>
+</div>

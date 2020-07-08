@@ -1,0 +1,16 @@
+<div class="invoice-history-card flex-column flex-center-start">
+  <div class="info-description-pair">
+    <p ng-bind="::loc.BP_INVOICE_DATE"></p>
+    <p class="font-weight-600" ng-bind="::invoice.date | date : 'M/d/yyyy'"></p>
+  </div>
+  <div class="info-description-pair">
+    <p ng-bind="::loc.BP_DESCRIPTION"></p>
+    <p class="font-weight-600" ng-bind="::invoice.description"></p>
+  </div>
+  <div class="info-description-pair">
+    <p ng-if="invoice.transactionType === 'I'" ng-bind="::loc.BP_INVOICE_AMOUNT"></p>
+    <p ng-if="invoice.transactionType === 'P'" ng-bind="::loc.BP_TITLE_PAYMENT_AMOUNT"></p>
+    <p class="font-weight-600" ng-bind="::invoice.amount | currency"></p>
+  </div>
+  <download-pdf-button invoice="invoice" ng-if="invoice.transactionType === 'I'"></download-pdf-button>
+</div>

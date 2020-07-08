@@ -1,0 +1,8 @@
+<div class="billing-invoice-history-filter-ribbon">
+  <div class="upper-ribbon-half">
+    <p ng-if="!isMedicareSSA"><span ng-bind="::loc.FILTERS"></span> <span ng-bind="::filterTransType"></span> | <span ng-bind="::resultsCountText"></span></p>
+    <p ng-if="isMedicareSSA"><span ng-bind="::loc.FILTERS"></span> <span ng-bind="::resultsCountText"></span></p>
+    <i ng-click="resetFilter()" class="fc-close"></i>
+  </div>
+  <div class="lower-ribbon-half"><p><span ng-bind="::resultsCount"></span>&nbsp;{{::loc.RESULTS}}</p></div>
+</div>

@@ -1,0 +1,55 @@
+<div class="home-card home-card-inbox">
+  <div class="home-card-header" ng-click="gotoView('/inbox')" track-action="{action: 'homeSecureInbox', section: analyticConstants.HOME_SECTION}">
+    <div>
+      <h3>
+        <i class="fc-circlefill fc-xl fc-underlay white"></i>
+        <i class="fc-inbox fc-xl fc-overlay"></i>
+      </h3>
+    </div>
+    <div class="home-card-header-text">
+      <p><strong ng-bind="loc.SECURE_INBOX"></strong></p>
+      <p>
+        <span ng-bind="'1 ' + loc.NEW_MESSAGE" ng-if="inboxDetails.unreadMessages === 1"></span>
+        <span ng-bind="inboxDetails.unreadMessages + ' ' + loc.NEW_MESSAGES" ng-if="inboxDetails.unreadMessages > 1"></span>
+        <span ng-bind="'1 ' + loc.MESSAGE" ng-if="!inboxDetails.unreadMessages && inboxDetails.totalMessages === 1"></span>
+        <span ng-bind="inboxDetails.totalMessages + ' ' + loc.MESSAGES" ng-if="!inboxDetails.unreadMessages && inboxDetails.totalMessages > 1"></span>
+        <span ng-bind="'0 ' + loc.MESSAGES" ng-if="inboxDetails.totalMessages === 0"></span>
+      </p>
+    </div>
+  </div>
+  <div class="home-card-body">
+    <div class= "home-card-no-secure-messages" ng-if="inboxDetails.title">
+      <span ng-bind="inboxDetails.title"></span>
+    </div>
+    <div ng-if="!inboxDetails.title">
+      <div class="home-card-no-messages" ng-if="inboxDetails.totalMessages === 0">
+        <label ng-bind= "loc.NO_MESSAGES"></label>
+      </div>
+      <div class="home-card-inbox-message"
+        ng-class="{'unread': message.unread}"
+        ng-repeat="message in inboxDetails.messages"
+        ng-click="readMessage(message); $event.stopPropagation();"
+        track-action="{action: 'homeViewSecureMessage', section: analyticConstants.HOME_SECTION}">
+        <div class="full-width">
+          <p class="message-date" ng-bind="getMessageDisplayDate(message)"></p>
+          <p class="message-subject">
+            <i ng-if="message.canReply"
+              class="fa fa-reply med-light-blue"
+              ng-click=" gotoView('/inbox/compose/' + message.messageId + '?returnTo=' + '/inbox/messages/' + message.messageId); $event.stopPropagation();"
+              track-action="{action: 'homeViewSecureMessage', section: analyticConstants.HOME_SECTION}">
+            </i>
+            <img ng-src="images/crossshield.svg" class="inbox-logo">
+            <span ng-bind="message.subject"></span>
+          </p>
+        </div>
+        <div class="message-arrow">
+          <i class="fa fa-lg fa-angle-right"></i>
+        </div>
+      </div>
+    </div>
+    <div class="small-padding" ng-if="!inboxDetails.title">
+      <button class="btn btn-default btn-block" ng-bind="loc.VIEW_ALL_MESSAGES" ng-if="inboxDetails.totalMessages !== 0" ng-click="gotoView('/inbox')" track-action="{action: 'homeViewAllMessages ', section: analyticConstants.HOME_SECTION}"></button>
+      <button class="btn btn-default btn-block" ng-bind="loc.GO_TO_SECURE_INBOX" ng-if="inboxDetails.totalMessages === 0" ng-click="gotoView('/inbox')"></button>
+    </div>
+  </div>
+</div>

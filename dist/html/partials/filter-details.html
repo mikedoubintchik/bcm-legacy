@@ -1,0 +1,66 @@
+<div class="filter-details" ng-click="detectClickElement($event)">
+  <!-- Smart Shopper filter-->
+
+  <div class="smart-shopper-filter pl2 pt4 white border-line" ng-if="findDoctorFilterDetails.smartShopperFlow === 'true'">
+    <div ng-click="smartShopperToggleCheckBox()">
+      <span class="smart-shopper-check-box" type="checkbox" ng-class="{'check-box-unchecked': !selectedSmartShopperFilter, 'check-box-selected': selectedSmartShopperFilter}"></span>
+      <label class="smart-shopper-rewards-text" ng-bind="::loc.SMARTSHOPPER_FILTER_RESULTS_SMARTSHOPPER_CHECKBOX"></label>
+    </div>
+  </div>
+
+  <!-- End Smart Shopper filter-->
+  <div class="filter-details-container">
+  <div class="error-text" ng-bind="errorText" ng-if="isZipDirty && errorText && !isZipValid"></div>
+<div class="filter-input-details">
+ <div class="filter-distance-box">
+   <div class="filter-item-label">
+     <label class="mb0 pl2" ng-bind="::loc.DISTANCE"></label>
+  </div>
+  <div class=" filter-item-content">
+    <div class="arrow-row">	
+  <i class="fa fc-dropdown"></i>	
+</div>
+    <select class="filter-select-distance filter-select" ng-model="data.displayDistance" ng-blur="saveDistance()" ng-options="item + ' ' + loc.MILES for item in findDoctorFilterDetails.distanceDetails.distance_options">
+    </select>
+  </div>
+</div>
+
+  <div class="filter-distance-box">
+    <div class="filter-item-label">
+      <label class="mb0 pl2" ng-bind="::loc.FROM_CITY_COUNTY_OR_ZIP_CODE"></label>
+    </div>
+    <div class="filter-item-content filter-zip-code-box" ng-class="{'error-input': isZipDirty && errorText && !isZipValid}">
+      <lookup-cities-input city="data.city" class="lookup-cities-input" ng-click="enableInputZipCode()"></lookup-cities-input>
+      <div class="location-icon" ng-click="toggleCurrentLocation()">
+        <i ng-if="currentLocationActive===true && currentLocation===true" class="fa fc-current-location-active"></i>
+        <i ng-if="(currentLocationActive===true && currentLocation===false) || (currentLocationActive===false && locationBlocked===false)" class="fa fc-current-location-outline"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<div><label class="blockedMsg" ng-bind="locationMsg" ng-if="locationBlocked"></label></div>
+
+<div class="find-doctor-filter-items" ng-repeat= "item in findDoctorFilterDetails.listdetails" ng-init="itemSelected = item.values[item.defaultOptionIndex]" ng-if="item">
+  <div class="filter-item-label"  ng-class="{'disable-item-label': item.defaultName === 'Not Available' || item.defaultName === 'No está disponible'}">
+    <label class="mb0 pl2" ng-bind="item.name"></label>
+    <i ng-hide="((item.name === 'Specialty' || item.name === 'Especialidad') && findDoctorFilterDetails.specialtyTerms.length === 0) || item.name === 'Gender' || item.name === 'Sexo'" class="fc-circle-feature-info fc-es" ng-click="showGlossaryTerms(item.name)"></i>
+ </div>
+ <div class="filter-item-content" ng-class="{'disable-select-area': item.defaultName === 'Not Available' || item.defaultName === 'No está disponible'}">
+   <div class="arrow-row">
+     <i class="fa fc-dropdown"></i>	
+    </div>
+   <select class="filter-select" ng-change="selectedFilterValue(itemSelected, item)" ng-model="itemSelected"
+      ng-options="item as item.description for item in item.values"
+      ng-class="{'disable-select-box': item.defaultName === 'Not Available' || item.defaultName === 'No está disponible'}"
+      ng-disabled = "item.defaultName === 'Not Available' || item.defaultName === 'No está disponible'" >
+  </select>
+</div>
+ <div class="noFilterBackground" ng-if = "item.defaultName === 'Not Available' || item.defaultName === 'No está disponible'">
+    <label class="noFilterMsg" ng-bind="item.notAvailableMsg"></label>
+</div>
+</div>
+</div>
+ <div class="filter-bottom-button">
+   <button class="no-border bg-med-light-blue" ng-bind="findDoctorFilterDetails.applyFilter" ng-click="filterResults()"></button>
+ </div>
+</div>

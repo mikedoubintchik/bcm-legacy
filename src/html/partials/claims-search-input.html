@@ -1,0 +1,21 @@
+<div class="claims-search-input">
+  <form name="searchForm" ng-submit="search()" novalidate>
+    <div class="input-group">
+      <input type="search" class="form-control" safe-input ng-model="query">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary" ng-bind="loc.SEARCH" ng-disabled="!queryIsValid()" track-action="{action: 'claimsSearch:submit', section: analyticConstants.CLAIMS_SECTION, details: '{{query}}'}"></button>
+      </span>
+    </div>
+  </form>
+  <div class="search-input-icon" ng-click="focusOnSearchInput();">
+    <i class="fc-search fc-lg2 fc-underlay"></i>
+    <!-- <i class="fc-circlefill fc-lg2 fc-underlay"></i>
+    <i class="fc-utility-search fc-lg2 fc-overlay white"></i> -->
+  </div>
+  <div class="claims-filter-button">
+    <button type="button" class="btn" ng-click="filterResults(query);">
+      <i class="fc-filter fc-md"></i>
+      <span ng-bind="loc.FILTER_CLAIMS"></span>
+    </button>
+  </div>
+</div>

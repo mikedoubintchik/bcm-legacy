@@ -1,0 +1,9 @@
+<div ng-if="!searchContext" class="no-invoices-message">
+  <p>
+    <span ng-bind="::loc.BP_HAVE_NO_INVOICES"></span>
+    <span ng-bind="::loc.BP_PLEASE_TRY_AGAIN"></span>
+  </p>
+</div>
+<div ng-if="searchContext" class="no-invoices-message">
+  <p ng-bind="::loc.BP_ADJUST_FILTER_SETTINGS"></p>
+</div>

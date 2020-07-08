@@ -1,0 +1,52 @@
+<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+  <div class="gray-box claim-info">
+    <span>
+      <help-icon class="claims-help" file-name="'help/claims-help'"
+        track-action="{action: 'claimDetails:tooltip:claimsHelp', section: analyticConstants.CLAIMS_SECTION}">
+      </help-icon>
+    </span>
+    <div class="med-blue">
+      <i class="fc-claim-number"></i>
+    </div>
+    <div>
+      <label ng-bind="loc.CLAIM_NUMBER"></label>
+      <div class="claim-info-text" ng-bind="info.claimId"></div>
+    </div>
+    <hr />
+    <div class="med-blue">
+      <i class="fc-health-only"></i>
+    </div>
+    <div>
+      <label ng-bind="loc.SERVICE"></label>
+      <div class="claim-info-text" ng-bind="loc.MEDICAL_SERVICE"></div>
+    </div>
+    <hr />
+
+    <div class="med-blue">
+      <i class="fc-provider"></i>
+    </div>
+    <div>
+      <label ng-bind="loc.PROVIDED_BY"></label>
+      <div class="claim-info-text" ng-bind="info.providerRecordName"></div>
+    </div>
+    <hr />
+
+    <div class="med-blue">
+      <i ng-class="{'fc-processed': info.processed, 'fc-pending': !info.processed}"></i>
+    </div>
+    <div>
+      <label ng-bind="loc.CURRENT_STATUS"></label>
+      <div ng-bind="info.claimStatus"></div>
+    </div>
+    <hr />
+
+    <div class="med-blue">
+      <i class="fc-calendar"></i>
+    </div>
+    <div>
+      <label ng-bind="loc.DATE_OF_SERVICE"></label>
+      <div class="claim-info-text" ng-bind="info.startServiceDate | date:'M/d/yyyy'"></div>
+    </div>
+  </div>
+  <div class="claim-bottom"></div>
+</div>

@@ -1,0 +1,194 @@
+<div class="find-doctor-results-details">
+  <div ng-if="findDoctorResultsDetails.disclaimersMessage" class="disclaimer-message p2 mt2 ml2 mr2 mb0"
+    ng-bind-html="findDoctorResultsDetails.disclaimersMessage"></div>
+  <div class="dependent-title" ng-if="findDoctorResultsDetails.dependentName">
+    <h6 class="dependent-name" ng-bind="findDoctorResultsDetails.dependentName"></h6>
+  </div>
+  <div id="display-make-this-pcp-error" class="pcp-message-box med-dark-gray m2 p3 bg-beige"
+    ng-if="displayMakeThisMyPcpError">
+    <span class="btn-text font-weight-500" ng-bind="::loc.ERROR_SERVICE_NOT_AVAILABLE"></span>
+  </div>
+  <div class="p2" ng-click="openChangePcpAlert()"
+    ng-if="!ChangedMySelectedPcp && findDoctorResultsDetails.showMakeThisMyPcp && (findDoctorResultsDetails.isPcpFlow || findDoctorResultsDetails.recommendedFlow)">
+    <button type="button" class="btn pt3 pb2 btn-block bg-med-blue white">
+      <span class="btn-text" ng-bind="findDoctorResultsDetails.makeThisMyPcpButton"></span>
+    </button>
+  </div>
+
+  <div class="p2 change-pcp-successful-message" ng-if="ChangedMySelectedPcp" ng-class="{'text-center': !medicareUser}">
+    <span class="dark-green" ng-bind="findDoctorResultsDetails.changePcp.SuccesfullyChangedMyPcpMessage" ng-if="!medicareUser"></span>
+    <p class="dark-green" ng-bind="findDoctorResultsDetails.changePcp.medicareSuccesfullyChangedMyPcpMessage1" ng-if="medicareUser"></p>
+    <p class="dark-green" ng-bind="findDoctorResultsDetails.changePcp.medicareSuccesfullyChangedMyPcpMessage2" ng-if="medicareUser"></p>
+  </div>
+  <!-- Smart Shopper Procedure Details-->
+
+  <div class="row m0 p1 pl3 bg-darker-blue white"
+    ng-if="showSmartShopper && findDoctorResultsDetails.showProcedureCosts && !medicareUser && findDoctorResultsDetails.smartShopperIncentiveAmount">
+    <h6 class="mt1 mb0 float-left card-title" ng-bind="::loc.SMARTSHOPPER_PROCEDURE_DETAILS"></h6>
+  </div>
+  <div class="row m0 p2"
+    ng-if="showSmartShopper && findDoctorResultsDetails.showProcedureCosts && !medicareUser && findDoctorResultsDetails.smartShopperIncentiveAmount">
+    <div class="col-xs-12 find-doctor-result-detail-card about-this-procedure">
+      <div class="p2 pb0 smart-shopper-cash-rewards-details">
+        <i class="fc-smartshopper fc-md med-green icon-margin smart-shopper-icon-align"></i>
+        <div class="smart-shopper-eligible-text">
+          <span class="m2 p2 med-green smart-shopper-eligible-text-size"
+            ng-bind="::loc.SMARTSHOPPER_DETAILS_PAGE_PROCEDURE_HEADING"></span>
+        </div>
+        <div class="pl8 fc-md med-green smart-shopper-eligible-text">
+          <span ng-bind="::loc.SMARTSHOPPER_DETAILS_PAGE_PROCEDURE_SUBHEAD"></span>
+          <span class="font-weight-700"
+            ng-bind="findDoctorResultsDetails.smartShopperIncentiveAmount | currency:'$':0"></span>
+        </div>
+        <hr class="smart-shopper-section" />
+        <div class="pb1">
+          <span ng-bind="::loc.SMARTSHOPPER_SEARCH_CONFIRMATION_NUMBER"></span>
+          <div>
+            <span class="text-bold med-dark-gray"
+              ng-bind="findDoctorResultsDetails.smartShopperSearchReferenceNumber"></span>
+          </div>
+        </div>
+        <div class="row pt1 pl2 inline-block-children p1 bg-med-green white smart-shopper-how-to-claim-section"
+          ng-click="openSmartShopper()">
+          <h6 class="pl1 mt1 float-left card-title title-width smart-shopper-how-to-claim-text"
+            ng-bind="::loc.SMARTSHOPPER_DETAILS_PAGE_PROCEDURE_HOW_TO_CLAIM"></h6>
+          <i class="mt1 float-right pr1 white toggle-collapse-icon fc-plus-expand"
+            ng-class="expandSmartShopperInfo ? 'fc-minus-collapse' : 'fc-plus-expand'"></i>
+        </div>
+        <div class="p3" ng-if="expandSmartShopperInfo">
+          <span class="pb2 font-weight-500 med-dark-gray"
+            ng-bind="::loc.SMARTSHOPPER_DETAILS_PAGE_PROCEDURE_HOW_TO_CLAIM_TEXT"></span>
+          <span ng-if="smartShopperTerm.searchTerm" class="pb2 font-weight-500 text-bold med-dark-gray"
+            ng-bind="smartShopperTerm.searchTerm"></span>
+          <span ng-if="smartShopperTerm.searchTerm" class="pb2 font-weight-500 med-dark-gray"
+            ng-bind="smartShopperTerm.preposition"></span>
+          <span
+            class="pb2 font-weight-500 text-bold med-dark-gray">{{findDoctorResultsDetails.cardData.summary.name}}{{findDoctorResultsDetails.cardData.summary.degrees}}</span>
+          <span class="pb2 font-weight-500 med-dark-gray"
+            ng-bind="::loc.SMARTSHOPPER_DETAILS_PAGE_PROCEDURE_HOW_TO_CLAIM_TEXT1"></span>
+          <span class="pb2 font-weight-500 text-bold med-green"
+            ng-bind="findDoctorResultsDetails.smartShopperIncentiveAmount | currency:'$':0"></span>
+          <span class="pb2 font-weight-500 med-dark-gray"
+            ng-bind="::loc.SMARTSHOPPER_DETAILS_PAGE_PROCEDURE_HOW_TO_CLAIM_TEXT2"></span>
+          <hr />
+          <div class="float-left">
+            <i id="fc-check-only" class="fc-check-only med-green"></i>
+          </div>
+          <div class="smart-shopper-steps float-right">
+            <div class="text-bold" ng-bind="::loc.SMARTSHOPPER_SHOP_HEADING"></div>
+            <span ng-bind="::loc.SMARTSHOPPER_ELIGIBLE_SHOP_TEXT"></span>
+            <span class="text-bold">
+              {{findDoctorResultsDetails.cardData.summary.name}}{{findDoctorResultsDetails.cardData.summary.degrees}}.</span>
+            <div class="mt2 text-bold" ng-bind="::loc.SMARTSHOPPER_GO_HEADING"></div>
+            <div ng-bind-html="::loc.SMARTSHOPPER_ELIGIBLE_GO_TEXT"></div>
+            <div class="mt2 mb2" ng-bind-html="::loc.SMARTSHOPPER_ELIGIBLE_CALL_US_TEXT"></div>
+            <div class="text-bold" ng-bind="::loc.SMARTSHOPPER_EARN_HEADING"></div>
+            <span ng-bind="::loc.SMARTSHOPPER_ELIGIBLE_EARN_TEXT"></span>
+            <span class="pb2 text-bold med-green"
+              ng-bind="findDoctorResultsDetails.smartShopperIncentiveAmount | currency:'$':0"></span>
+            <span class="remove-extra-space">.</span>
+          </div>
+          <hr />
+          <div class="text-center mt3">
+            <span ng-click="openInfoModal()" ng-bind="::loc.SMARTSHOPPER_HOMECARD_LEARN_MORE"
+              class="home_card_link modal-link"
+              track-action="{action: 'healthNavSmartShopperLearnMore', section: analyticConstants.HEALTHNAV_SECTION}"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Smart Shopper Procedure Details-->
+
+  <!-- estimated procedure cost -->
+  <div class="row m0 p1 pl3 bg-darker-blue white" ng-if="findDoctorResultsDetails.showProcedureCosts && !medicareUser">
+    <h6 ng-bind="findDoctorResultsDetails.estimatedProcedureCost" class="mt1 mb0 float-left card-title"></h6>
+  </div>
+  <div class="row m0 p2" ng-if="findDoctorResultsDetails.showProcedureCosts && !medicareUser">
+    <div class="col-xs-12 find-doctor-result-detail-card about-this-procedure"
+      ng-if="findDoctorResultsDetails.cardData.memberNumber">
+      <div class="row m0 pl3 pr3 pt3 collapsible-section">
+        <div ng-repeat="(name, costInfo) in findDoctorResultsDetails.cardData.estimatedCostInfo"
+          ng-hide="name === 'estimatedCostToYou'">
+          <p class="col-xs-9" ng-bind="costInfo.name"></p>
+          <span class="col-xs-3 text-right text-bold med-light-blue" ng-bind="costInfo.amount | currency:'$':0"></span>
+          <hr ng-if="name !== 'totalCost'" />
+        </div>
+      </div>
+      <div class="row m0 pt2 pb1 pl3 pr3 bg-dark-blue white">
+        <p class="col-xs-9 m0" ng-bind="findDoctorResultsDetails.cardData.estimatedCostInfo.estimatedCostToYou.name">
+        </p>
+        <span class="col-xs-3 text-right text-bold"
+          ng-bind="findDoctorResultsDetails.cardData.estimatedCostInfo.estimatedCostToYou.amount | currency:'$':0"></span>
+      </div>
+    </div>
+    <div class="col-xs-12 find-doctor-result-detail-card about-this-procedure"
+      ng-if="!findDoctorResultsDetails.cardData.memberNumber">
+      <div class="m0 pl3 pr3 pt3 total-cost-section">
+        <p class="col-xs-9" ng-bind="findDoctorResultsDetails.cardData.estimatedCostInfo.totalCost.name"></p>
+        <span class="col-xs-3 text-right text-bold med-light-blue"
+          ng-bind="findDoctorResultsDetails.cardData.estimatedCostInfo.totalCost.amount | currency:'$':0"></span>
+      </div>
+    </div>
+  </div>
+  <!-- spending accounts -->
+  <div class="row m0 p1 pl3 bg-darker-blue white" ng-if="findDoctorResultsDetails.showHSABalance && !medicareUser">
+    <h6 ng-bind="findDoctorResultsDetails.spendingAccounts" class="col-xs-11 mt1 mb0 float-left card-title"></h6>
+    <i class="float-right pr0 text-right col-xs-1 white toggle-collapse-icon fc-info"></i>
+  </div>
+  <div class="row m0 pt2 p0" ng-if="findDoctorResultsDetails.showHSABalance && !medicareUser">
+    <div class="col-xs-12 spending-accounts-section" ng-click="toggleCollapse()">
+      <div class="row m0 pl3 pr3 med-dark-gray">
+        <p class="spending-accounts-description" ng-bind="findDoctorResultsDetails.spendingAccountsMessage"></p>
+      </div>
+      <div class="row m0 p2">
+        <button class="btn btn-default btn-block border-light-gray bg-white btn-shadow hsa-button mb3">
+          <div class="row m0 p0">
+            <span class="col-xs-8 pl3 text-left" ng-bind="findDoctorResultsDetails.hsaBalance"></span>
+            <span class="col-xs-4 med-light-blue text-right pr3"
+              ng-bind="findDoctorResultsDetails.hsaBalanceAmount | currency"></span>
+          </div>
+        </button>
+        <button type="button" class="btn btn-default pt3 pb2 btn-block bg-white med-blue border-med-blue"
+          ng-click="goToHEQ()">
+          <span ng-bind="::loc.VIEW_HEALTH_EQUITY"></span>
+          <i class="fa fc-external-link ml2"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- end spending accounts -->
+
+  <div class="row m0 p1 pl3 bg-darker-blue white" ng-if="findDoctorResultsDetails.showProcedureCosts && !medicareUser">
+    <h6 ng-bind="findDoctorResultsDetails.cardData.summary.providerTypeText"
+      class="mt1 mb0 float-left card-title title-width"></h6>
+  </div>
+
+  <find-doctor-results-details-name-card doctor-name-card-obj="findDoctorResultsDetails.cardData"
+    view-pcp-details-value="findDoctorResultsDetails.viewPcpDetails"
+    recommended-flow-value = "findDoctorResultsDetails.recommendedFlow"
+    dependent-pcp="findDoctorResultsDetails.dependentPcp">
+  </find-doctor-results-details-name-card>
+  <find-doctor-results-details-office-location-card
+    location-and-contact-info-card-obj="findDoctorResultsDetails.cardData">
+  </find-doctor-results-details-office-location-card>
+  <find-doctor-results-details-networks-card ng-if="!noMatchPlanFound"></find-doctor-results-details-networks-card>
+  <find-doctor-results-details-specialties-card></find-doctor-results-details-specialties-card>
+  <find-doctor-results-details-credential-card provider-type="findDoctorResultsDetails.cardData.summary.providerType">
+  </find-doctor-results-details-credential-card>
+  <find-doctor-results-details-awards-card></find-doctor-results-details-awards-card>
+  <find-doctor-results-details-affiliation-card></find-doctor-results-details-affiliation-card>
+  <find-doctor-results-details-languages-card></find-doctor-results-details-languages-card>
+  <find-doctor-results-details-limitations-card></find-doctor-results-details-limitations-card>
+  <find-doctor-results-details-location-amenities-card></find-doctor-results-details-location-amenities-card>
+  <find-doctor-results-details-more-provider-details-card></find-doctor-results-details-more-provider-details-card>
+  <find-doctor-change-pcp-alert-modal open-modal-fn-alias="openAlertModal" confirm-fn="confirmFunc"
+    modal-info="alertModalObj"></find-doctor-change-pcp-alert-modal>
+  <find-doctor-select-pcp-alert-modal open-modal-fn-alias="openSelectPcpModal" confirm-fn="confirmPcpFunc"
+    modal-info="selectPcpAlertModalObj"></find-doctor-select-pcp-alert-modal>
+    <div class="small-padding" ng-if="findDoctorResultsDetails.recommendedFlow === 'true'">
+      <button class="btn btn-default btn-block" ng-click="otherPcpSearch(findDoctorResultsDetails.pcpSearchInput)">
+        <span ng-bind="loc.PCP_MEDICARE_HOMECARD_SEARCHOTHERPCPS"></span>
+      </button>
+    </div>
+</div>

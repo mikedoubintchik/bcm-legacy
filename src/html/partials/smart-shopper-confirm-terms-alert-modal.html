@@ -1,0 +1,37 @@
+<div class="modal fad-accept-terms-alert-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header alert-modal-header">
+        <button type="button" class="close" ng-click="alertModal.result()">
+          <i class="fc-close fc-lg" id="closeButton"></i>
+        </button>
+        <h4 class="modal-title" id="smart-shopper-title" ng-bind="alertModal.title"></h4>
+      </div>
+      <div class="modal-body alert-modal-body">
+        <div class="pb3 pt3 pl3 pr3">
+          <div class="home-card-terms-message fc-lg">
+            <span class="blockedMsg-l" ng-bind="alertModal.message"></span>
+            <span class="home-card-terms-link modal-link link"
+                  ng-click="alertModal.openTermsDetailsModal()"
+                  track-action="{action: 'smartShopperTermsOfUse:view', section: analyticConstants.SMARTSHOPPER_SECTION}">{{::loc.TERMS_OF_USE}}.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="fad-accept-terms-alert-modal alert-btn-50 terms-modal-cancel-btn" id="cancelButton" ng-click="alertModal.result(false)"
+          ng-bind="alertModal.cancelBtn"
+          track-action="{action: 'smartShopperTermsOfUse:decline', section: analyticConstants.SMARTSHOPPER_SECTION}">{{::loc.TERMS_OF_USE}}.</span>
+          >
+      </div>
+      <div class="alert-btn alert-btn-50 confirm-btn alert-btn-blue" ng-click="alertModal.result(true)"
+          ng-bind="alertModal.confirmBtn"
+          track-action="{action: 'smartShopperTermsOfUse:accept', section: analyticConstants.SMARTSHOPPER_SECTION}">{{::loc.TERMS_OF_USE}}.</span>
+          >
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>

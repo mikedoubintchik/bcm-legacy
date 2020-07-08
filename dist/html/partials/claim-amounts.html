@@ -1,0 +1,66 @@
+<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+  <div class="gray-box" ng-if="amounts.processed">
+    <help-icon class="claims-help" file-name="'help/claims-amount-help'" track-action="{action: 'claimDetails:tooltip:claims-amount-help', section: analyticConstants.CLAIMS_SECTION}"></help-icon>
+    <vertical-bar-graph graph-height = {{claimgraph.graphHeight}} graph-values = "claimgraph">
+    </vertical-bar-graph>
+  </div>
+  <div class="gray-box claim-amounts">
+    <div ng-if="amounts.processed">
+  <!--  <div class="claim-visual">
+      <label ng-bind="loc.YOUR_DOCTOR_BILLED + ' $' + amounts.originalBilled.toFixed(2) + ' ' + loc.FOR_THIS_CLAIM"></label>
+      <div class="amounts-bar">
+        <div class="colors-bar">
+          <div class="savings" ng-style="{'width': percentages.savings + '%'}"></div>
+          <div class="upfront" ng-style="{'width': percentages.upfront + '%'}"></div>
+          <div class="remaining" ng-style="{'width': percentages.remaining + '%'}"></div>
+        </div>
+        <div class="badges">
+          <div class="total">
+            <div class="title" ng-bind="loc.ORIGINAL"></div>
+            <div class="badge-amount">
+              <sup>$</sup>
+              <span ng-bind="amounts.originalBilled.toFixed(0)"></span>
+            </div>
+            <div class="strikethrough"></div>
+          </div>
+          <div class="savings" ng-style="{'right': (percentages.savings - 2) + '%'}" ng-if="amounts.savings > 0">
+            <div class="title" ng-bind="loc.SAVINGS"></div>
+            <div class="badge-amount">
+              <sup>$</sup>
+              <span ng-bind="amounts.savings.toFixed(0)"></span>
+            </div>
+          </div>
+          <div class="remaining" ng-if="amounts.remainingCost > 0">
+            <div class="title" ng-bind="loc.YOUR_PART"></div>
+            <div class="badge-amount">
+              <sup>$</sup>
+              <span ng-bind="amounts.remainingCost.toFixed(0)"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="line-item total">
+      <div ng-bind="loc.ORIGINAL_BILL"></div>
+      <div class="text-right" ng-bind="'$' + amounts.originalBilled.toFixed(2)">
+        <!-- <strike ng-bind="'$' + amounts.originalBilled.toFixed(2)"></strike> -->
+      </div>
+    </div>
+    <div class="line-item savings" >
+      <div ng-bind="loc.MEMBER_SAVINGS"></div>
+      <div class="savings-line-item" ng-bind="'-$' + amounts.savings.toFixed(2)"></div>
+    </div>
+    <div class="line-item upfront" >
+      <div ng-bind="loc.PAID_BY_BCBSNC"></div>
+      <div class="savings-line-item" ng-bind="'$' + amounts.bcbsncPayment.toFixed(2)"></div>
+    </div>
+    <div class="line-item remaining" >
+      <div ng-bind="loc.YOU_MAY_OWE"></div>
+      <div class="remaining-line-item" ng-bind="'$' + amounts.remainingCost.toFixed(2)"></div>
+    </div>
+  </div>
+    <div class="claim-pending-message" ng-if="!amounts.processed">
+      <label ng-bind="loc.YOUR_CLAIM_IS_PENDING"></label>
+    </div>
+  </div>
+</div>

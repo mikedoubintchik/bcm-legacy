@@ -1,0 +1,174 @@
+<div class="claims-list col-sm-8 col-sm-offset-2">
+  <blue-bar-label class="claims-viewlist-bluebar" ng-bind="getClaimsTitle()"
+    ng-if="policySelection.choice === 'DENTAL_ONLY' || policySelection.choice === 'RX_ONLY' || policySelection.choice === 'BBTRX_ONLY' || policySelection.choice === 'VISION_ONLY'">
+  </blue-bar-label>
+  <div class="list-messaging" ng-if="policySelection.choice === 'DENTAL_ONLY'">
+    <label ng-bind="loc.DENTAL_CLAIM_INFO"></label>
+    <div class="small-padding document-buttons">
+      <button class="btn btn-block btn-default" ng-click="gotoDentalClaims(policySelection.dentalSSOLink)"
+        track-action="{action: 'viewDentalClaims', section: analyticConstants.CLAIMS_SECTION}">
+        <span ng-bind="loc.VIEW_DENTAL_CLAIMS"></span>
+        <i class="fc-external-link light-gray"></i>
+      </button>
+    </div>
+  </div>
+  <div class="list-messaging" ng-if="policySelection.choice === 'RX_ONLY' || policySelection.choice === 'BBTRX_ONLY'">
+    <label ng-hide="policySelection.isState" ng-bind="loc.PRESCRIP_CLAIM_INFO"></label>
+    <label ng-if="policySelection.isState" ng-bind="loc.PRESCRIP_CLAIM_INFO_SHP"></label>
+    <div class="small-padding document-buttons">
+      <button class="btn btn-block btn-default" ng-click="gotoDrugClaims(policySelection.rxSSOLink)"
+        track-action="{action: 'viewPrescriptionClaims', section: analyticConstants.CLAIMS_SECTION}">
+        <span ng-bind="loc.VIEW_PRESCRIP_CLAIMS"></span>
+        <i class="fc-external-link"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="list-messaging p4" ng-if="policySelection.choice === 'VISION_ONLY'">
+    <label ng-bind="loc.BLUE2020_CLAIMS_SSO_OUT_MESSAGE"></label>
+    <div class="mt1 document-buttons">
+      <button class="btn btn-block btn-default" ng-click="gotoVisionClaims(policySelection.visionClaimsSSOLink)">
+        <span ng-bind="loc.BLUE2020_CLAIMS_BUTTON_VIEW_VISION_CLAIMS"></span>
+        <i class="fc-external-link"></i>
+      </button>
+    </div>
+  </div>
+
+  <div
+    ng-if="policySelection.choice != 'DENTAL_ONLY' && policySelection.choice != 'RX_ONLY' && policySelection.choice != 'VISION_ONLY' && policySelection.choice != 'BBTRX_ONLY'">
+
+    <blue-bar-label class="claims-viewlist-bluebar" ng-bind="loc.PRESCRIPTION_CLAIMS"
+      ng-if="policySelection.choice === 'MEDICAL_RX'"></blue-bar-label>
+    <div class="list-messaging" ng-if="policySelection.choice === 'MEDICAL_RX'">
+      <label ng-hide="policySelection.isState" ng-bind="loc.PRESCRIP_CLAIM_INFO"></label>
+      <label ng-if="policySelection.isState" ng-bind="loc.PRESCRIP_CLAIM_INFO_SHP"></label>
+      <div class="small-padding document-buttons">
+        <button class="btn btn-block btn-default" ng-click="gotoDrugClaims(policySelection.rxSSOLink);"
+          track-action="{action: 'viewPrescriptionClaims', section: analyticConstants.CLAIMS_SECTION}">
+          <span ng-bind="loc.VIEW_PRESCRIP_CLAIMS"></span>
+          <i class="fc-external-link light-gray"></i>
+        </button>
+      </div>
+    </div>
+
+    <blue-bar-label class="claims-viewlist-bluebar" ng-bind="loc.DENTAL_CLAIMS"
+      ng-if="policySelection.choice === 'MEDICAL_DENTAL'"></blue-bar-label>
+    <div class="list-messaging" ng-if="policySelection.choice === 'MEDICAL_DENTAL'">
+      <label ng-bind="loc.DENTAL_CLAIM_INFO"></label>
+      <div class="small-padding document-buttons">
+        <button class="btn btn-block btn-default" ng-click="gotoDentalClaims(policySelection.dentalSSOLink);"
+          track-action="{action: 'viewDentalClaims', section: analyticConstants.CLAIMS_SECTION}">
+          <span ng-bind="loc.VIEW_DENTAL_CLAIMS"></span>
+          <i class="fc-external-link light-gray"></i>
+        </button>
+      </div>
+    </div>
+
+    <blue-bar-label class="claims-viewlist-bluebar" ng-bind="loc.DENTAL_AND_PRESCRIP_CLAIMS"
+      ng-if="policySelection.choice === 'MEDICAL_DENTAL_RX'"></blue-bar-label>
+    <div class="list-messaging" ng-if="policySelection.choice === 'MEDICAL_DENTAL_RX'">
+      <label ng-bind="loc.DENTAL_AND_PRESCRIP_CLAIM_INFO"></label>
+      <div class="small-padding document-buttons">
+        <button class="btn btn-block btn-default" ng-click="gotoDentalClaims(policySelection.dentalSSOLink)"
+          track-action="{action: 'viewDentalClaims', section: analyticConstants.CLAIMS_SECTION}">
+          <span ng-bind="loc.VIEW_DENTAL_CLAIMS"></span>
+          <i class="fc-external-link light-gray"></i>
+        </button>
+      </div>
+      <div class="small-padding document-buttons">
+        <button class="btn btn-block btn-default" ng-click="gotoDrugClaims(policySelection.rxSSOLink);"
+          track-action="{action: 'viewPrescriptionClaims', section: analyticConstants.CLAIMS_SECTION}">
+          <span ng-bind="loc.VIEW_PRESCRIP_CLAIMS"></span>
+          <i class="fc-external-link light-gray"></i>
+        </button>
+      </div>
+    </div>
+
+    <blue-bar-label class="claims-viewlist-bluebar" ng-bind="loc.HEALTH_CLAIMS" ng-if="claims.length === 0">
+    </blue-bar-label>
+    <div class="claims-filter-ribbon" ng-if="showRibbon">
+      <label ng-bind="claimsFilterText"></label>
+      <div class="filter-reset-button" ng-click="resetFilter()">
+        <i class="fc-close fc-lg white"></i>
+      </div>
+    </div>
+    <div class="list-messaging" ng-if="claims.length === 0 && !hasCcr">
+      <label ng-bind="loc.CLAIMS_NOT_FOUND_TEXT"></label>
+    </div>
+    <div class="list-messaging" ng-if="claims.length === 0 && hasCcr">
+      <label ng-bind="loc.CCR_MESSAGE"></label>
+    </div>
+    <blue-bar-label class="claims-count-container" ng-bind="claimsCountText" ng-if="claims.length !== 0">
+    </blue-bar-label>
+    <div ng-if="claims.length > 0" class="claim-item" ng-repeat="claim in claims">
+      <div class="claim-contents">
+        <div class="claim-header">
+          <div>
+            <h5 ng-bind="claim.serviceType"></h5>
+          </div>
+          <div class="text-right">
+            <span class="claim-date" ng-bind="claim.startServiceDate | date:'M/d/yyyy'"></span>
+          </div>
+        </div>
+        <div class="claim-body">
+          <div class="claim-details">
+            <div class="claim-provider-name" ng-bind-html="claim.providerRecordName"></div>
+            <div ng-bind-html="claim.memberName"></div>
+            <div>
+              <i ng-class="{'fc-pending med-gray': !claim.processed, 'fc-processed med-green': claim.processed}"></i>
+              <span class="claim-status pending" ng-bind="claim.claimStatus"></span>
+              <span ng-bind="' - ' + loc.YOU_MAY_OWE + ': $' + claim.totalToPayAmount.toFixed(2)"
+                ng-if="claim.processed && claim.totalToPayAmount > 0"></span>
+            </div>
+          </div>
+          <div class="text-right">
+            <i class="fa fa-lg fa-angle-right light-gray"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOR SWIPING ACTIONS WHEN BOOKMARKING IS AVAILABLE
+      <div class="claim-actions">
+        <div class="claim-action blue" ng-class="{'shadowed': !lowResDevice}" ng-click="toggleBookmarked(claim)">
+          <div class="action-content">
+            <div>
+              <i class="fc-lg2" ng-class="{'fc-swipe-unbookmark': claim.bookmarked, 'fc-swipe-bookmark': !claim.bookmarkd}"></i>
+              <div class="action-title" ng-bind="loc.BOOKMARK" ng-if="!claim.bookmarked"></div>
+              <div class="action-title" ng-bind="loc.UNBOOKMARK" ng-if="claim.bookmarked"></div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>-->
+
+      <div class="claim-main" ng-class="{'unswiped': claim.swiped === false, 'swiped': claim.swiped}"
+        ng-click="openClaim(claim)">
+        <div class="claim-contents">
+          <div class="claim-header">
+            <div>
+              <h5 ng-bind="claim.serviceType"></h5>
+            </div>
+            <div class="text-right">
+              <span class="claim-date" ng-bind="claim.startServiceDate | date:'M/d/yyyy'"></span>
+            </div>
+          </div>
+          <div class="claim-body">
+            <div class="claim-details">
+              <div ng-bind-html="claim.providerRecordName"></div>
+              <div ng-bind-html="claim.memberName"></div>
+              <div>
+                <i ng-class="{'fc-pending med-gray': !claim.processed, 'fc-processed med-green': claim.processed}"></i>
+                <span class="claim-status pending" ng-bind="claim.claimStatus"></span>
+                <span ng-bind="' - ' + loc.YOU_MAY_OWE + ': $' + claim.totalToPayAmount.toFixed(2)"
+                  ng-if="claim.processed && claim.totalToPayAmount > 0"></span>
+              </div>
+            </div>
+            <div class="text-right">
+              <i class="fa fa-lg fa-angle-right light-gray"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

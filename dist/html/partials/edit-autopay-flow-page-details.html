@@ -1,0 +1,46 @@
+<div ng-form="editAutopayDetailsForm">
+  <payment-flow-tracker tracker-info="trackerInfo" flow-is-autopay="true"></payment-flow-tracker>
+  <payment-flow-auto-pay-setup billing-info="serviceResponse" user-selected-auto-pay="true" flow-is-autopay="true"></payment-flow-auto-pay-setup>
+  <div class="payment-method-selected-container">
+    <payment-flow-title-bar title="{{::loc.BP_TITLE_PAYMENT_METHOD_SELECTED}}">
+    </payment-flow-title-bar>
+    <div class="payment-method-selected pl5 mt4 mb4">
+      <div class="flex-row">
+        <i class="fc-check-only mr4"></i>
+        <p class="mb0">
+          {{::loc.AUTO_PAY}}
+        </p>
+      </div>
+      <div class="pt3 flex-row">
+        <i class="fc-check-only mr4"></i>
+        <p class="mb0">
+          <span ng-bind="::loc.BP_MONTHLY_PREMIUM_AMOUNT"></span><br>
+          <strong ng-bind="::serviceResponse.account.currentInvoice.billedAmount | padCurrencyAmount | currency"></strong>
+        </p>
+      </div>
+      <div class="flex-row">
+        <i class="fc-check-only mr4"></i>
+
+        <p class="mb0 pt3">
+          {{::localizedPaymentMethod}}
+        </p>
+      </div>
+      <div ng-if="localizedBillingMethod && serviceResponse.preferences.billingMethod !== 'EMAIL'" class="pt3 flex-row">
+        <i class="fc-check-only mr4"></i>
+        <p class="mb0 pr4">
+          <span ng-bind="::loc.BP_TITLE_BILLING_METHOD + ' - '"></span>
+          <span ng-class="{'text-bold': localizedBillingMethod === loc.BP_DO_NOT_SEND_COPY_OF_BILL}" ng-bind="::localizedBillingMethod"></span><br>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <payment-flow-bank-details ng-if="::userSetData.paymentMethod === 'bankdraft'" user-data="userSetData"></payment-flow-bank-details>
+  <payment-flow-credit-card-details ng-if="::userSetData.paymentMethod === 'creditcard'" user-data="userSetData" billing-info="billingInfo"></payment-flow-credit-card-details>
+  <payment-flow-terms-conditions></payment-flow-terms-conditions>
+  <details-page-payment-error ng-if="creditCardSignatureError" class="flex-row"></details-page-payment-error>
+  <cta-button-row>
+    <cta-button class="blue" ng-click="validateEditAutopayDetails(editAutopayDetailsForm)" ng-bind="::loc.BP_CONTINUE_TO_AUTOPAY_REVIEW"></cta-button>
+  </cta-button-row>
+  <payment-flow-cancel-button></payment-flow-cancel-button>
+</div>

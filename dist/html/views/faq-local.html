@@ -1,0 +1,52 @@
+<div class="bg-solid dark"></div>
+<div class="row-fluid">
+    <div class="col-xs-12">
+        <nav class="navbar navbar-dark bg-primary basic-navbar basic-navbar-dark">
+            <div class="navbar-header-item">
+                <button class="navbar-toggler" type="button" ng-click="goBack()">
+                    <i class="fc-back fc-lg"></i>
+                </button>
+            </div>
+            <div class="navbar-header-item full-width text-center">
+                <a class="navbar-brand full-width" ng-bind="loc.FAQ"></a>
+            </div>
+            <div class="navbar-header-item invisible">
+                <button class="navbar-toggler" type="button">
+                    <i class="fc-circlefill fc-lg"></i>
+                </button>
+            </div>
+        </nav>
+        <div id="faq-local" class="faq col-sm-8 col-sm-offset-2">
+            <div class="faq-logo">
+                <span ng-bind="loc.SELECT_A_CATEGORY"></span>
+            </div>
+            <div class="faq-content">
+                <div id="accordion">
+                    <div class="panel" ng-repeat="item in faqDetails.categories">
+                        <div class="panel-heading">
+                            <p class="panel-title" ng-click="toggleItem(item, $index, $event)" ng-if="item.icon !== 'info'">
+                                <i class="heading-icon fc-{{item.icon}} fc-lg white"></i>
+                                <a ng-bind="loc[item.category]"></a>
+                                <i ng-class="{'fc-plus-expand': !item.expandedDiv, 'fc-minus-collapse': item.expandedDiv}" class="pull-right"></i>
+                            </p>
+                            <help-icon class="panel-title" file-name="'partials/glossary-of-terms'" item= "item" ng-if="item.icon === 'info'"></help-icon>
+                        </div>
+                        <div ng-class="{'close-div': !item.expandedDiv, 'open-div': item.expandedDiv}">
+                            <div id="answers">
+                                <div class="answer-default" ng-repeat="q in item.questions">
+                                    <div class="answer-panel question{{q.id}}">
+                                        <p class="answer-title" ng-click="toggleInnerItem(q, $parent.$index, $index, $event)">
+                                            <a ng-bind="loc[q.question]"></a>
+                                            <i ng-class="{'fc-plus-expand': !q.expandedDiv, 'fc-minus-collapse': q.expandedDiv}" class="pull-right"></i>
+                                        </p>
+                                    </div>
+                                  <div ng-class="{'close-div': !q.expandedDiv, 'open-div': q.expandedDiv}" class="answer" ng-bind="loc[q.answer]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

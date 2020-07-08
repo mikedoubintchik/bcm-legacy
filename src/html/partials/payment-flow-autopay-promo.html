@@ -1,0 +1,31 @@
+<div
+  ng-if="!hideAutopayPromo"
+  class="row bg-lightest-green pl4 pr4 pt4 pb1 m0 autopay-promo">
+  <div
+    class="col-xs-12 text-center pt4"
+    ng-class="{'bottom-dashed-border mb4 pb4': expanded}">
+    <h5 class="univers-cn" ng-bind="::loc.BP_DO_YOU_KNOW_ABOUT_AUTOPAY"></h5>
+  </div>
+  <div
+    class="row m0 collapsible-box"
+    ng-class="{'expanded': expanded, 'collapsed': !expanded}">
+    <div class="col-xs-12">
+      {{::loc.BP_AUTOPAY_PROMO_NEVER_FORGET_YOUR_BILL}}
+    </div>
+    <button ng-click="gotoView('/payment/method')" class="btn btn-primary btn-block col-xs-12 mb4 mt4" ng-bind="::loc.SETUP_AUTOPAY"></button>
+  </div>
+  <div class="col-xs-12">
+    <div class="row m0 mb2 bottom-dashed-border text-center">
+      <div class="col-xs-4">
+
+      </div>
+      <div class="col-xs-4" ng-click="expanded = !expanded">
+        <i ng-class="{'fa-rotate-180': !expanded}" class="fa fc-double-chevron med-blue"></i>
+      </div>
+      <div class="col-xs-4">
+
+      </div>
+
+    </div>
+  </div>
+</div>

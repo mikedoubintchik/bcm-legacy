@@ -1,0 +1,30 @@
+<div class="payment-container no-flex bg-lightest-gray">
+  <plan-details
+    ng-if="serviceResponse.policy"
+    class="flex-column flex-center-start bg-lightest-gray pt4 pb3 pr4 pl4"
+    policy="serviceResponse.policy">
+  </plan-details>
+  <cta-button-row>
+    <cta-button class="history-filter-button" type="button" ng-click="gotoView('/billing-history-filter')">
+      <i class="fc-filter fc-md pr2"></i>
+      <span ng-bind="loc.BP_FILTER_BILLING_HISTORY"></span>
+    </cta-button>
+  </cta-button-row>
+  <billing-invoice-history-filter-ribbon results-count="serviceResponse.invoiceHistory.length"></billing-invoice-history-filter-ribbon>
+  <cta-button-row>
+  <download-pdf-button ng-if="serviceResponse.invoiceHistory.length" invoice="serviceResponse.invoiceHistory"></download-pdf-button>
+</cta-button-row>
+  <cta-button-row ng-if="serviceResponse.invoiceHistory.length">
+    <cta-button class="history-filter-button" type="button" ng-click="gotoView('/understand-invoice')">
+      <span ng-bind="loc.BP_UNDERSTAND_YOUR_INVOICE"></span>
+    </cta-button>
+  </cta-button-row>
+  <no-invoices-message ng-if="!serviceResponse.invoiceHistory.length"></no-invoices-message>
+  <div class="flex-column" ng-if="serviceResponse.invoiceHistory.length">
+    <invoice-history-card
+      ng-repeat="invoice in serviceResponse.invoiceHistory"
+      invoice="invoice"
+      class=" pt1 pb1 pr4 pl4">
+    </invoice-history-card>
+  </div>
+</div>

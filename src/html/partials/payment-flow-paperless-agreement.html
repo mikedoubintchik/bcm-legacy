@@ -1,0 +1,32 @@
+<div
+  ng-form="paymentFlowPaperlessAgreement"
+  class="flex-column paperless-agreement-container">
+  <pf-divider></pf-divider>
+  <pf-error-message ng-if="paymentFlowPaperlessAgreement.acceptedAgreement.$error.required
+    && paymentFlowPaperlessAgreement.acceptedAgreement.$dirty">{{::loc.BP_YOU_MUST_AGREE_TO_THE_PAPERLESS_BILLING_AGREEMENT}}</pf-error-message>
+  <pf-checkbox value="checkboxValue">
+    <p>{{::loc.BP_PAPERLESS_BILLING_AGREEMENT_READ_AND_AGREE}}
+      <br>
+      <span pf-modal-open="paperlessAgreement" class="link">{{::loc.BP_PAPERLESS_BILLING_AGREEMENT}}</span>
+    </p>
+  </pf-checkbox>
+  <input
+    id="paperless-input"
+    class="hidden"
+    type="checkbox"
+    name="acceptedAgreement"
+    ng-model="checkboxValue"
+    ng-required="required ? required : billingMethodSelected.$modelValue === 'email'">
+  <pf-divider></pf-divider>
+  <pf-modal
+    name="paperlessAgreement"
+    modal-title="{{loc.BP_EMAIL_NOTIFICATION_AGREEMENT}}"
+    modal-button="{{loc.BP_AGREE}}"
+    agreement-button="acceptPaperlessFn()">
+    <p ng-bind="loc.BP_EMAIL_NOTIFICATION_AGREEMENT_MODAL"></p>
+    <p ng-bind="loc.BP_EMAIL_NOTIFICATION_AGREEMENT_MODAL_PREMIUM"></p>
+    <p ng-bind="loc.BP_EMAIL_NOTIFICATION_AGREEMENT_MODAL_ADDRESS"></p>
+    <p ng-bind="loc.BP_EMAIL_NOTIFICATION_AGREEMENT_MODAL_EMAIL"></p>
+    <p ng-bind="loc.BP_EMAIL_NOTIFICATION_AGREEMENT_MODAL_AUTHORIZATION"></p>
+  </pf-modal>
+</div>

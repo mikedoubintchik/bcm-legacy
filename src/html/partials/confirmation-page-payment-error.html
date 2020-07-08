@@ -1,0 +1,15 @@
+<unsuccessful-header class="mb4"></unsuccessful-header>
+<div class="pr4 pl4">
+  <p>
+    <span ng-bind="::loc.BP_PAYMENT_DECLINED"></span>
+    <span ng-bind="::paymentAmount | currency"></span>
+    <span> </span>
+    <span ng-bind="::loc.BP_PAYMENT_DECLINED_LINE2"></span>
+    <span ng-bind="::paymentDate"></span>
+    <span ng-bind="::loc.BP_PAYMENT_DECLINED_LINE3"></span>
+  </p>
+  <p ng-bind="::loc.BP_REENTER_PAYMENT"></p>
+</div>
+<cta-button-row>
+  <cta-button ng-click="gotoView('/payment/method')" class="white"><span ng-bind="::loc.BP_RETURN_PAYMENT_METHOD"></span></cta-button>
+</cta-button-row>

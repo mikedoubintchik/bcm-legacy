@@ -1,0 +1,17 @@
+<div class="payment-container bg-white">
+    <payment-flow-title-bar title="{{::loc.BP_TITLE_PAYMENT_FREQUENCY}}"></payment-flow-title-bar>
+    <div class="pl4 pr4 pt4 pb1 m0 bg-lightest-gray">
+        <span ng-bind="::loc.BP_AFTER_CANCELING_AUTOPAY"></span>
+    </div>
+    <payment-flow-billing-method  balance-info="billingPreferencesUpdateData" user-data="billingPreferencesUpdateData"></payment-flow-billing-method>
+    <payment-flow-paperless-agreement></payment-flow-paperless-agreement>
+    <div class="pl4 pr4 pt4 pb1 m0 bg-lightest-gray">
+        <cta-button-row>
+            <cta-button ng-click="gotoView('/edit-billing-method')" class="red">
+                <span ng-bind="::loc.BP_STOP_AUTOPAY"></span>
+            </cta-button>
+        </cta-button-row>
+    </div>
+</div>
+
+

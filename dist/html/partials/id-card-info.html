@@ -1,0 +1,18 @@
+<div class="id-card-info-container">
+  <div class="gray-box id-card-info">
+    <dynamic-help-icon class="id-card-help" info="info[1].infoHtml"></dynamic-help-icon>
+    <div>
+      <label ng-bind="loc.GROUP_NUM"></label>
+      <div class="id-card-info-text" ng-bind="info[0].groupNumber"></div>
+    </div>
+    <hr>
+    <div ng-if="info[0].rxBinNumber">
+      <label ng-bind="loc.RX_BIN_GROUP"></label>
+      <div class="id-card-info-text" ng-bind="info[0].rxBinNumber"></div>
+    </div>
+    <hr ng-if="info[0].rxBinNumber">
+    <div>
+      <label ng-bind="loc.DATE_ISSUED"></label>
+      <div class="id-card-info-text" ng-bind="info[0].issuanceDate | date: 'MM/dd/yy'"></div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="help-item-group help-item">
+  <div class="blue-bar-label">
+    <label ng-bind="groupDetails.title"></label>
+  </div>
+  <div class="help-item-button text-left" 
+       ng-repeat="button in groupDetails.buttons" 
+       ng-click="checkForSso(button.url, button.description, button.type, button.index)"
+       id="{{chatButtons[button.index].btn_id}}"
+       name="{{chatButtons[button.index].id}}"
+       token="{{chatButtons[button.index].token}}" ng-class="{'chat-now': button.url === '/chatnow', 'chat-unavailable-alert': button.url === '/chatalert'}">
+   <div class="help-item-icon">
+      <i class="{{button.icon}} fc-lg2"></i>
+    </div>
+    <div class="help-item-title" >
+      <span ng-bind="button.title"></span>&nbsp;&nbsp;
+      <i ng-if="button.type" class="fc-external-link"></i>
+    </div>
+
+    <div class="help-item-arrow">
+      <i class="fa fa-angle-right fa-2x"></i>
+    </div>
+  </div>
+  <find-doctor-zip-alert-modal open-modal-fn-alias="openModal" confirm-fn="confirmFunc" modal-info="modalObj"></find-doctor-zip-alert-modal>
+  <find-doctor-unavailable-alert-modal open-modal-fn-alias="openAlertModal" modal-info="alertModalObj"></find-doctor-unavailable-alert-modal>
+  <nav class="navbar-bottom-occupied">
+    <div class="navbar-header-item bg-faded bottom-border text-center" ng-repeat="item in groupDetails.bottomDescription">
+      <button class="navbar-toggler med-light-blue" type="button" ng-click="openInBrowser(item.link)">
+        <p class="bottom-btn full-width">
+          <span ng-bind="item.title"></span>
+        </p>
+      </button>
+    </div>
+  </nav>
+</div>

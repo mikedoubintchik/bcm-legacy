@@ -1,0 +1,36 @@
+<div class="modal fad-change-pcp-alert-modal">
+    <div class="modal-dialog" id="change-pcp-modal">
+        <div class="modal-content">
+            <div class="modal-header alert-modal-header">
+                <button type="button" class="close" ng-click="alertModal.result()">
+                    <i class="fc-close fc-lg" id="closeButton"></i>
+                </button>
+                <h4 class="modal-title" id="select-pcp-title" ng-bind="alertModal.title"></h4>
+            </div>
+            <div class="modal-body alert-modal-body" ng-form="membersForm">
+                <div class="pb0 pt3 pl3 pr3 modal-border">
+                    <div><label class="blockedMsg-l" ng-bind="alertModal.message"></label></div>
+                </div>
+                <div class="p3 large-text">
+                    <div class="p0 large-text" ng-repeat="member in alertModal.members">
+                        <div class="member-checkbox">
+                            <div class="button-label-pair">
+                                <div class="outer-border" ng-click="alertModal.toggleCheckbox($index)">
+                                    <div class="inner-box" ng-class="{'active': member.SELECTED === true}">
+                                        <i class="fa fc-check-only"></i>
+                                    </div>
+                                </div>
+                                <label for="memberToSelectPcp" ng-bind="member.displayMemberName"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="alert-btn confirm-btn alert-btn-green full-width"
+                    ng-click="alertModal.result(true, alertModal.members)" ng-bind="alertModal.confirmBtn">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

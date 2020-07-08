@@ -1,0 +1,7 @@
+<div class="find-doctor-browser">
+    <div class="browser-item-card" ng-repeat="item in findDoctorBrowserDetails" ng-click="gotoBrowseNextLevelPage(item)">
+        <div class="card-title" ng-bind="item.name || item.title" ng-if="item.name || item.title"></div>
+        <div class="card-description" ng-bind="item.description" ng-if="item.description"></div>
+        <div class="card-icon-display" ng-if="item.name"><i class="fc-right-caret"></i></div>
+  </div>
+</div>

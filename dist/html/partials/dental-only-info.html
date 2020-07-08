@@ -1,0 +1,133 @@
+<div class="col-sm-8 col-sm-offset-2 dental-only-container">
+  <div class="main-bucket top-container">
+    <!--Dental coverage-->
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <label class="more-info-title" ng-bind="data[0].title"></label>
+          <help-icon class="coverage-help" file-name="'help/benefits-dental-only-help'"></help-icon>
+        </div>
+      </div>
+      <div id="subBucket">
+        <div>
+          <div class="list-messaging">
+            <div class="main-text" ng-bind="data[0].mainText"></div>
+            <button class="btn btn-default btn-block button-view-info" ng-click="openInSecureBrowser(data[0].url);" track-action="{action: 'benefitsViewDental', section: analyticConstants.BENEFITS_SECTION}">
+              <span ng-bind="data[0].buttonText"></span>
+              <i class="{{data[0].icon}}"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-bucket bottom-container">
+    <!--More info about your plan-->
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <label class="more-info-title" ng-bind="data[1].title"></label>
+          <help-icon class="coverage-help" file-name="'help/benefits-dental-only-help'"></help-icon>
+        </div>
+      </div>
+      <div id="subBucket">
+        <div>
+          <div class="buttons-container" ng-repeat="item in data[1].buttons">
+            <button class="btn btn-default btn-block {{item.class}}" ng-if="item.ssoUrl" ng-click="openInSecureBrowser(item.ssoUrl);"  track-action="{action: 'benefitsViewBooklet', section: analyticConstants.BENEFITS_SECTION}">
+              <span ng-bind="item.buttonText"></span>
+              <i class="{{item.icon}}"></i>
+            </button>
+            <button class="btn btn-default btn-block {{item.class}}" ng-if="item.url" ng-click="openPDF(item.url);" track-action="{action: 'benefitsViewBooklet', section: analyticConstants.BENEFITS_SECTION}" >
+              <span ng-bind="item.buttonText"></span>
+              <i class="{{item.icon}}"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Annual Maximum -->
+    <div class="panel">
+      <div class="panel-heading" ng-click="toggleItem()">
+        <div class="panel-title blue-bar-label">
+          <label class="more-info-title" ng-bind="data[2].title"></label>
+          <help-icon class="coverage-help" file-name="'help/benefits-dental-only-help'"></help-icon>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div id="subBucket" class="annual-maximum-items">
+        <div class="inner-wrapper">
+          <div class="sub-title-header" >
+            <div class="sub-title-left" ng-bind="data[2].subTitleLeft"></div>
+            <div class="sub-title-right" ng-bind-html="data[2].subTitleRight"></div>
+          </div>
+          <div ng-repeat="item in data[2].data" class="item-container {{item.class}}">
+            <div class="item-title" ng-bind="item.dataText"></div>
+            <div class="item-data" ng-bind-html="item.dataValue"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Annual Deductible -->
+    <div class="panel dental-single-items">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <label class="more-info-title" ng-bind="data[3].title"></label>
+          <help-icon class="coverage-help" file-name="'help/benefits-dental-only-help'"></help-icon>
+        </div>
+      </div>
+      <div id="subBucket" class="plan-benefits-items">
+          <div class="item-container">
+            <div class="item-title" ng-bind="data[3].mainText"></div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Preventive Services -->
+    <div class="panel dental-single-items">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <label class="more-info-title" ng-bind="data[4].title"></label>
+          <help-icon class="coverage-help" file-name="'help/benefits-dental-only-help'"></help-icon>
+        </div>
+      </div>
+      <div id="subBucket" class="plan-benefits-items">
+          <div class="item-container">
+            <div class="item-title" ng-bind="data[4].mainText"></div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Basic Services -->
+    <div class="panel dental-single-items">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <label class="more-info-title" ng-bind="data[5].title"></label>
+          <help-icon class="coverage-help" file-name="'help/benefits-dental-only-help'"></help-icon>
+        </div>
+      </div>
+      <div id="subBucket" class="plan-benefits-items">
+          <div class="item-container">
+            <div class="item-title" ng-bind="data[5].mainText"></div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Major Services-->
+    <div class="panel dental-single-items">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <label class="more-info-title" ng-bind="data[6].title"></label>
+          <help-icon class="coverage-help" file-name="'help/benefits-dental-only-help'"></help-icon>
+        </div>
+      </div>
+      <div id="subBucket" class="plan-benefits-items">
+          <div class="item-container">
+            <div class="item-title" ng-bind="data[6].mainText"></div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="row pl4 pr4 pt2 bg-lightest-green text-center">
+  <payment-processing payment-amount="userSetData.paymentAmount" payment-date="todayFormatted"></payment-processing>
+</div>
+<payment-flow-auto-pay-success ng-if="userSetData.paymentErrorCode === 100 && userSetData.paymentFrequency === 'autopay'" billing-info="billingInfo"></payment-flow-auto-pay-success>
+<div ng-if="userSetData.successConfirmationCode" class="row pl4 pr4 bg-light-green text-center">
+  <p class="dark-green m0 pt1 pb1">
+    <span ng-bind="::loc.BP_CONFIRMATION_CODE"></span>
+    <span> - </span>
+    <span ng-bind="::userSetData.successConfirmationCode"></span>
+  </p>
+</div>

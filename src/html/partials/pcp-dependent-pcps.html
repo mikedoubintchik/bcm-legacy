@@ -1,0 +1,65 @@
+<div class="row m0 p3">
+  <div ng-repeat="dependentPcp in dependentPcpDetails.providerData">
+    <div class="col-xs-12 pcp-dependent-card">
+      <div class="row m0 inline-block-children p1 bg-med-blue white" ng-click="toggleCollapse($index)">
+        <i class="float-left mr2 fc-provider"></i>
+        <h6 ng-bind="dependentPcp.memberInfo.displayMember" class="mb0 float-left card-title title-width"></h6>
+        <i class="float-right pr1 white toggle-collapse-icon"
+          ng-class="cardClose{{$index}} ? 'fc-plus-expand' : 'fc-minus-collapse'"></i>
+      </div>
+      <div class="row m0 collapsible-section" ng-if="dependentPcp.displayErrorMessage">
+        <p class="mb0 home-card-no-secure-messages" ng-bind="dependentPcpDetails.errMessage"></p>
+      </div>
+      <div class="row m0 collapsible-section" ng-class="cardClose{{$index}} ? 'contents-collapsed': 'contents-open'"
+        ng-hide="dependentPcp.displayErrorMessage">
+        <div class="black pt3 pl3 pr3 pcp-text-transform"
+          ng-if="!dependentPcp.providerInvalidNetwork && !dependentPcp.noPCP">
+          <div class="pcp-home-card-provider-title" ng-bind="dependentPcp.selectedPrimaryCarePhysician.pcpFullName">
+          </div>
+          <hr class="mb2 mt2" />
+          <div class="pcp-home-card-provider-address med-gray">
+            <div ng-bind="dependentPcp.selectedPrimaryCarePhysician.providerOrganizationName"></div>
+            <div ng-bind="dependentPcp.selectedPrimaryCarePhysician.providerAddressLine1"></div>
+            <div
+              ng-bind="dependentPcp.selectedPrimaryCarePhysician.providerCity + ', ' + dependentPcp.selectedPrimaryCarePhysician.providerStateCode + ' ' + dependentPcp.selectedPrimaryCarePhysician.providerZipCode">
+            </div>
+          </div>
+        </div>
+        <div class="p3 med-light-blue" ng-if="!dependentPcp.providerInvalidNetwork && !dependentPcp.noPCP"
+          ng-click="gotoDetailsPage($event, $index, dependentPcp.memberInfo.displayMember)"
+          track-action="{action: 'pcpViewPCPDetails', section: analyticConstants.PCP_SECTION}">
+          <span ng-bind="::loc.PCP_MEDICARE_HOMECARD_VIEWPCPDETAILS"></span>
+          <i class="fc-arrow-right"></i>
+        </div>
+        <div class="small-padding pt0 pb4" ng-if="!dependentPcp.providerInvalidNetwork && !dependentPcp.noPCP">
+          <button class="btn btn-default btn-block" ng-click="otherPcpSearch(dependentPcpDetails.searchInput)"
+            track-action="{action: 'pcpSearchOtherPCPs', section: analyticConstants.PCP_SECTION}">
+            <span ng-bind="loc.PCP_MEDICARE_HOMECARD_SEARCHOTHERPCPS"></span>
+          </button>
+        </div>
+        <div class="p1 pb2" ng-if="dependentPcp.providerInvalidNetwork || dependentPcp.noPCP">
+          <div id="provider-no-longer-valid-message" class="pcp-message-box med-dark-gray m2 p3 bg-beige">
+            <span ng-bind-html="::loc.PCP_COMMERCIAL_HOMECARD_NO_LONGER_VALID_PCP1"
+              ng-if="dependentPcp.providerInvalidNetwork"></span>
+            <span ng-bind-html="::loc.PCP_COMMERCIAL_HOMECARD_NO_PCP1" ng-if="dependentPcp.noPCP"></span>
+            <span ng-bind-html="::loc.PCP_MEDICARE_HOMECARD_THISISYOURPCP_2" class="pcp-home-card-info-link"
+              ng-click="openInformationModal(dependentPcpDetails.pcpInformation)"
+              track-action="{action: 'pcpDependentPCPInformation', section: analyticConstants.PCP_SECTION}"></span>
+            <span ng-bind-html="::loc.PCP_COMMERCIAL_HOMECARD_NO_LONGER_VALID_PCP2"
+              ng-if="dependentPcp.providerInvalidNetwork"></span>
+            <span ng-bind-html="::loc.PCP_COMMERCIAL_HOMECARD_NO_PCP2" ng-if="dependentPcp.noPCP"></span>
+          </div>
+        </div>
+        <div class="small-padding pt0 pb4" ng-if="dependentPcp.providerInvalidNetwork || dependentPcp.noPCP">
+          <button class="btn btn-default btn-block" ng-click="otherPcpSearch(dependentPcpDetails.searchInput)"
+            track-action="{action: 'pcpSearchPCP', section: analyticConstants.PCP_SECTION}">
+            <span ng-bind="loc.PCP_COMMERCIAL_SEARCH_PCP"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <find-doctor-zip-alert-modal ng-hide="dependentPcpDetails.displayErrorMessage" open-modal-fn-alias="openModal"
+    confirm-fn="confirmFunc" modal-info="modalObj">
+  </find-doctor-zip-alert-modal>
+</div>

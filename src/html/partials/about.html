@@ -1,0 +1,32 @@
+<div class="about-the-app col-sm-8 col-sm-offset-2">
+    <div class="about-content">
+        <div class="about-logo">
+            <span ng-bind="aboutDetails.title" ng-if="!aboutDetails.image"></span>
+            <img class="navbar-menu-header-image" ng-src="images/{{aboutDetails.image}}" ng-if="aboutDetails.image"></img>
+        </div>
+        <div id="accordion">
+            <div class="panel" ng-repeat="item in aboutDetails.content">
+                <div class="panel-heading" track-action="{action: 'about:{{item.title}}', section: analyticConstants.HELP_SECTION}">
+                    <p class="panel-title" ng-click="toggleItem(item, $index)">
+                        <a>
+                            <span ng-bind="item.title"></span>
+                            <span ng-bind="appVersion" ng-if="item.hasAppVersion"></span>
+                            <span ng-bind="getEnvironment()" ng-if="item.hasAppVersion"></span>
+                        </a>
+                        <i ng-class="{'fc-plus-expand': !item.expandedDiv, 'fc-minus-collapse': item.expandedDiv}" class="pull-right" ng-if="item.isContent"></i>
+                    </p>
+                </div>
+                <div ng-class="{'close-div': !item.expandedDiv, 'open-div': item.expandedDiv}" ng-if="item.isContent">
+                    <div class="expanded-text white" ng-include="item.partial"></div>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-support">
+            <span ng-bind="aboutDetails.mobileSupport" ng-click="gotoView(aboutDetails.mobileSupportUrl)" track-action="{action: 'feedback', section: analyticConstants.HELP_SECTION}"></span>
+        </div>
+        <div class="full-site">
+            <span ng-bind="aboutDetails.fullsite" ng-click="openInBrowser(aboutDetails.fullsiteUrl);"></span>
+      	</div>
+        <div class="about-footer" ng-bind="aboutDetails.licensee"></div>
+    </div>
+</div>

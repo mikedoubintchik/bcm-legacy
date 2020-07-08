@@ -1,0 +1,8 @@
+<div class="modal full-screen-modal" data-backdrop="static">
+  <button class="full-screen-close" ng-click="fullScreenCancel()">
+    <i class="fc-close fc-lg"></i>
+  </button>
+  <div class="fullScreen" ng-if ="fullScreen.imageIn">
+    <img id="img-fullscreen" class="flip" ng-src="{{fullScreen.imageIn}}"/>
+  </div>
+</div>

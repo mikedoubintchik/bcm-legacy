@@ -1,0 +1,26 @@
+<div class="row m0 p2">
+  <div class="col-xs-12 find-doctor-result-detail-card doctor-name">
+    <div class="row m0 inline-block-children p1 bg-dark-blue white" ng-click="toggleItem()">
+      <i class="fc-globe-nocircle float-left mr2"></i>
+      <h6 ng-bind="::loc.RESULTS_DETAILS_LANGUAGES_CARD" class="mb0 float-left card-title title-width"></h6>
+      <i class="float-right pr1 white toggle-collapse-icon" ng-class="languagesCardOpen ? 'fc-minus-collapse' : 'fc-plus-expand'"></i>
+    </div>
+    <div class="row m0 pr3 collapsible-section" ng-class="{'contents-open': languagesCardOpen, 'contents-collapsed': !languagesCardOpen, 'pl4': !languages.length, 'pl1': languages.length}">
+      <div class="language-data">
+        <div class="mt4 mb4" ng-if="!languages.length">
+          <h7 class="med-dark-gray" ng-bind="::loc.PROVIDER_NO_LANGUAGES_LISTED"></h7>
+        </div>
+        <div class="mt2" ng-if="languages.length">
+          <ul ng-repeat="language in languages">
+            <li ng-bind="language"></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt3 mb3 language-card-loading-spinner">
+        <div class="spinner">
+          <i class="fa fa-2x fa-spinner fa-pulse"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="login-container">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="login-logo-container" ng-swipe-left="attemptTestLogin()">
+          <img id="login-bcbsnc-logo" class="full-width" src="images/logo.svg"></img>
+        </div>
+        <div class="list-messaging" ng-if="messageEods==='down'" ng-bind="loc.ERROR_NOT_ACCESSIBLE"></div>
+          <form name="loginForm" class="login-form" ng-submit="logIn()" ng-show="messageEods!=='down'" novalidate>
+            <div class="list-messaging" ng-if="messageEods==='limited'" ng-bind="loc.ERROR_CAN_LOGIN_NO_CLAIMS_BENEFITS"></div>
+            <div class="list-messaging" ng-if="messageEods==='maintenance'">
+              {{loc.ERROR_MAINTENANCE}}{{messageDate}}{{loc.ERROR_MAINTENANCE_LINE2}}
+            </div>
+            <div
+              class="login-message"
+              ng-class="{'invalid': (loginInvalidMessage && !loginForm.$valid) || (loginInvalidMessage && loginFailed), 'success': loginSuccessMessage}"
+              ng-bind="loginInvalidMessage || loginSuccessMessage"
+              ng-if="!biometric.alreadyEnrolled && ((loginInvalidMessage && !loginForm.$valid) || (loginInvalidMessage && loginFailed) || loginSuccessMessage)"></div>
+            <div class="blue-bar-label">
+              <label for="userId" ng-bind="loc.USER_ID"></label>
+              <label class="right-action">
+                <a ng-click="gotoForgotUsername()"
+                  ng-bind="loc.FORGOT"
+                  track-action="{action:'loginForgotUserId',section: analyticConstants.LOGIN_SECTION}">
+                </a>
+              </label>
+            </div>
+            <div class="login-form-input" ng-class="{'invalid': (!loginForm.userId.$valid && loginAttempted) || loginFailed}">
+              <div>
+                <i class="fc-userid fc-lg2"></i>
+              </div>
+              <div>
+                <input type="text" id="userId" name="userId" ng-model="userId" autocorrect="off" autocapitalize="off" required></input>
+              </div>
+            </div>
+            <div class="blue-bar-label">
+              <label for="password" ng-bind="loc.PASSWORD"></label>
+              <label class="right-action">
+                <a ng-click="gotoForgotPassword()" ng-bind="loc.FORGOT"
+                  track-action="{action:'loginForgotPassword',section: analyticConstants.LOGIN_SECTION}">
+                </a>
+              </label>
+            </div>
+            <div class="login-form-input login-form-input-password"
+              ng-class="{'invalid': !biometric.alreadyEnrolled && ((!loginForm.password.$valid && loginAttempted) || loginFailed)}">
+              <div>
+                <i class="fc-password fc-lg2"></i>
+              </div>
+              <div>
+                <input type="password" id="password" name="password" ng-model="password" required></input>
+              </div>
+              <div ng-class="{'deviceIsAndroid': biometric.isAndroid === true, deviceIsIOS: biometric.isAndroid === false }" class="biometric-container text-center"
+              ng-if="biometric.alreadyEnrolled === true && userIdChangedFromPrevious(userId) === false">
+                <i ng-class="biometric.faceId ? 'fc-face-id': (biometric.isAndroid ? 'fc-android-fingerprint-id' :'fc-touchid')"
+                  ng-click="loginWithBiometric()"
+                  class="fc-lg">
+                </i>
+                <p class="biometric-description" ng-bind="{{'loc.' + biometric.biometricType}}"></p>
+              </div>
+            </div>
+            <div ng-if="biometric.isAvailable === true && ((biometric.alreadyEnrolled === false && userIdChangedFromPrevious(userId) === false) || userIdChangedFromPrevious(userId) === true)" class="biometric-enrollment-container">
+              <i class="biometric-enrollment-checkbox fc-check-only" ng-click="toggleBiometricDesireToEnroll()" ng-class="{'checked': biometric.desireToEnroll}"></i>
+              <span class="white" ng-bind="{{'loc.' + biometric.enableText}}"></span>
+            </div>
+            <div class="login-register-container">
+              <button type="submit" class="btn btn-block btn-primary login-button" ng-bind="loc.LOG_IN"></button>
+              <button type="button" class="btn btn-block btn-default register-button" ng-click="gotoRegistration()" ng-bind="loc.REGISTER" track-action="{action:'loginRegister', section: analyticConstants.LOGIN_SECTION}"></button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+  <login-bottom-bar></login-bottom-bar>
+</div>

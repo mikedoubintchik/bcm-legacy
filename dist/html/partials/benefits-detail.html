@@ -1,0 +1,190 @@
+<div class="benefits-container col-sm-8 col-sm-offset-2">
+  <!-- <div class="btn-group-nav-container">
+    <div class="btn-group-nav-item" ng-class="{'active': benefitsData.tabs.active}" ng-repeat="tab in benefitsData.tabs.tabs" ng-click="tabToView(tab.url)">
+      <div class="item-content" ng-class="tab.class" ng-bind="tab.title"></div>
+    </div>
+  </div> -->
+
+  <div id='bencardtop{{benefits.memberIndex}}' ng-repeat="benefits in benefitsData.itemDTO" class="benefit-details benefits-card">
+    <div class="benefits-body small-padding">
+      <!-- <div ng-repeat="fund in benefits.funds">
+        <div class="home-card-fund-balance">
+          <div class="pull-left fund-balance-text" ng-if="fund.fundingAccountTypeCode === 'HSA'" ng-bind="loc.HSA_BALANCE"></div>
+          <div class="pull-left fund-balance-text" ng-if="fund.fundingAccountTypeCode === 'HRA'" ng-bind="loc.HRA_BALANCE"></div>
+          <div class="pull-right fund-balance-value">${{fund.fundAmount | number}}</div>
+        </div>
+      </div> -->
+
+      <div class="benefits-details-heading">
+        <i class="fc-circle-group benefits-icon" ng-if="benefits.relationship === 'family'"></i>
+        <i class="fc-subscriber benefits-icon" ng-if="benefits.relationship === 'SUB'"></i>
+        <i class="fc-user benefits-icon" ng-if="benefits.relationship !== 'SUB' && benefits.relationship !== 'family'"></i>
+        <div class="family-summary" ng-bind="benefits.headerText"></div>
+        <div class="family-progress-text" ng-bind="benefits.subHeaderText"></div>
+        <hr ng-show="!benefits.graphData.isFullBenefit">
+      </div>
+
+      <div class="graph-container" ng-show="benefits.cardExpanded">
+        <div class="in-overall-benefit" ng-show="benefits.graphData.isFullBenefit">
+          <div style="text-align:center;">
+            <i class="fc-check-only"></i>
+            <span  ng-bind="benefits.graphData.fullBenefit_Label_Top">
+            </span>
+          </div>
+          <div style="text-align:center;" ng-bind="benefits.graphData.fullBenefit_Label_Bottom"></div>
+        </div>
+        <!--Left side of the graph when member is in full-benefit-->
+        <div class="graph-left override-padding" ng-show="benefits.graphData.deductibleMet_inFullBenefit">
+          <div ng-bind="benefits.graphData.deductibleMet_inFullBenefit_Label" class="in-full-benefit in-full-benefit-height">
+          </div>
+          <i id="fc-check-only" class="fc-check-only in-full-benefit"></i>
+          <vertical-bar-graph graph-height = {{benefits.graphData.deductibleGraph.graphHeight}} graph-values = "benefits.graphData.deductibleGraph">
+          </vertical-bar-graph>
+        </div>
+        <!--Left side of the graph when member is NOT in full-benefit-->
+        <div class="graph-left" ng-show="!benefits.graphData.deductibleMet_inFullBenefit && !benefits.graphData.deductibleMet_dontContribute">
+          <div class="graph-text" ng-bind="benefits.graphData.leftHeadingLabel"></div>
+          <div class="graph-amount" ng-bind="benefits.graphData.deductible | currency:'$': 0"> </div>
+          <vertical-bar-graph graph-height = {{benefits.graphData.deductibleGraph.graphHeight}} graph-values = "benefits.graphData.deductibleGraph">
+          </vertical-bar-graph>
+          <div class="graph-text-bottom" ng-bind="benefits.graphData.leftBottomLabel"> </div>
+          <div class="graph-amount" ng-bind="benefits.graphData.deductibleMet.toFixed(2) | currency:'$'"></div>
+        </div>
+        <div class="graph-left override-padding" ng-show="benefits.graphData.deductibleMet_dontContribute">
+          <div ng-bind="benefits.graphData.deductibleMet_dontContribute_Label" class="in-full-benefit">
+          </div>
+          <i id="fc-processed" class="fc-check-only in-full-benefit"></i>
+        </div>
+
+        <!--Right side-->
+        <div class="graph-right unlimited-oop override-padding" ng-show="benefits.graphData.outOfPocketMet_unlimited">
+          <div class="graph-text" ng-bind="benefits.graphData.outOfPocketMet_unlimited_Label_Top"></div>
+          <div class="graph-amount" ng-bind="benefits.graphData.outOfPocketMet_unlimited_Value_Top"></div>
+          <hr/>
+          <div class="graph-text" ng-bind="benefits.graphData.outOfPocketMet_unlimited_Label_Bottom"></div>
+          <div class="graph-amount" ng-bind="benefits.graphData.outOfPocketMet_unlimited_Value_Bottom | currency:'$'"></div>
+        </div>
+        <div class="graph-right override-padding" ng-show="benefits.graphData.outOfPocketMet_inFullBenefit && !benefits.graphData.outOfPocketMet_unlimited">
+          <div ng-bind="benefits.graphData.outOfPocketMet_inFullBenefit_Label" class="in-full-benefit in-full-benefit-height">
+          </div>
+          <i id="fc-processed" class="fc-check-only in-full-benefit"></i>
+          <vertical-bar-graph graph-height = {{benefits.graphData.oopGraph.graphHeight}} graph-values = "benefits.graphData.oopGraph">
+          </vertical-bar-graph>
+        </div>
+        <div class="graph-right" ng-show="!benefits.graphData.outOfPocketMet_inFullBenefit && !benefits.graphData.outOfPocketMet_dontContribute && !benefits.graphData.outOfPocketMet_unlimited">
+          <div class="graph-text" ng-bind="benefits.graphData.rightHeadingLabel"></div>
+          <div class="graph-amount" ng-bind="benefits.graphData.outOfPocketLimit | currency:'$':0"></div>
+          <vertical-bar-graph graph-height = {{benefits.graphData.oopGraph.graphHeight}} graph-values = "benefits.graphData.oopGraph">
+          </vertical-bar-graph>
+          <div class="graph-text-bottom" ng-bind="benefits.graphData.rightBottomLabel"></div>
+          <div class="graph-amount" ng-bind="benefits.graphData.outOfPocketMet.toFixed(2) | currency:'$'"></div>
+        </div>
+        <div class="graph-right override-padding" ng-show="benefits.graphData.outOfPocketMet_dontContribute && !benefits.graphData.outOfPocketMet_unlimited">
+          <div ng-bind="benefits.graphData.outOfPocketMet_dontContribute_Label" class="in-full-benefit">
+          </div>
+          <i id="fc-processed" class="fc-check-only in-full-benefit"></i>
+        </div>
+      </div>
+
+      <!-- small view-->
+      <div class="benefit-table" ng-show="!benefits.cardExpanded">
+        <div class="benefit-row">
+          <div class="benefit-detail-text" ng-bind="benefits.appliedToDeductibleLabel"></div>
+          <div class="benefit-detail-amount" ng-bind="benefits.appliedToDeductibleAmount | currency:'$'"> </div>
+        </div>
+        <div class="benefit-row">
+          <div class="benefit-detail-text" ng-bind="benefits.appliedToOOPLimitLabel"></div>
+          <div class="benefit-detail-amount" ng-bind="benefits.appliedToOOPLimitAmount | currency:'$'"> </div>
+        </div>
+      </div>
+      <div ng-show="!benefits.cardExpanded">
+        <hr/>
+        <a class="btn btn-default btn-block graph-details-button" ng-click="toggleBenefitsTable($event,benefits.memberIndex)" track-action="{action: 'benefitsToggleTables', section: analyticConstants.BENEFITS_SECTION}">
+          <i class="fc-graph-details benefits-icon"></i> <span class="show-hide-benefits" ng-bind="loc.SHOW_BENEFIT_GRAPH_DETAILS"></span>
+          <i class="fc-plus-expand benefits-icon"></i>
+        </a>
+    </div>
+    <!-- small view-->
+
+      <!-- expanded view -->
+      <div class="benefit-table" ng-show="benefits.cardExpanded">
+        <div class="benefit-row blue-row" ng-show="!benefits.isDone_Contributing_Deductible">
+          <div class="benefit-detail-text" ng-bind="benefits.amountRemainingToMeetDeductibleLabel"> </div>
+          <div class="benefit-detail-amount" ng-bind="benefits.amountRemainingToMeetDeductibleAmount | currency:'$'"> </div>
+        </div>
+        <div class="benefit-row blue-row" ng-show="!benefits.isDone_Contributing_OOP">
+          <div class="benefit-detail-text" ng-bind="benefits.amountRemainingToMeetOOPLabel"> </div>
+          <div class="benefit-detail-amount" ng-show="!benefits.isUnlimited" ng-bind="benefits.amountRemainingToMeetOOPAmount | currency:'$'"> </div>
+          <div class="benefit-detail-amount" ng-show="benefits.isUnlimited" ng-bind="benefits.amountRemainingToMeetOOPAmount"> </div>
+        </div>
+        <div class="benefit-row">
+          <div class="benefit-detail-text" ng-bind="benefits.expensesAppliedTowardsDeductibleLabel"> </div>
+          <div class="benefit-detail-amount" ng-bind="benefits.expensesAppliedTowardsDeductibleAmount.toFixed(2) | currency:'$'"> </div>
+        </div>
+        <!-- remove ng-show for 80/20
+        <div class="benefit-row" ng-show="!benefits.hideCoinsurance"> -->
+        <div class="benefit-row">
+          <div class="benefit-detail-text" ng-bind="benefits.coInsCoPayExpensesLabel"> </div>
+          <div class="benefit-detail-amount" ng-bind="benefits.coInsCoPayExpensesAmount.toFixed(2) | currency:'$'"> </div>
+        </div>
+        <div class="benefit-row">
+          <div class="benefit-detail-text" ng-bind="benefits.totalAppliedToFamilyOOPLabel"> </div>
+          <div class="benefit-detail-amount" ng-bind="benefits.totalAppliedToFamilyOOPAmount.toFixed(2) | currency:'$'"> </div>
+        </div>
+        <div class="benefit-row gray-row">
+          <div class="benefit-detail-text" ng-bind="benefits.maximumDeductibleYouPayLabel"> </div>
+          <div class="benefit-detail-amount">
+            <span class="benefit-detail-value" ng-bind="benefits.maximumDeductibleYouPay.member.toFixed(2) | currency:'$'"></span>
+            <span ng-bind="benefits.maximumDeductibleYouPay.memberLabel"></span>
+          </div>
+          <div class="benefit-detail-amount">
+            <span class="benefit-detail-value" ng-bind="benefits.maximumDeductibleYouPay.family.toFixed(2) | currency:'$'"></span>
+            <span ng-bind="benefits.maximumDeductibleYouPay.familyLabel"></span>
+          </div>
+        </div>
+        <div class="benefit-row gray-row gray-row-no-border">
+          <div class="benefit-detail-text" ng-bind="benefits.maximumOOPYouPayLabel"> </div>
+          <div class="benefit-detail-amount" ng-show="!benefits.isUnlimited">
+            <span class="benefit-detail-value"  ng-bind="benefits.maximumOOPYouPay.member.toFixed(2) | currency:'$'"></span><span ng-bind="benefits.maximumOOPYouPay.memberLabel"></span>
+          </div>
+          <div class="benefit-detail-amount" ng-show="!benefits.isUnlimited">
+            <span class="benefit-detail-value"  ng-bind="benefits.maximumOOPYouPay.family.toFixed(2) | currency:'$'"></span><span ng-bind="benefits.maximumOOPYouPay.familyLabel"></span>
+          </div>
+          <div class="benefit-detail-amount" ng-show="benefits.isUnlimited">
+            <span ng-bind="benefits.maximumOOPYouPay.member"></span>
+          </div>
+        </div>
+        <div class="graph-details-button-container">
+          <button class="btn btn-default btn-block claims-button " ng-bind="benefits.claimsBtnLabel" ng-click="gotoView(benefits.claimsBtnUrl);">
+          </button>
+        </div>
+      </div>
+      <div ng-show="benefits.cardExpanded">
+        <hr/>
+        <a class="btn btn-default btn-block graph-details-button" ng-click="toggleBenefitsTable($event,benefits.memberIndex)" track-action="{action: 'benefitsToggleTables', section: analyticConstants.BENEFITS_SECTION}">
+          <i class="fc-graph-details benefits-icon"></i>
+          <span class="show-hide-benefits" ng-bind="loc.HIDE_BENEFIT_GRAPH_DETAILS"></span>
+          <i class="fc-minus-collapse benefits-icon"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="benefit-details benefits-card bottom-padding" >
+    <div class="benefits-body small-padding">
+      <div class="benefits-footer-heading-text">
+        <div class="family-summary" ng-bind="loc.FOOTNOTES">
+
+        </div>
+        <hr/>
+      </div>
+      <div ng-bind-html="footnotes" class="footnotes"></div>
+      <div>
+        <hr/>
+        <a class="btn btn-default btn-block graph-details-button" ng-click="toggleFootnotes()" track-action="{action: 'benefitsToggleFootnotes', section: analyticConstants.BENEFITS_SECTION}">
+          <span class="show-hide-benefits" ng-bind="FootnotesDetailButton"></span>
+          <i class="fc-{{collapseExpandIcon}} benefits-icon"></i>
+        </a>
+    </div>
+    </div>
+  </div>
+</div>

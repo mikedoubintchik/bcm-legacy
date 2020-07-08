@@ -1,0 +1,32 @@
+<div class="home-card home-card-billing" ng-click="gotoView('billing')">
+  <div class="home-card-header">
+    <div>
+      <h3>
+        <i class="fc-circlefill fc-xl fc-underlay white"></i>
+        <i class="fc-billpay fc-xl fc-overlay"></i>
+      </h3>
+    </div>
+    <div class="home-card-header-text">
+      <p><strong ng-bind="loc.BILLING_PAYMENTS"></strong></p>
+      <p ng-if="planDetails.startDate">
+        <span ng-bind="planDetails.planType"></span>
+        <span ng-if="planDetails.active" ng-bind="loc[planDetails.startMonth] + ' ' + planDetails.startYear + '-'"></span>
+        <span
+          ng-if="!planDetails.active && !planDetails.future"
+          ng-bind="loc.INACTIVE">
+        </span>
+        <span
+          ng-if="planDetails.active"
+          ng-bind="loc.ACTIVE">
+        </span>
+        <span
+            ng-if="planDetails.future"
+            ng-bind="loc.FUTURE">
+        </span>
+      </p>
+    </div>
+  </div>
+  <div class="pt5 pb5 pr5 pl5 home-card-body">
+    <p class="mb0 home-card-error-text" ng-bind="::loc.ERROR_HOME_BP"></p>
+  </div>
+</div>

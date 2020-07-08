@@ -1,0 +1,5 @@
+<input id="city-input" ng-readonly="$parent.currentLocationActive===true" ng-model="data.displayCityName" ng-model-options="{debounce: 500}" ng-change="searchCities()" list="_cities" ng-class="{'narrower-width': !$parent.alertModal.locationBlocked && $parent.alertModal.values.locationNotFound}"/>
+<div role="listbox" id="_cities" class="city-dropdown-menu" ng-class="{'mt1': !$parent.errorText && $parent.isZipDirty}" modal-info="cancelModalObj" ng-if="data.displayCityName && data.cities.length > 0">
+  <div role="listitem" id="city.place_id" class="city-county-item" ng-if="!city.errorMessage" ng-repeat="city in data.cities track by $index" ng-click="setCity(city)">{{city.city}}, {{city.state_code}} - {{city.zip}}</div>
+  <div role="listitem" class="city-county-item" ng-if="data.cities[0].errorMessage">{{data.cities[0].errorMessage}}</div>
+</div>

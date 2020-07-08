@@ -1,0 +1,25 @@
+<div ng-if="showAutoPay || showOneTimePayment" ng-form="paymentFlowPaymentFrequencyForm">
+  <payment-flow-title-bar title="{{::loc.BP_TITLE_PAYMENT_FREQUENCY}}"></payment-flow-title-bar>
+  <pf-error-message
+    ng-show="paymentFlowPaymentFrequencyForm.frequencySelected.$error.required && paymentFlowPaymentFrequencyForm.frequencySelected.$dirty">
+    {{::loc.BP_REQUIRED}}
+  </pf-error-message>
+  <payment-flow-radio-group group-value="frequencySelected">
+    <payment-flow-radio-button
+      value="autopay"
+      ng-if="showAutoPay">
+      {{loc.BP_AUTOPAY}}
+    </payment-flow-radio-button>
+    <payment-flow-radio-button
+      value="oneTimePayment"
+      ng-if="showOneTimePayment">
+      {{loc.BP_ONE_TIME_PAYMENT}}
+    </payment-flow-radio-button>
+  </payment-flow-radio-group>
+  <input
+    type="text"
+    ng-model="frequencySelected"
+    name="frequencySelected"
+    class="hidden"
+    required>
+</div>

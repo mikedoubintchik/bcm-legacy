@@ -1,0 +1,51 @@
+<div class="col-sm-8 col-sm-offset-2 prescription-only-info-container benefits-prescription-only-container">
+  <!-- Prescription Coverage -->
+  <div class="main-bucket top-container">
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <label class="more-info-title" ng-bind="data[0].title"></label>
+          <help-icon header="data[0].glossaryHeader" class="coverage-help" file-name="'help/benefits-medicare-help'"></help-icon>
+        </div>
+      </div>
+      <div id="subBucket">
+        <div>
+          <div class="list-messaging">
+            <div class="main-text" ng-bind="data[0].mainText"></div>
+            <button class="btn btn-default btn-block button-view-info no-vertical-margin" ng-class="{'spanish-btn': language==='es'}" ng-click="openInSecureBrowser(data[0].url)">
+              <span ng-bind="data[0].buttonText" ng-class="{'spanish-text': language==='es'}"></span>
+              <i class="{{data[0].icon}}" ng-class="{'right-side-icon': language==='es'}"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- More Info About Your Plan -->
+  <div class="main-bucket bottom-container">
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <label class="more-info-title" ng-bind="data[1].title"></label>
+          <help-icon  header="data[1].glossaryHeader"  class="coverage-help" file-name="'help/benefits-medicare-help'"></help-icon>
+        </div>
+      </div>
+      <div id="subBucket">
+        <div>
+          <div ng-repeat="item in data[1].buttons">
+            <button class="btn btn-default btn-block {{item.class}}" ng-if="item.ssoUrl" ng-click="openInSecureBrowser(item.ssoUrl)">
+              <span ng-bind="item.buttonText"></span>
+              <i class="{{item.icon}} external-link-icon"></i>
+            </button>
+
+            <button class="btn btn-default btn-block {{item.class}}" ng-if="item.url" ng-class="{'spanish-btn-2': language==='es'}" ng-click="openPDF(item.url)">
+              <span ng-bind="item.buttonText" ng-class="{'spanish-text-2': language==='es'}"></span>
+              <i class="{{item.icon}} pdf-icon" ng-class="{'right-side-icon-2': language==='es'}"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

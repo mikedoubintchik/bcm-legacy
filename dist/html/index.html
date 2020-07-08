@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta id="test-viewport" name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+  <meta name="format-detection" content="telephone=no">
+  <title>BlueConnect</title>
+  <link rel="stylesheet" href="css/app.min.css" media="screen" charset="utf-8">
+  <link rel="stylesheet" href="css/react.min.css" media="screen" charset="utf-8">
+  <link rel="stylesheet" href="css/fontcustom.css" media="screen" charset="utf-8">
+</head>
+
+<body id="app-container" ng-app="blueconnect.mobile.app" ng-controller="MainController"
+  ng-class="{'no-scroll': blurContent && !lowResDevice}">
+  <div id="bcm-react"></div>
+  <img class="bg-image" ng-class="{'blur': blurContent && !lowResDevice}" src="images/background.jpg"
+    ng-if="!lowResDevice && showBackgroundImage()"></img>
+  <div class="bg-solid" ng-if="lowResDevice && showBackgroundImage()"></div>
+  <div class="header-container">
+    <div ng-bind-html-compile="navbarHtml" ng-if="showNav"></div>
+    <policy-select ng-if="showPolicySelect"></policy-select>
+  </div>
+  <div class="page-loading-spinner">
+    <div>
+      <i class="fa fa-2x fa-spinner fa-pulse"></i>
+    </div>
+  </div>
+  <div class="page-no-connection">
+    <i class="fc-alert"></i>
+    <span ng-bind="loc.ERROR_NETWORK_BADCONNECTION"></span>
+  </div>
+  <div class="main-wrapper"
+    ng-class="{'nav-margin-top': (showNav && !showPolicySelect) || hasBasicNavbar(), 'blur': blurContent && !lowResDevice}"
+    ng-view></div>
+  <quick-alert-modal></quick-alert-modal>
+  <help-modal></help-modal>
+  <terms-modal></terms-modal>
+  <full-screen-modal></full-screen-modal>
+  <share-modal></share-modal>
+  <alert-modal></alert-modal>
+  <coachmark></coachmark>
+  <script type="text/javascript">
+    if (typeof Object.assign != 'function') {
+      // Must be writable: true, enumerable: false, configurable: true
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) { // .length of function is 2
+          'use strict';
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
+
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                // Avoid bugs when hasOwnProperty is shadowed
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+  </script>
+  <script src="cordova.js"></script>
+  <script src="js/vendor.min.js"></script>
+  <script src="js/app.min.js"></script>
+  <script src="js/react.app.js"></script>
+  <script src="js/livechatDeployment.js"></script>
+  <script type="text/javascript">
+    (function(){var g=function(e,h,f,g){
+    this.get=function(a){for(var a=a+"=",c=document.cookie.split(";"),b=0,e=c.length;b<e;b++)
+
+    {for(var d=c[b];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}
+    return null};
+    this.set=function(a,c)
+
+    {var b="",b=new Date;b.setTime(b.getTime()+6048E5);b="; expires="+b.toGMTString();document.cookie=a+"="+c+b+"; path=/; "}
+    ;
+    this.check=function(){var a=this.get(f);if(a)a=a.split(":");else if(100!=e)"v"==h&&(e=Math.random()>=e/100?0:100),a=[h,e,0],this.set(f,a.join(":"));else return!0;var c=a[1];if(100==c)return!0;switch(a[0])
+
+    {case "v":return!1;case "r":return c=a[2]%Math.floor(100/c),a[2]++,this.set(f,a.join(":")),!c}
+    return!0};
+    this.go=function(){if(this.check()){var a=document.createElement("script");a.type="text/javascript";a.src=g;document.body&&document.body.appendChild(a)}};
+    this.start=function(){var t=this;"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",function()
+
+    {t.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){t.go()}
+    ):t.go()};};
+    try
+
+    {(new g(100,"r","QSI_S_ZN_cLMFUd3wFwnFTj7","https://znclmfud3wfwnftj7-bcbsnc.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_cLMFUd3wFwnFTj7")).start()}
+  catch{}})();
+  </script>
+  <div id="ZN_cLMFUd3wFwnFTj7"><!-DO NOT REMOVE-CONTENTS PLACED HERE-></div>
+</body>
+
+</html>

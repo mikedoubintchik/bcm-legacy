@@ -1,0 +1,70 @@
+<div class="customer-service-phone-card" ng-show="(policy.isNew === true && policy.active === true) || (policy.isTerminated === true || policy.isFuture === true || policy.isReinstatement === true)">
+  <div class="customer-service-card" ng-if="cardDetails.length > 0 && policy.sourceSystem !== 'Amisys'">
+    <div class="customer-service-header">
+      <h6 class="darker-blue" ng-bind="cardDetails[0].serviceTitles.title"></h6>
+    </div>
+    <section class="customer-service-card-body bg-lightest-gray med-dark-gray">
+      <div class="customer-service-hours">
+        <span class="hours-label" ng-bind="localization.hours + ':'">
+        </span>
+        <div class="hours-text" ng-if="!cardDetails[0].serviceHours.openEveryday">
+          <span class="pt2" ng-bind="formatTime(openHours[0][0], 'days')"></span>
+          <br>
+          <span class="pt2">{{formatTime(openHours[0][0], 'hours')}} {{::localization.timeZone}}</span>
+        </div>
+        <div class="hours-text med-light-blue" ng-if="cardDetails[0].serviceHours.openEveryday">
+          <span>24/7</span>
+        </div>
+      </div>
+    </section>
+    <div class="send-secure-message row m0 pt4 pb3" ng-click="gotoView('/inbox')">
+      <div class="send-secure-text col-xs-11" ng-bind="::loc.SEND_SECURE_MESSAGE"></div>
+      <i class="fa fa-angle-right fa-2x col-xs-1"></i>
+    </div>
+    <footer class="customer-service-footer text-center pt2 pb2">
+      <div class="tty-text" ng-if="cardDetails[0].serviceHours.tty" ng-bind="::localization.ttyText"></div>
+      <div class="{{cardDetails[0].serviceHours.class}} phone-container p0">
+        <div class="tty-number-title" ng-if="cardDetails[0].serviceHours.tty" ng-bind="::localization.ttyNumberTitle"></div>
+        <i class="fc-lg" ng-class="[cardDetails[0].serviceTitles.icon]"></i>
+        <a ng-href="tel://{{cardDetails[0].serviceHours.number}}">
+          <span
+            class="customer-service-phone med-light-blue"
+            ng-bind="cardDetails[0].serviceHours.number">
+          </span>
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <div class="customer-service-card" ng-if="cardDetails.length > 0 && policy.sourceSystem === 'Amisys'" ng-repeat="cardDetail in customerServiceDetails track by $index">
+    <div class="customer-service-header">
+      <h6 class="darker-blue" ng-bind="cardDetail.title"></h6>
+    </div>
+    <section class="customer-service-card-body bg-lightest-gray med-dark-gray">
+      <div class="customer-service-hours">
+        <span class="hours-label" ng-bind="localization.hours + ':'">
+        </span>
+        <div class="hours-text" ng-if="cardDetail.openSevenDays">
+          <span ng-bind="'7 ' + localization.daysOfWeek"></span>
+          <span>{{openTimeHours()}}</span>
+        </div>
+        <div class="hours-text" ng-if="!cardDetail.openSevenDays">
+          <span>{{openHours[0][0]}}</span>
+        </div>
+      </div>
+    </section>
+    <footer class="customer-service-footer text-center pt2 pb2">
+      <div class="tty-text" ng-if="cardDetail.tty" ng-bind="::localization.ttyText"></div>
+      <div class="{{cardDetail.class}} phone-container p0">
+        <div class="tty-number-title" ng-if="cardDetail.tty" ng-bind="::localization.ttyNumberTitle"></div>
+        <i class="fc-lg" ng-class="[cardDetail.icon]"></i>
+        <a ng-href="tel://{{cardDetail.phones}}">
+          <span
+            class="customer-service-phone med-light-blue"
+            ng-bind="cardDetail.phones">
+          </span>
+        </a>
+      </div>
+    </footer>
+  </div>
+</div>

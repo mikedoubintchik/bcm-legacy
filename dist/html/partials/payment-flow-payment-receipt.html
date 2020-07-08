@@ -1,0 +1,29 @@
+<div class="row payment-receipt-container m0 pl4 pt6 pb2 pr4 bg-lightest-gray">
+  <div class="col-xs-12 payment-receipt-body pt1 pl2 pr2 pb4 bg-white">
+    <payment-flow-receipt-row label="{{::loc.BP_POLICY_NUMBER}}" value="{{::billingInfo.policyMembership.policyId}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row label="{{::loc.SUBSCRIBER_ID}}" value="{{::billingInfo.userIdentity.alphaPrefix}}{{::billingInfo.userIdentity.externalMemberId}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row label="{{::loc.BP_TITLE_PAYMENT_FREQUENCY}}" value="{{::paymentFrequencyDisplayValue}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentFrequency === 'autopay'" label="{{::loc.BP_MONTHLY_DRAFT_DATE}}" value="{{::loc.BP_MONTHLY_DRAFT}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row label="{{::loc.BP_MONTHLY_PREMIUM_AMOUNT}}" value="{{::billingInfo.currentInvoice.billedAmount | currency}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="billingInfo.reinstatementAmount > 0" label="{{::loc.BP_REINSTATEMENT_TOTAL_AMOUNT}}" value="{{::billingInfo.reinstatementAmount | currency}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="billingInfo.reinstatementAmount > 0" label="{{::loc.BP_TOTAL_ACCOUNT_BALANCE}}" value="{{::billingInfo.reinstatementAmount | currency}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="!billingInfo.reinstatementAmount > 0" label="{{::loc.BP_TOTAL_ACCOUNT_BALANCE}}" value="{{::billingInfo.currentInvoice.totalDueAmount | currency}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row label="{{::loc.BP_AMOUNT_PAID_TODAY}}" value="{{::userSetData.paymentAmount | currency}}"></payment-flow-receipt-row>
+    <div class="row m0 mt3 pt0" ng-if="billingInfo.previousPayment">
+      <span class="col-xs-7 mb1 med-dark-gray" ng-bind="::loc.BP_PREVIOUS_PAYMENT"></span>
+      <span class="col-xs-5 mb1 med-dark-gray text-bold" ng-bind="::billingInfo.previousPaymentAmount | currency"></span>
+    </div>
+    <div class="row m0 pt0 bottom-border" ng-if="billingInfo.previousPayment">
+      <span class="col-xs-7 mb3 med-dark-gray" ng-bind="'(' + loc.BP_CURRENTLY_PROCESSING + ')'"></span>
+    </div>
+    <payment-flow-receipt-row label="{{::loc.BP_HEADER_PAYMENT_METHOD}}" value="{{::paymentMethodDisplayValue}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="::billingMethodDisplayValue" label="{{::loc.BP_TITLE_BILLING_METHOD}}" value="{{::billingMethodDisplayValue}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod === 'bankdraft'" label="{{::loc.BP_NAME_ON_ACCOUNT}}" value="{{::userSetData.accountHolderName}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod === 'bankdraft'" label="{{::loc.BP_ACCOUNT_TYPE}}" value="{{::accountTypeDisplayValue}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod === 'bankdraft'" label="{{::loc.BP_ROUTING_NUMBER}}" value="{{::userSetData.routingNumber}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod === 'bankdraft'" label="{{::loc.BP_BANK_ACCOUNT_NUMBER}}" value="{{::userSetData.accountNumber | maskAccount}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod != 'bankdraft'" label="{{::loc.BP_NAME_ON_CARD}}" value="{{::userSetData.creditCardDetails.firstName}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod != 'bankdraft'" label="{{::loc.BP_CARD_NUMBER}}" value="{{::userSetData.creditCardDetails.lastFour | maskAccount}}"></payment-flow-receipt-row>
+    <payment-flow-receipt-row ng-if="userSetData.paymentMethod != 'bankdraft'" label="{{::loc.BP_EXPIRATION_DATE}}" value="{{::userSetData.creditCardDetails.month}}/{{::userSetData.creditCardDetails.year}}"></payment-flow-receipt-row>
+  </div>
+</div>

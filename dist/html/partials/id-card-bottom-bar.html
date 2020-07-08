@@ -1,0 +1,20 @@
+<nav class="navbar navbar-fixed-bottom navbar-light bg-faded bottom-bar">
+  <div class="navbar-header-item text-center id-nav-border">
+    <button class="navbar-toggler med-light-blue" type="button" ng-click="gotoView('/help');" track-action="{action: 'idCardHelp', section: analyticConstants.IDCARD_SECTION}">
+      <i class="fc-utility-help"></i>
+      <p class="bottom-btn"><span ng-bind="loc.HELP"></span></p>
+    </button>
+  </div>
+  <div class="navbar-header-item text-center id-nav-border">
+    <a class="navbar-toggler med-light-blue id-card-share" type="button" ng-click="shareIdCard();" track-action="{action: 'idCardShare', section: analyticConstants.IDCARD_SECTION}">
+      <i ng-class="{'fc-utility-share': $root.device === 'Android' || 'amazon-fireos', 'fc-utility-share-ios': $root.device === 'iOS'}"></i>
+      <p class="bottom-btn"><span ng-bind="loc.SHARE"></span></p>
+    </a>
+  </div>
+  <div class="navbar-header-item text-center">
+    <a class="navbar-toggler med-light-blue id-card-share" type="button" ng-click="shareIdCard();" track-action="{action: 'idCardSaveImage', section: analyticConstants.IDCARD_SECTION}">
+      <i class="fc-utility-download"></i>
+      <p class="bottom-btn"><span ng-bind="loc.SAVE_IMAGE"></span></p>
+    </a>
+  </div>
+</nav>

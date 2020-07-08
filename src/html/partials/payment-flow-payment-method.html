@@ -1,0 +1,12 @@
+<div ng-form="paymentFlowPaymentMethodForm">
+  <payment-flow-title-bar title="{{loc.BP_TITLE_PAYMENT_METHOD}}"></payment-flow-title-bar>
+  <pf-error-message
+    ng-show="paymentFlowPaymentMethodForm.desiredPaymentMethod.$dirty && paymentFlowPaymentMethodForm.desiredPaymentMethod.$invalid">
+    {{::loc.BP_REQUIRED}}
+  </pf-error-message>
+  <payment-flow-radio-group group-value="desiredPaymentMethod">
+    <payment-flow-radio-button value="bankdraft">{{::loc.BP_BANK_DRAFT}}</payment-flow-radio-button>
+    <payment-flow-radio-button ng-hide="methodInfo.hideCreditCard === true" value="creditcard">{{::loc.BP_CREDIT_CARD}}</payment-flow-radio-button>
+  </payment-flow-radio-group>
+  <input class="hidden" name="desiredPaymentMethod" ng-model="desiredPaymentMethod" required>
+</div>

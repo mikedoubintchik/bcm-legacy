@@ -6,10 +6,10 @@ function buildJs() {
   return gulp.src([
     'node_modules/single-spa-angularjs/lib/single-spa-angularjs.js',
     'src/single-spa-application.js',
-    'src/account-settings.module.js',
+    'src/app.js',
     'src/**/*.js'
   ])
-    .pipe(concat('polyglot-mf-account-settings.js'))
+    .pipe(concat('legacy-port.js'))
     .pipe(gulp.dest('dist/'));
 }
 

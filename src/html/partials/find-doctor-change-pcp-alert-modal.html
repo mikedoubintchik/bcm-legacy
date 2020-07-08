@@ -1,0 +1,35 @@
+<div class="modal fad-change-pcp-alert-modal">
+    <div class="modal-dialog" id="change-pcp-modal">
+        <div class="modal-content">
+            <div class="modal-header alert-modal-header">
+                <button type="button" class="close" ng-click="alertModal.result()">
+                    <i class="fc-close fc-lg" id="closeButton"></i>
+                </button>
+                <h4 class="modal-title" id="confirm-pcp-title" ng-bind="alertModal.title"></h4>
+            </div>
+            <div class="modal-body alert-modal-body">
+                <div class="pb0 pt3 pl3 pr3">
+                    <div><label class="blockedMsg-l" ng-bind="alertModal.message"></label></div>
+                </div>
+                <div class="p3 pcp-text-transform" id="change-pcp-provider-details">
+                    <div class="alert-provider-name" ng-bind="alertModal.providerData.name"></div>
+                    <hr class="mb2 mt2 border-line-change-pcp">
+                    <div class="alert-provider-address"> 
+                    <div ng-bind="alertModal.providerData.location_name"></div>
+                    <div ng-bind="alertModal.providerData.addr_line1"></div>
+                    <div ng-bind="alertModal.providerData.addr_line2"></div>
+                    <div ng-bind="alertModal.providerData.city + ', ' + alertModal.providerData.state + ' ' + alertModal.providerData.postal_code"></div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="alert-btn alert-btn-50 cancel-btn" ng-click="alertModal.result(false)"
+                    ng-bind="alertModal.cancelBtn">
+                </div>
+                <div class="alert-btn alert-btn-50 confirm-btn alert-btn-green" ng-click="alertModal.result(true)"
+                    ng-bind="alertModal.confirmBtn">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

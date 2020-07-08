@@ -1,0 +1,186 @@
+<div class="payment-container bg-white">
+    <div>
+        <div class="billing-header-text">
+            <span></span>
+            <p>
+                <span ng-bind="loc.COVERED_MEMBERS + ' - '" class="ng-binding"></span>
+                <!-- ngRepeat: member in policy.policyMembers -->
+                <span ng-repeat="member in policy.selectedPolicy.policyMembers track by $index"
+                      class="ng-binding ng-scope">
+                <strong class="policy-select-members ng-binding" ng-bind="member.givenName"></strong>{{$last ? '' : ', '}}
+              </span><!-- end ngRepeat: member in policy.policyMembers -->
+            </p>
+            <p>
+                <span ng-bind="::loc.SUBSCRIBER_ID + ' - '"></span>
+                <strong class="policy-select-id" ng-bind="billingPreferencesData.subscriberId"></strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Start payment frequency -->
+    <div ng-if="!policy.selectedPolicy.isNew && !billingPreferencesData.processingPayments && policy.medicare === false">
+        <payment-flow-title-bar title="{{::loc.BP_TITLE_PAYMENT_FREQUENCY}}"></payment-flow-title-bar>
+        <!-- If OTP -->
+        <div class="row bg-lightest-green pl4 pr4 pt4 pb2 m0 autopay-promo" ng-if="billingPreferencesData.otp">
+            <div class="col-xs-12 text-center dark-green pt4">
+                <h4 class="univers-cn" ng-bind="::loc.BP_DO_YOU_KNOW_ABOUT_AUTOPAY"></h4>
+            </div>
+            <div class="col-xs-12 pb2 text-center">
+                <pf-divider></pf-divider>
+            </div>
+            <div class="row pl4 pr4 pt4 pb1 m0">
+                <div class="col-xs-12 dark-green">
+                    {{::loc.BP_AUTOPAY_PROMO_NEVER_FORGET_YOUR_BILL}}
+                </div>
+                <cta-button-row class="bg-lightest-green">
+                    <cta-button ng-click="gotoView('/edit-autopay-flow/method')" class="blue"><span
+                            ng-bind="::loc.SETUP_AUTOPAY"></span></cta-button>
+                </cta-button-row>
+            </div>
+        </div><!-- End If OTP -->
+        <!-- If Autopay -->
+        <div class="preferences-border m2" ng-if="billingPreferencesData.autoPay">
+            <div class="row pl4 pr4 pt4 pb1 m0 bg-white">
+                <div class="col-xs-8 green-1-text">
+                    <h4 class="univers-cn" ng-bind="::loc.BP_AUTOPAY"></h4>
+                </div>
+                <div class="col-xs-4 green-1-text">
+                    <h5 class="univers-cn" ng-bind="billedAmount + '/mo'"></h5>
+                </div>
+                <div class="col-xs-12 text-center pt4 pb3">
+                    <pf-divider></pf-divider>
+                </div>
+                <div class="row m0">
+                    <div class="col-xs-4 flex-column">
+                        <img ng-if="billingPreferencesData.isBankdraft" src="images/check.svg" alt=""/>
+                        <img ng-if="billingPreferencesData.isCreditCard && billingPreferencesData.payment.creditCardDetails.type == 'Discover'"
+                             src="images/cc-discover.svg" alt=""/>
+                        <img ng-if="billingPreferencesData.isCreditCard && billingPreferencesData.payment.creditCardDetails.type == 'Mastercard'"
+                             src="images/cc-mastercard.svg" alt=""/>
+                        <img ng-if="billingPreferencesData.isCreditCard && billingPreferencesData.payment.creditCardDetails.type == 'Visa'"
+                             src="images/cc-visa.svg" alt=""/>
+                        <img ng-if="billingPreferencesData.isCreditCard && billingPreferencesData.payment.creditCardDetails.type == 'Amex'"
+                             src="images/cc-amex.svg" alt=""/>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="row ml1"><span
+                                ng-bind="billingPreferencesData.payment.bankDraftDetails.accountNumber | maskAccount"></span>
+                        </div>
+                        <div class="row ml1"><span ng-bind="billingPreferencesData.bankName"></span></div>
+                    </div>
+                    <div class="col-xs-8" ng-if="billingPreferencesData.isCreditCard">
+                        <div class="row ml1"><span
+                                ng-bind="billingPreferencesData.payment.creditCardDetails.lastFour | maskAccount"></span>
+                        </div>
+                        <div class="row ml1">Exp. <span
+                                ng-bind="billingPreferencesData.payment.creditCardDetails.expirationShortened"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 text-center pt3 pb3">
+                    <pf-divider></pf-divider>
+                </div>
+                <div class="col-xs-12 green-1-text next-draft">
+                    <i class="fc-autopay autopay-icon"></i>
+                    <span class="pr1" ng-bind="::loc.BP_AUTOPAY_PAYMENTS_DRAFTED"></span>
+                </div>
+                <div class="col-xs-12 text-center pt3 pb3">
+                    <pf-divider></pf-divider>
+                </div>
+                <div>
+                    <span ng-if="billingPreferencesData.isBlackout"
+                          ng-bind="::loc.BP_AUTOPAY_INFO_CANNOT_BE_CHANGED"></span>
+                </div>
+                <cta-button-row ng-if="!billingPreferencesData.isBlackout" class="bg-white">
+                    <cta-button ng-click="gotoView('/update-autopay')" class="white"><span
+                            ng-bind="::loc.BP_UPDATE_AUTOPAY_DETAILS"></span></cta-button>
+                </cta-button-row>
+            </div><!-- End row bg-white -->
+        </div><!-- End If Autopay -->
+    </div><!-- End payment frequency -->
+
+    <payment-flow-title-bar title="{{::loc.BP_TITLE_BILLING_METHOD}}"></payment-flow-title-bar>
+    <!-- Paper -->
+    <div class="row bg-lightest-green pl4 pr4 pt4 pb1 m0 autopay-promo" ng-if="billingPreferencesData.paperInvoice && policy.selectedPolicy.sourceSystem !== 'Amisys'">
+        <div class="col-xs-12 next-draft dark-green">
+            <i class="fc-autopay autopay-icon"></i><h4 class="univers-cn"
+                                                       ng-bind="::loc.BP_SETUP_PAPERLESS_BILLING"></h4>
+        </div>
+        <div class="row m0">
+            <div class="col-xs-12 da">
+                {{::loc.BP_PAPERLESS_BILLING}}
+            </div>
+            <cta-button-row class="bg-lightest-green">
+                <cta-button ng-click="gotoView('/edit-billing-method')" class="blue"><span
+                        ng-bind="::loc.BP_EDIT_BILLING_METHOD"></span></cta-button>
+            </cta-button-row>
+        </div>
+    </div>
+    <!-- End Paper -->
+    <!-- Paperless -->
+    <div class="preferences-border m2">
+        <div class="row pl4 pr4 pt2 pb2 m0 bg-lightest-gray next-draft"
+             ng-if="(billingPreferencesData.noInvoice || billingPreferencesData.emailInvoice)">
+            <i class="fc-paperless-billing-leaf"></i>
+            <span ng-bind="loc.BP_PAPERLESS_BILLING_HEADER"></span>
+        </div>
+        <div class="row pl4 pr4 pt4 pb1 m0 bg-white" ng-if="billingPreferencesData.emailInvoice">
+            <span class="fc-check-only pr2"></span><span ng-bind="loc.BP_RECEIVE_BILLS_BY_EMAIL"></span>
+        </div>
+        <div class="row pl4 pr4 pb1 m0 bg-white" ng-if="billingPreferencesData.emailInvoice">
+            <span ng-bind="billingPreferencesData.emailAddress"></span>
+        </div>
+        <div class="row pl4 pr4 pt4 pb1 m0 bg-white" ng-if="billingPreferencesData.noInvoice">
+            <span class="fc-check-only pr2"></span><span ng-bind="loc.BP_DO_NOT_SEND_COPY_OF_BILL"></span>
+        </div>
+        <!-- postal -->
+        <p class="row pl4 pr4 pt4 pb1 m0 bg-lightest-gray next-draft" ng-if="billingPreferencesData.paperInvoice">
+            <i class="fc-postal-mail"></i>
+            <span ng-bind="loc.BP_POSTAL_MAIL"></span>
+        </p>
+        <div class="row pl6 pr4 pt4 pb1 m0 bg-white" ng-if="billingPreferencesData.paperInvoice">
+            <span class="fc-check-only pr2"></span><span ng-bind="loc.BP_RECEIVE_BILLS_BY_POSTAL"></span>
+        </div>
+        <div class="row pl6 pr4 pb1 m0 bg-white" ng-if="billingPreferencesData.paperInvoice">
+            <span ng-if="billingPreferencesData.paperInvoice"
+                  ng-bind="billingPreferencesData.mailingAddress.addressLine1"></span>
+        </div>
+        <div class="row pl6 pr4 pb1 m0 bg-white"
+             ng-if="billingPreferencesData.paperInvoice &&billingPreferencesData.mailingAddress.addressLine2">
+            <span ng-if="billingPreferencesData.paperInvoice"
+                  ng-bind="billingPreferencesData.mailingAddress.addressLine2"></span>
+        </div>
+        <div class="row pl6 pr4 pb1 m0 bg-white" ng-if="billingPreferencesData.paperInvoice">
+            <span ng-if="billingPreferencesData.paperInvoice"
+                  ng-bind="billingPreferencesData.mailingAddress.cityName + ', '"></span><span
+                ng-if="billingPreferencesData.paperInvoice" class="pl1 pr1"
+                ng-bind="billingPreferencesData.mailingAddress.stateCode"></span><span
+                ng-if="billingPreferencesData.paperInvoice"
+                ng-bind="billingPreferencesData.mailingAddress.postalCode"></span>
+        </div>
+        <pf-divider></pf-divider>
+        <div class="pl4 pr4 pt4 pb4 m0 bg-white">
+            <cta-button-row class="bg-white">
+                <cta-button ng-click="gotoView('/edit-billing-method')" class="white"><span
+                        ng-bind="::loc.BP_EDIT_BILLING_METHOD"></span></cta-button>
+            </cta-button-row>
+        </div>
+    </div>
+    <!-- End Paperless -->
+    <div class="pl4 pr4 pt4 pb1 m0 bg-white">
+        <cta-button-row class="bg-white">
+            <cta-button ng-click="gotoView('/billing')" class="blue"><span
+                    ng-bind="::loc.BP_RETURN_TO_ACCOUNT_SUMMARY"></span></cta-button>
+        </cta-button-row>
+        <cta-button-row class="bg-white">
+            <cta-button ng-click="gotoView('/billing-invoice-history')" class="white"><span
+                    ng-bind="::loc.BP_VIEW_BILLING_HISTORY"></span></cta-button>
+        </cta-button-row>
+        <cta-button-row class="bg-white">
+            <cta-button ng-click="gotoView('/faq?expand=BILLING_PAYMENTS')" class="white"><span
+                    ng-bind="::loc.BILLING_PAYMENTS_FAQ"></span>
+            </cta-button>
+        </cta-button-row>
+    </div>
+    <billing-preferences-save-toast ng-if="preferencesSaveSuccess"></billing-preferences-save-toast>
+</div>

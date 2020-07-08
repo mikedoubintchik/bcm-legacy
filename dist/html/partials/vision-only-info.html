@@ -1,0 +1,215 @@
+<div class="col-sm-8 col-sm-offset-2 dental-only-container">
+    <div class="main-bucket top-container">
+      <!--Vision coverage-->
+      <div class="panel">
+        <div class="panel-heading">
+          <div class="panel-title blue-bar-label">
+            <label class="more-info-title" ng-bind="visionBenefitsData[0].title"></label>
+          </div>
+        </div>
+        <div>
+          <div>
+            <div class="list-messaging p3">
+              <div class="main-text" ng-bind="visionBenefitsData[0].mainText"></div>
+              <button class="btn btn-default btn-block button-view-info message-button" ng-click="openInSecureBrowser(visionBenefitsData[0].url);">
+                <span ng-bind="visionBenefitsData[0].buttonText"></span>
+                <i class="{{visionBenefitsData[0].icon}} pl2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="main-bucket bottom-container">
+      <!--More info about your plan-->
+      <div class="panel">
+        <div class="panel-heading">
+          <div class="panel-title blue-bar-label">
+            <label class="more-info-title" ng-bind="visionBenefitsData[1].title"></label>
+          </div>
+        </div>
+        <div id="subBucket">
+          <div>
+            <div ng-repeat="item in visionBenefitsData[1].buttons">
+              <button class="btn btn-default btn-block {{item.class}}" ng-if="item.ssoUrl" ng-click="openInSecureBrowser(item.ssoUrl)">
+                <span ng-bind="item.buttonText"></span>
+                <i class="{{item.icon}} pl2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!--Benefit Summary -->
+      <div class="panel">
+        <div class="panel-heading">
+          <div class="panel-title blue-bar-label">
+            <label class="more-info-title" ng-bind="visionBenefitsData[2].title"></label>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="annual-maximum-items">
+          <div class="inner-wrapper pb2">
+            <div class="sub-title-header" >
+              <div class="sub-title" ng-bind="visionBenefitsData[2].contents[0].title"></div>
+            </div>
+            <div class="data-container">
+              <div class="data-catagory" ng-bind="visionBenefitsData[2].contents[0].dataCatagory"></div>
+              <div class="data-value pt1" ng-bind-html="visionBenefitsData[2].contents[0].dataValue"></div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="annual-maximum-items" ng-if="visionPlan === 'exam'">
+          <div class="inner-wrapper pb2">
+            <div class="sub-title-header" >
+              <div class="sub-title" ng-bind="visionBenefitsData[2].contents[1].title"></div>
+            </div>
+            <div class="data-container">
+              <div class="data-catagory" ng-bind="visionBenefitsData[2].contents[1].dataCatagory"></div>
+              <div class="data-value pt1" ng-bind-html="visionBenefitsData[2].contents[1].dataValue"></div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="annual-maximum-items" ng-if="visionPlan === 'exam plus'">
+          <div class="inner-wrapper pb2">
+            <div class="sub-title-header" >
+                <div class="sub-title" ng-bind="visionBenefitsData[2].contents[1].title"></div>
+            </div>
+            <div ng-repeat="item in visionBenefitsData[2].contents[1].data track by $index">
+              <div class="data-container">
+                <div class="data-catagory" ng-bind="item.dataCatagory"></div>
+                <div class="data-value pt1" ng-bind-html="item.dataValue"></div>
+                <hr class="mt2 mb2" ng-hide="$last">
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="annual-maximum-items" ng-if="visionPlan === 'exam'">
+          <div class="inner-wrapper pb2">
+            <div class="sub-title-header" >
+                <div class="sub-title" ng-bind="visionBenefitsData[2].contents[2].title"></div>
+            </div>
+            <div ng-repeat="item in visionBenefitsData[2].contents[2].data track by $index">
+              <div class="data-container">
+                <div class="data-catagory" ng-bind="item.dataCatagory"></div>
+                <div class="data-value pt1" ng-bind-html="item.dataValue"></div>
+                <hr class="mt2 mb2" ng-hide="$last">
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="annual-maximum-items" ng-if="visionPlan === 'exam plus'">
+          <div class="inner-wrapper pb2">
+            <div class="sub-title-header" >
+                <div class="sub-title" ng-bind="visionBenefitsData[2].contents[2].title"></div>
+            </div>
+            <div ng-repeat="item in visionBenefitsData[2].contents[2].data track by $index">
+              <div class="data-container">
+                <div class="data-catagory" ng-bind="item.dataCatagory"></div>
+                <div class="data-value pt1" ng-bind-html="item.dataValue"></div>
+                <hr class="mt2 mb2" ng-hide="$last">
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="annual-maximum-items" ng-if="visionPlan === 'exam'">
+          <div class="inner-wrapper pb2">
+            <div class="sub-title-header" >
+              <div class="sub-title" ng-bind="visionBenefitsData[2].contents[3].title"></div>
+            </div>
+            <div class="data-container">
+              <div class="data-catagory" ng-bind="visionBenefitsData[2].contents[3].dataCatagory"></div>
+              <div class="data-value pt1" ng-bind-html="visionBenefitsData[2].contents[3].dataValue"></div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="annual-maximum-items" ng-if="visionPlan === 'exam plus'">
+          <div class="inner-wrapper pb2">
+            <div class="sub-title-header" >
+              <div class="sub-title" ng-bind="visionBenefitsData[2].contents[3].title"></div>
+            </div>
+            <div class="data-container">
+              <div class="data-catagory" ng-bind="visionBenefitsData[2].contents[3].dataCatagory"></div>
+              <div class="data-value pt1" ng-bind-html="visionBenefitsData[2].contents[3].dataValue"></div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="annual-maximum-items" ng-if="visionPlan === 'exam'">
+          <div class="inner-wrapper pb2">
+            <div class="sub-title-header" >
+              <div class="sub-title" ng-bind="visionBenefitsData[2].contents[4].title"></div>
+            </div>
+            <div class="data-container">
+              <div class="data-catagory" ng-bind="visionBenefitsData[2].contents[4].dataCatagory"></div>
+              <div class="data-value pt1" ng-bind-html="visionBenefitsData[2].contents[4].dataValue"></div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="annual-maximum-items" ng-if="visionPlan === 'exam plus'">
+          <div class="inner-wrapper pb2">
+            <div class="sub-title-header" >
+              <div class="sub-title" ng-bind="visionBenefitsData[2].contents[4].title"></div>
+            </div>
+            <div class="data-container">
+              <div class="data-catagory" ng-bind="visionBenefitsData[2].contents[4].dataCatagory"></div>
+              <div class="data-value pt1" ng-bind-html="visionBenefitsData[2].contents[4].dataValue"></div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="annual-maximum-items" ng-if="visionPlan === 'exam'">
+          <div class="inner-wrapper pb2">
+            <div class="sub-title-header" >
+              <div class="sub-title" ng-bind="visionBenefitsData[2].contents[5].title"></div>
+            </div>
+            <div class="data-container">
+              <div class="data-catagory" ng-bind="visionBenefitsData[2].contents[5].dataCatagory"></div>
+              <div class="data-value pt1" ng-bind-html="visionBenefitsData[2].contents[5].dataValue"></div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="annual-maximum-items" ng-if="visionPlan === 'exam plus'">
+          <div class="inner-wrapper pb2">
+            <div class="sub-title-header" >
+                <div class="sub-title" ng-bind="visionBenefitsData[2].contents[5].title"></div>
+            </div>
+            <div ng-repeat="item in visionBenefitsData[2].contents[5].data track by $index">
+              <div class="data-container">
+                <div class="data-catagory" ng-bind="item.dataCatagory"></div>
+                <div class="data-value pt1" ng-bind-html="item.dataValue"></div>
+                <hr class="mt2 mb2" ng-hide="$last">
+              </div>
+            </div>
+          </div>
+        </div>      
+      </div>
+  
+    </div>
+  
+    <div class="col-sm-8 col-sm-offset-2 medicare-footnotes-container vision-only-footnotes-container">
+        <div>
+          <div class="item-container">
+            <div class="item-title" ng-bind="visionBenefitsData[3].title"></div>
+            <div class="item-data top-data" ng-bind-html="visionBenefitsData[3].text1"></div>
+            <div class="item-data bottom-data mb2" ng-bind-html="visionBenefitsData[3].text2" ng-class="{'close-div': !expandedDiv, 'open-div': expandedDiv}"></div>
+            <div class="item-data bottom-data mb2" ng-bind-html="visionBenefitsData[3].text3" ng-class="{'close-div': !expandedDiv, 'open-div': expandedDiv}"></div>
+            <div class="footnotes-button" ng-click="toggleItem()">
+                <span class="footnotes-button-text" ng-bind="footnotesBottom"></span>
+                <i class="fc-plus-expand fc-lg white" ng-if="!expandedDiv"></i>
+                <i class="fc-minus-collapse fc-lg white" ng-if="expandedDiv"></i>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+  </div>

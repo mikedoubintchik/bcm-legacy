@@ -1,5 +1,5 @@
 "use strict";
 
-const BCMLegacy = require("./dist/polyglot-mf-account-settings.js");
+const BCMLegacy = require("./dist/legacy-port.js");
 
 module.exports = BCMLegacy;

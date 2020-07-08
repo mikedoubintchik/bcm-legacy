@@ -1,0 +1,6 @@
+<div class="radio-button-group">
+  <div ng-repeat="button in buttons" ng-click="toggleRadio(button, buttons)">
+    <div ng-class = "{'radio-off': button.status==false, 'radio-on':button.status==true}" value="button.value"></div>
+    <label ng-bind="button.label"></label>
+  </div>
+</div>

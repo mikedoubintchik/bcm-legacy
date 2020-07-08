@@ -1,0 +1,13 @@
+<div>
+  <p class="mb0" ng-if="policy.policyMembers.length">
+    <span ng-bind="::loc.COVERED_MEMBERS + ' - '"></span>
+    <!-- ngRepeat: member in policy.policyMembers -->
+    <span ng-repeat="member in policy.policyMembers track by $index">
+    <span class="font-weight-400" ng-bind="::member.givenName"></span>{{$last ? '' : ', '}}
+  </span><!-- end ngRepeat: member in policy.policyMembers -->
+  </p>
+  <p class="mb0" ng-if="policy.externalId">
+    <span ng-bind="loc.SUBSCRIBER_ID + ' - '"></span>
+    <span class="font-weight-400" ng-bind="::policy.alphaPrefix + policy.externalId"></span>
+  </p>
+</div>

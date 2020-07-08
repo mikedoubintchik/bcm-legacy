@@ -1,0 +1,60 @@
+<div class="policy-select nav-margin-top" ng-class="{'blur': selectOpen ? '': blurContent && !lowResDevice}" ng-show="loc && selectedPolicy">
+  <div class="policy-select-header" ng-if="!policies">
+    <div>
+      <i class="fa fa-spinner fa-pulse"></i>
+    </div>
+  </div>
+  <div class="policy-select-header" ng-click="toggleSelectOpen(selectOpen)" ng-if="policies">
+    <div class="policy-header-small-box">
+      <span ng-bind="loc.NOW_VIEWING"></span>
+    </div>
+    <div class="header-text">
+      <div style="display: inline-block; margin-bottom: -19px;">
+        <i style="display: flex;" class="" ng-class="{'fc-health-only': selectedPolicy.isMedical || selectedPolicy.isPharmacy, 'fc-dental-only': selectedPolicy.isDental, 'fc-Vision': selectedPolicy.isVision}"></i>
+      <div>
+          <h5 class="univers-cn" ng-bind="getPolicyPlanTitle(selectedPolicy)"></h5>
+          <h5 class="univers-cn" ng-bind="getPolicyDatesHeader(selectedPolicy)"></h5>
+      </div>
+    </div>
+    </div>
+    <div class="policy-header-small-box">
+      <i class="fa fa-fw fc-dropdown-reverse" ng-if="selectOpen"></i>
+      <span ng-bind="loc.CHANGE"></span>
+      <i class="fa fa-fw fc-dropdown" ng-if="!selectOpen"></i>
+    </div>
+  </div>
+  <div class="policy-select-options" ng-class="{'open': selectOpen, 'closed': selectOpen === false}" ng-if="showPolicySelect">
+    <div class="policy-select-option" ng-class="{'active': isActive(policy), 'inactive': !isActive(policy), 'future': isActiveFuture(policy)}" ng-repeat="policy in policies | orderBy:'index'" ng-click="selectPolicyFromDropdown($index, policy)">
+      <div class="policy-header">
+        <div class="policy-header-icon-container">
+          <i class="fc-overlay" ng-class="{'fc-health-only': policy.isMedical || policy.isPharmacy, 'fc-dental-only': policy.isDental, 'fc-Vision': policy.isVision}"></i>
+        </div>
+        <div class="header-text">
+          <h5 >
+            <span ng-bind="getPolicyDates(policy)"></span>
+            <span ng-class="{'inactive-text': !isActive(policy)}" ng-if="!isActive(policy)" ng-bind="(loc.INACTIVE | uppercase)"></span>
+            <span ng-class="{'future-text': isActiveFuture(policy)}" ng-if="isActiveFuture(policy)" ng-bind="(loc.FUTURE | uppercase)"></span>
+          </h5>
+          <h6 ng-bind="policy.lobDesc"></h6>
+        </div>
+      </div>
+      <div class="policy-select-details">
+        <p ng-if="policy.policyMembers.length > 0 && !policy.dependentLoggedIn">
+          <span ng-bind="loc.COVERED_MEMBERS + ' - '"></span>
+          <span ng-repeat="member in policy.policyMembers">
+            <span class="policy-select-members" ng-bind="member.givenName"></span>{{$last ? '' : ', '}}
+          </span>
+        </p>
+        <p ng-if="!policy.individual">
+          <span ng-bind="loc.GROUP + ' - '"></span>
+          <span class="policy-select-group" ng-bind="policy.groupName + ' (' + policy.groupNumber + ')'"></span>
+        </p>
+        <p>
+          <span ng-bind="loc.PRIMARY_SUBSCRIBER_ID + ' - '"></span>
+          <span class="policy-select-id" ng-bind="policy.alphaPrefix + policy.externalId"></span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="policy-select-shadow" ng-if="selectOpen" ng-click="toggleSelectOpen(true)"></div>
+</div>

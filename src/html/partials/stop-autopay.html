@@ -1,0 +1,148 @@
+<div ng-form="stopAutopayForm">
+  <payment-flow-title-bar title="{{::loc.BP_TITLE_PAYMENT_FREQUENCY}}"></payment-flow-title-bar>
+  <div class="pl4 pr4 pt4 pb4 m0 bg-lightest-gray">
+    <span ng-bind="::loc.BP_AFTER_CANCELING_AUTOPAY"></span>
+  </div>
+
+  <div ng-if="userData.preferences.billingMethod === 'NONE'">
+    <payment-flow-title-bar title="{{::loc.BP_TITLE_BILLING_METHOD}}"></payment-flow-title-bar>
+    <!-- Radio buttons and form -->
+    <pf-error-message ng-if="stopAutopayForm.$dirty && !billingMethodSelected" class="bg-lightest-gray">
+      {{::loc.BP_REQUIRED}}
+    </pf-error-message>
+    <payment-flow-radio-group group-value="billingMethodSelected">
+      <payment-flow-radio-button class="col-xs-12" value='EMAIL'>
+        <i ng-if="!userData.preferences.isAutoPay" class="fc-paperless-billing-leaf"></i>
+        <span ng-bind="loc.BP_RECEIVE_BILLS_BY_EMAIL"></span>
+      </payment-flow-radio-button>
+      <div ng-if="billingMethodSelected === 'EMAIL'" class="col-xs-12 pl4 pr4 bg-lightest-gray">
+        <pf-error-message ng-if="stopAutopayForm.memberEmail.$error.required && stopAutopayForm.memberEmail.$dirty">{{::loc.BP_REQUIRED}}</pf-error-message>
+        <pf-error-message ng-if="stopAutopayForm.memberEmail.$dirty && stopAutopayForm.memberEmail.$error.pattern">{{::loc.BP_INVALID_EMAIL_FORMAT}}</pf-error-message>
+        <payment-flow-input
+          type='email'
+          value="userData.preferences.emailAddress"
+          form-label="memberEmail"
+          title="{{::loc.BP_BILLING_EMAIL_ADDRESS}}"
+          pattern="strictEmailRegex"
+          required="billingMethodSelected === 'EMAIL'">
+        </payment-flow-input>
+      </div>
+      <payment-flow-radio-button class="col-xs-12" value="POSTAL">
+        <span ng-bind="loc.BP_CONTINUE_TO_RECEIVE_PAPER_BILLS"></span>
+      </payment-flow-radio-button>
+      <div
+        ng-if="billingMethodSelected === 'POSTAL'"
+        class="col-xs-12 pl4 pr4 bg-lightest-gray">
+        <pf-error-message ng-if="stopAutopayForm.streetAddress.$dirty && stopAutopayForm.streetAddress.$error.required">
+          {{::loc.BP_REQUIRED}}
+        </pf-error-message>
+        <payment-flow-input
+        type="text"
+        value="userData.preferences.mailingAddress.addressLine1"
+        form-label="streetAddress"
+        title="{{::loc.BP_STREET_ADDRESS}}"
+        required="billingMethodSelected === 'POSTAL'">
+        </payment-flow-input>
+        <payment-flow-input
+          type="text"
+          value="userData.preferences.mailingAddress.addressLine2"
+          title="{{::loc.BP_APARTMENT}}">
+        </payment-flow-input>
+        <pf-error-message ng-if="stopAutopayForm.state.$modelValue &&
+          stopAutopayForm.city.$modelValue &&
+          stopAutopayForm.zipcode.$viewValue &&
+          stopAutopayForm.zipcode.$error.cityStateZipMatch">
+          {{::loc.BP_COMBINATION_DOES_NOT_MATCH}}
+        </pf-error-message>
+        <div class="col-xs-6 pr1">
+          <pf-error-message ng-if="stopAutopayForm.city.$dirty && stopAutopayForm.city.$error.required">
+            {{::loc.BP_REQUIRED}}
+          </pf-error-message>
+          <payment-flow-input
+            type="text"
+            value="userData.preferences.mailingAddress.cityName"
+            form-label="city"
+            title="{{::loc.BP_CITY}}"
+            required="billingMethodSelected === 'POSTAL'">
+          </payment-flow-input>
+        </div>
+        <div class="col-xs-6 pl1">
+          <pf-error-message ng-if="stopAutopayForm.state.$dirty && stopAutopayForm.state.$error.required">
+            {{::loc.BP_REQUIRED}}
+          </pf-error-message>
+          <payment-flow-state-select
+            value="userData.preferences.mailingAddress.stateCode"
+            required="billingMethodSelected === 'POSTAL'"
+            title="{{::loc.BP_STATE}}"
+            form-label="state">
+          </payment-flow-state-select>
+        </div>
+        <pf-error-message ng-if="stopAutopayForm.zipcode.$dirty && stopAutopayForm.zipcode.$error.required">
+          {{::loc.BP_REQUIRED}}
+        </pf-error-message>
+        <pf-error-message ng-if="stopAutopayForm.zipcode.$dirty && !stopAutopayForm.zipcode.$error.required && stopAutopayForm.zipcode.$error.pattern">
+          {{::loc.BP_ZIP_CODE_MUST_BE}}
+        </pf-error-message>
+        <payment-flow-input
+          type="text"
+          number="true"
+          value="userData.preferences.mailingAddress.postalCode"
+          form-label="zipcode"
+          title="{{::loc.BP_ZIPCODE}}"
+          pattern="'\\d{5}'"
+          address-validation
+          max-length-enforce
+          max-length="5"
+          required="billingMethodSelected === 'POSTAL'">
+        </payment-flow-input>
+      </div>
+    </payment-flow-radio-group>
+    <input type="text" class="hidden" ng-model="billingMethodSelected" name="billingMethodSelected" />
+  
+    <div ng-if="billingMethodSelected === 'EMAIL'" class="flex-column paperless-agreement-container">
+      <pf-divider></pf-divider>
+      <pf-error-message ng-if="billingMethodSelected === 'EMAIL'
+        && stopAutopayForm.paperlessAgreement.$error.required
+        && stopAutopayForm.paperlessAgreement.$dirty">{{loc.BP_YOU_MUST_AGREE_TO_THE_PAPERLESS_BILLING_AGREEMENT}}</pf-error-message>
+      <pf-checkbox value="checkboxValue">
+        <p>{{loc.BP_PAPERLESS_BILLING_AGREEMENT_READ_AND_AGREE}}
+          <br>
+          <span pf-modal-open="paperlessAgreement" class="link">{{loc.BP_PAPERLESS_BILLING_AGREEMENT}}</span>
+        </p>
+      </pf-checkbox>
+      <input class="hidden"
+        type="checkbox"
+        name="paperlessAgreement"
+        ng-model="checkboxValue"
+        ng-required="billingMethodSelected === 'EMAIL'">
+      <pf-divider></pf-divider>
+      <pf-modal
+        name="paperlessAgreement"
+        modal-title="{{loc.BP_EMAIL_NOTIFICATION_AGREEMENT}}"
+        modal-button="{{loc.BP_AGREE}}"
+        agreement-button="acceptPaperlessFn()">
+        <p ng-bind="loc.BP_EMAIL_NOTIFICATION_AGREEMENT_MODAL"></p>
+        <p ng-bind="loc.BP_EMAIL_NOTIFICATION_AGREEMENT_MODAL_PREMIUM"></p>
+        <p ng-bind="loc.BP_EMAIL_NOTIFICATION_AGREEMENT_MODAL_ADDRESS"></p>
+        <p ng-bind="loc.BP_EMAIL_NOTIFICATION_AGREEMENT_MODAL_EMAIL"></p>
+        <p ng-bind="loc.BP_EMAIL_NOTIFICATION_AGREEMENT_MODAL_AUTHORIZATION"></p>
+      </pf-modal>
+    </div>
+
+  </div>
+
+  <!-- Alert message -->
+  <div ng-if="stopAutopayError" class="flex-row alert-message-colors pt2 pb2 pr4 pl2 text-center">
+    <p class="m0 alert-red" ng-bind="::loc.ERROR_DETAILS_DID_NOT_SAVE"></p>
+  </div>
+
+  <!-- Stop autopay button -->
+  <div class="pl4 pr4 pt1 pb1 m0 bg-lightest-gray">
+    <cta-button-row>
+      <cta-button ng-click="stopAutopay(stopAutopayForm)" class="red">
+        <span ng-bind="::loc.BP_STOP_AUTOPAY"></span>
+      </cta-button>
+    </cta-button-row>
+  </div>
+
+</div>

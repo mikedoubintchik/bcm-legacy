@@ -1,0 +1,55 @@
+<div class="row m0 p2">
+  <div class="col-xs-12 find-doctor-result-detail-card doctor-name" id="doctor-name-card">
+    <div class="row m0 inline-block-children p1 bg-dark-blue white" ng-click="toggleCollapse()">
+      <i class="float-left mr2"
+        ng-class="(doctorNameCardInfo.summary.providerType == 'f') ? 'fc-home-nocircle' : 'fc-provider'"></i>
+      <h6 ng-bind="::loc.RESULTS_DETAILS_NAME_CARD" class="mb0 float-left card-title title-width"></h6>
+      <i class="float-right pr1 white toggle-collapse-icon"
+        ng-class="doctorNameCardOpen ? 'fc-minus-collapse' : 'fc-plus-expand'"></i>
+    </div>
+    <div class="row m0 pl5 pr3 collapsible-section"
+      ng-class="doctorNameCardOpen ? 'contents-open': 'contents-collapsed'">
+      <h4 class="text-bold mt3 med-dark-gray doctor-name">
+        {{doctorNameCardInfo.summary.name}}{{doctorNameCardInfo.summary.degrees}}</h4>
+      <div class="find-doctor-search-results mb1"
+        ng-if="tierDetails.label && tierDetails.label !== null && !noMatchPlanFound"><span class="tier p1"
+          ng-class="tierDetails.style" ng-bind="tierDetails.label"></span></div>
+          <!--Medicare recommended flow tier label-->
+          <div class="mt2" ng-if="recommendedProviderData && recommendedFlowValue === 'true' && recommendedProviderData.vendorSource === 'Sapphire'"><span class="tier p1 blue">Select Providers</span>
+        </div>
+          <div class="mt2" ng-if="recommendedProviderData && recommendedFlowValue === 'true' && recommendedProviderData.vendorSource === 'Nuna'"><span class="p1 nuna-tier-label med-gray">Participating Providers</span>
+        </div>
+          <!--End Medicare recommended flow tier label-->
+
+      <h5 class="doctor-description mt2 med-dark-gray">
+        {{doctorNameCardInfo.summary.gender}}{{doctorNameCardInfo.summary.specialty_names}}</h5>
+      <div ng-if="doctorNameCardInfo.ChangedMySelectedPcp || (viewPcpDetailsValue && recommendedFlowValue === 'false')">
+        <hr />
+        <i class="fc-circle-check-no-border med-green mr3 float-left"></i>
+        <span ng-hide="dependentPcp" ng-bind="::loc.PCP_MEDICARE_DETAILS_THISISYOURSELECTEDPCP"></span>
+        <span ng-if="dependentPcp" ng-bind="::loc.PCP_COMMERCIAL_DEPENDENT_SELECTED_PCP_MSG"></span>
+      </div>
+      <div ng-if="doctorNameCardInfo.ChangedMyDependentSelectedPcp"
+        ng-class="{'pt2': doctorNameCardInfo.ChangedMySelectedPcp || viewPcpDetailsValue}">
+        <hr ng-hide="doctorNameCardInfo.ChangedMySelectedPcp || viewPcpDetailsValue" />
+        <i class="fc-circle-check-no-border med-green mr3 float-left"></i>
+        <span ng-bind="::loc.PCP_COMMERCIAL_DEPENDENT_SELECTED_PCP_MSG"></span>
+      </div>
+      <div
+        ng-if="doctorNameCardInfo.summary.accepting_new_patients && !doctorNameCardInfo.ChangedMySelectedPcp && (!viewPcpDetailsValue || recommendedFlowValue === 'true')">
+        <hr />
+        <i class="fc-circle-check-no-border mr3 float-left med-green"></i>
+        <p class="text-bold doctor-accepting-new-patients med-dark-gray" ng-bind="::loc.ACCEPTING_NEW_PATIENTS"></p>
+      </div>
+      <div ng-if="doctorNameCardInfo.ChangedMySelectedPcp || (viewPcpDetailsValue && recommendedFlowValue === 'false')" class="pb2">
+        <hr />
+        <span class="pcp-home-card-info-link" ng-bind="::loc.PCP_MEDICARE_DETAILS_OUTOFNETWORKPCP"
+          ng-click="openOutNetworkInformation()"
+          track-action="{action: 'pcpOutNetworkInformation', section: analyticConstants.PCP_SECTION}"></span>
+      </div>
+      <div class="mt4 mb4" ng-if="!doctorNameCardInfo.summary">
+        <h7 class="med-dark-gray" ng-bind="::loc.PROVIDER_NO_NAME_LISTED"></h7>
+      </div>
+    </div>
+  </div>
+</div>

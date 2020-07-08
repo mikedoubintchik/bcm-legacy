@@ -1,0 +1,10 @@
+<div>
+	<div class="btn-group-nav-container">
+	  <div class="btn-group-nav-item" ng-class="{'active': tab.active}" ng-repeat="tab in tabs" ng-click="tabToView(tab.url);" ng-if="tab.pageName !== 'benefits'">
+	    <div class="item-content" ng-class="tab.class" ng-bind="tab.title"></div>
+	  </div>
+		<div class="btn-group-nav-item" ng-class="{'active': tab.active}" ng-repeat="tab in tabs" ng-click="tabToView(tab.url);" track-action="{action: 'benefitsOpenNav', section: analyticConstants.BENEFITS_SECTION}" ng-if="tab.pageName === 'benefits'">
+	    <div class="item-content" ng-class="tab.class" ng-bind="tab.title"></div>
+	  </div>
+	</div>
+</div>

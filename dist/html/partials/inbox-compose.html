@@ -1,0 +1,75 @@
+<div class="message-box">
+  <form name="messageForm">
+    <div class="message-form col-sm-8 col-sm-offset-2">
+      <div class="form-group">
+        <div class="gray-bar-label">
+          <label for="inquiryType"><span ng-bind="loc.INQUIRY_TYPE"></span></label>
+          <label class="right-action"><span ng-bind="loc.REQUIRED"></span></label>
+        </div>
+        <div class="inquiry-box">
+          <select id="inquiryType" ng-class="{'first-option': !message.inquiryType[0]}" class="form-control" ng-model="message.inquiryType"  ng-options="type as loc[type] for type in inquiryTypes" ng-disabled="isReply" ng-change="switchFocus()" required>
+            <option value="" selected>{{loc.SELECT_A_TOPIC}}</option>
+          </select>
+          <i ng-class="{'fc-dropdown fc-md': !isReply}"></i>
+        <div>
+      </div>
+
+      <!--<div ng-if="message.inquiryType !== 'CANCEL_POLICY'">-->
+        <div class="form-group">
+          <div class="gray-bar-label">
+            <label for="subject"><span ng-bind="loc.SUBJECT"></span></label>
+            <label class="right-action"><span ng-bind="loc.REQUIRED"></span></label>
+          </div>
+          <input type="text" id="subject" class="form-control" ng-model="message.subject" maxlength="80" ng-disabled="isReply" placeholder="{{loc.MESSAGE_SUBJECT}}" required></input>
+        </div>
+        <div class="form-group">
+          <div class="gray-bar-label">
+            <label for="messageBody"><span ng-bind="loc.YOUR_MESSAGE"></span></label>
+            <label class="right-action"><span ng-bind="loc.REQUIRED"></span></label>
+          </div>
+          <div class="message-input">
+            <textarea id="message" autofocus class="form-control" ng-model="message.messageBody" title="Compose content" maxlength="10000" required></textarea>
+          </div>
+        </div>
+      
+      <!--</div>-->
+
+      <!--<div ng-if="message.inquiryType == 'CANCEL_POLICY'">
+        <div class="form-group">
+          <div class="gray-bar-label">
+            <label for="subject">Effective Date</label>
+            <label class="right-action"><span ng-bind="loc.REQUIRED"></span></label>
+          </div>
+          <input type="date" id="subject" class="form-control" ng-model="message.effDate" maxlength="80" required></input>
+        </div>
+        <div class="form-group">
+          <div class="gray-bar-label">
+            <label for="termPolicy">Select Policy to Terminate</label>
+            <label class="right-action"><span ng-bind="loc.REQUIRED"></span></label>
+          </div>
+          <div class="inquiry-box">
+            <select id="termPolicy" class="form-control" ng-model="message.termPolicy" ng-disabled="isReply" required>
+              <option ng-repeat="option in policies" value="{{option.index}}">{{option.effectiveDatesString}} - {{option.lobDesc}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="gray-bar-label">
+            <label for="membersToTerminate">Select Members to be Terminated</label>
+            <label class="right-action"><span ng-bind="loc.REQUIRED"></span></label>
+          </div>
+          <input type="text" id="membersToTerminate" class="form-control" ng-model="message.membersToTerminate" maxlength="80" required></input>
+        </div>
+        <div class="form-group">
+          <div class="gray-bar-label">
+            <label for="termReason"></span>Describe Reason for Termination</label>
+            <label class="right-action"><span ng-bind="loc.REQUIRED"></span></label>
+          </div>
+          <div class="message-input">
+            <textarea class="form-control" ng-model="message.termReason" title="Compose content" maxlength="10000" required></textarea>
+          </div>
+        </div>
+      </div>-->
+    </div>
+  </form>
+</div>

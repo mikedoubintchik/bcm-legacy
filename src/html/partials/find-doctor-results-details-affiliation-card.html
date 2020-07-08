@@ -1,0 +1,40 @@
+<div class="row m0 p2">
+  <div class="col-xs-12 find-doctor-result-detail-card doctor-name">
+    <div class="row m0 inline-block-children p1 bg-dark-blue white" ng-click="toggleItem()">
+      <i class="fc-group float-left mr2"></i>
+      <h6 ng-bind="::loc.RESULTS_DETAILS_AFFILIATIONS_CARD" class="mb0 float-left card-title title-width"></h6>
+      <i class="float-right pr1 white toggle-collapse-icon" ng-class="affiliationsCardOpen ? 'fc-minus-collapse' : 'fc-plus-expand'"></i>
+    </div>
+    <div class="row m0 pl5 pr3 collapsible-section" ng-class="affiliationsCardOpen ? 'contents-open': 'contents-collapsed'">
+      <div class="affiliation-data">
+        <!-- Affiliates -->
+        <div class="mt4 mb4" ng-if="!affiliations.length">
+          <h7 class="med-dark-gray" ng-bind="::loc.PROVIDER_NO_AFFILIATIONS_LISTED"></h7>
+        </div>
+        <div class="row m0 p0" ng-repeat="affiliate in affiliations" ng-click="viewDetailsOfAffiliate(affiliate)">
+          <div class="col-xs-10 mt3">
+            <h4 class="mt2 med-dark-gray location-name">{{affiliate.name}}</h4>
+          </div>
+          <div class="col-xs-2 mt2 mb2 pl2 flex-center-icon">
+            <i class="fa fa-caret-right light-gray p3 pr1"></i>
+          </div>
+          <div class="col-xs-12 m0">
+            <hr class="m0" ng-show="!$last">
+          </div>
+        </div>
+        <!-- Show message for all affiliations -->
+        <div class="med-blue more-affiliations" ng-click="toggleOtherAffiliations()" ng-if="otherAffiliations.length">
+          <div class="mt2 mb2">
+            <span>{{loadMoreAffiliationsMessage}}</span>
+            <i class="fa fa-fw mt1 fc-dropdown light-gray" ng-if="!showOtherAffiliations"></i>
+            <i class="fa fa-fw mt1 fc-dropdown-reverse light-gray" ng-if="showOtherAffiliations"></i>
+          </div>
+        </div>
+      </div>
+      <div class="mt3 mb3 affiliation-card-loading-spinner">
+        <div class="spinner">
+          <i class="fa fa-2x fa-spinner fa-pulse"></i>
+        </div>
+      </div>
+    </div>
+  </div>

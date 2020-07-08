@@ -1,0 +1,17 @@
+<div>
+  <div class="claim-bottom-bar-space"></div>
+  <nav class="navbar navbar-fixed-bottom navbar-light bg-faded bottom-bar">
+    <div class="navbar-header-item text-center compose-nav-border">
+      <button class="navbar-toggler med-light-blue" type="button" ng-click="gotoView('/help')" track-action="{action: 'claimDetails:Help', section: analyticConstants.CLAIMS_SECTION}">
+        <i class="fc-utility-help"></i>
+        <p class="bottom-btn"><span ng-bind="loc.HELP"></span></p>
+      </button>
+    </div>
+    <div class="navbar-header-item text-center">
+      <button class="navbar-toggler med-light-blue" type="button" ng-click="shareClaim()" track-action="{action: 'claimDetails:share', section: analyticConstants.CLAIMS_SECTION}">
+        <i ng-class="{'fc-utility-share': $root.device === 'Android' || 'amazon-fireos', 'fc-utility-share-ios': $root.device === 'iOS'}"></i>
+        <p class="bottom-btn"><span ng-bind="loc.SHARE"></span></p>
+      </button>
+    </div>
+  </nav>
+</div>

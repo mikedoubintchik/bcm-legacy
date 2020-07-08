@@ -1,0 +1,26 @@
+<nav class="navbar navbar-dark bg-primary basic-navbar" ng-class="{'basic-navbar-dark': navbarDetails.dark, 'basic-navbar-margin': navbarDetails.capra}">
+  <div class="navbar-header-item" ng-if="navbarDetails.leftNavButton">
+    <button class="navbar-toggler" id="navbar-left-click" type="button" ng-click="onLeftClick()">
+      <i class="fc-{{navbarDetails.leftNavButton.icon}} fc-lg" ng-class="{'white-forty': $root.messageSending}"></i>
+    </button>
+  </div>
+  <div class="navbar-header-item invisible" ng-if="!navbarDetails.leftNavButton">
+    <button class="navbar-toggler" type="button">
+      <i class="fc-circlefill fc-lg disable-nav-btn"></i>
+    </button>
+  </div>
+  <div class="navbar-header-item full-width text-center">
+    <a class="navbar-brand full-width" ng-bind="navbarDetails.title" ng-if="!navbarDetails.image"></a>
+    <img class="navbar-menu-header-image health-nav-logo" ng-src="images/{{navbarDetails.image}}" ng-if="navbarDetails.image"></img>
+  </div>
+  <div class="navbar-header-item" ng-if="navbarDetails.rightNavButton">
+    <button class="navbar-toggler" type="button" ng-click="onRightClick()">
+      <i class="fc-{{navbarDetails.rightNavButton.icon}} fc-lg" ng-class="{'white-forty': $root.messageSending}"></i>
+    </button>
+  </div>
+  <div class="navbar-header-item invisible" ng-if="!navbarDetails.rightNavButton">
+    <button class="navbar-toggler" type="button">
+      <i class="fc-circlefill fc-lg"></i>
+    </button>
+  </div>
+</nav>

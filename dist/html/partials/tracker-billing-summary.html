@@ -1,0 +1,88 @@
+<div class="tracker-billing-summary pl4 pr4 pb3">
+    <div id="accordion">
+        <div class="panel">
+            <div ng-if="trackerBillingData.currentInvoice.totalDueAmount > 0 && trackerBillingData.currentInvoice.balanceForwardAmount == 0">
+                <div class="panel-heading" ng-click="toggleItem()">
+                    <div class="panel-title">
+                        <div class="text-center">
+                            <div class="show-hide-billling univers-cn" ng-if="(expandedDiv)">
+                                <strong ng-bind="loc.BP_BILLING_SUMMARY_HIDE"></strong></div>
+                            <div class="show-hide-billling univers-cn" ng-if="(!expandedDiv)">
+                                <strong ng-bind="loc.BP_BILLING_SUMMARY_SHOW"></strong></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="accordionItems" ng-class="{'open-div': expandedDiv, 'close-div': !expandedDiv}">
+                    <div class="small-margin-top font-univers-420">
+                        <div class="pt3 balanceAmount">
+                            <span ng-if="(trackerBillingData.currentInvoice.totalDueAmount > 0 && trackerBillingData.currentInvoice.balanceForwardAmount == 0)" ng-bind="loc.CURRENT_AMOUNT_DUE"></span>
+                            <span ng-bind="'(' + trackerBillingData.currentInvoice.billingPeriodStart"></span> - <span ng-bind="trackerBillingData.currentInvoice.billingPeriodEnd + ')'"></span></div>
+                        <div class="pb3 amount">
+                            <strong ng-if="trackerBillingData.currentInvoice.totalDueAmount > 0 && trackerBillingData.currentInvoice.balanceForwardAmount == 0" ng-bind="padAmt(trackerBillingData.currentInvoice.totalDueAmount)"></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="(trackerBillingData.currentInvoice.balanceForwardAmount > 0 || (trackerBillingData.reinstatementAmount > 0))">
+                <div class="panel-heading" ng-click="toggleItem()">
+                    <div class="panel-title">
+                        <div class="pt3 text-center">
+                            <!-- will need to add a conditional for past due also -->
+                            <div class="show-hide-billling univers-cn" ng-if="(!expandedDiv || expandedDiv==false)">
+                                <strong ng-bind="loc.BP_BILLING_SUMMARY_HIDE"></strong></div>
+                            <div class="show-hide-billling univers-cn" ng-if="(expandedDiv || expandedDiv==true)">
+                                <strong ng-bind="loc.BP_BILLING_SUMMARY_SHOW"></strong></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="accordionItems"
+                     ng-class="{'open-div': (trackerBillingData.currentInvoice.balanceForwardAmount > 0 || (trackerBillingData.reinstatementAmount > 0) || expandedDiv), 'close-div': ((trackerBillingData.currentInvoice.totalDueAmount > 0 && trackerBillingData.currentInvoice.balanceForwardAmount == 0) || expandedDiv==true)}">
+                    <div class="font-univers-420">
+                        <!-- current amount due -->
+                        <div class="pt3 font-univers-420">
+                            <div class="balanceAmount">
+                                <span ng-bind="loc.CURRENT_AMOUNT_DUE"></span>
+                                <span ng-bind="'(' + trackerBillingData.currentInvoice.billingPeriodStart"></span> - <span ng-bind="trackerBillingData.currentInvoice.billingPeriodEnd + ')'"></span>
+                            </div>
+                            <div class="pb3 amount">
+                                <strong ng-bind="padAmt(trackerBillingData.currentInvoice.billedAmount)"></strong>
+                            </div>
+                        </div>
+                        <!-- processing payment -->
+                        <div class="col-xs-12 payment-processing dark-green" ng-if="trackerBillingData.isPaymentProcessing">
+                            <div class="balanceAmount font-italic">
+                                <span ng-bind="::loc.BP_PREVIOUS_AMOUNT_DUE"></span>
+                                <span ng-bind="'(' + trackerBillingData.previousPeriodStart"></span> - <span ng-bind="trackerBillingData.previousPeriodEnd + ')'"></span>
+                            </div>
+                            <div class="pb3 amount">
+                                <span ng-bind="padAmt(trackerBillingData.currentInvoice.balanceForwardAmount)"></span>
+                                (<i class="fa fa-1x fc-pending mr2" aria-hidden="true"></i><strong ng-bind="loc.BP_PROCESSING_PAYMENT"></strong>)
+                            </div>
+                        </div>
+                        <div ng-if="!trackerBillingData.isPaymentProcessing">
+                            <div class="pt3 balanceAmount"><span class="alert-red" ng-if="(trackerBillingData.currentInvoice.balanceForwardAmount > 0 || trackerBillingData.reinstatementAmount > 0)"
+                                       ng-bind="loc.BP_PAST_DUE_AMOUNT"></span><span
+                                    ng-if="(trackerBillingData.currentInvoice.totalDueAmount > 0 && trackerBillingData.currentInvoice.balanceForwardAmount == 0)"
+                                    ng-bind="loc.CURRENT_AMOUNT_DUE"></span><span
+                                    ng-class="{'alert-red':(trackerBillingData.currentInvoice.balanceForwardAmount > 0 || trackerBillingData.reinstatementAmount > 0)}"
+                                    ng-bind="' (' + trackerBillingData.previousPeriodStart + ' - '"></span><span
+                                    ng-class="{'alert-red':(trackerBillingData.currentInvoice.balanceForwardAmount > 0 || trackerBillingData.reinstatementAmount > 0)}"
+                                    ng-bind="trackerBillingData.previousPeriodEnd + ')'"></span>
+                            </div>
+                            <div class="pb3 amount alert-red"><strong
+                                    ng-if="trackerBillingData.currentInvoice.totalDueAmount > 0 && trackerBillingData.currentInvoice.balanceForwardAmount == 0"
+                                    ng-bind="padAmt(trackerBillingData.currentInvoice.totalDueAmount)"></strong><strong
+                                    ng-if="trackerBillingData.currentInvoice.balanceForwardAmount > 0"
+                                    ng-bind="padAmt(trackerBillingData.currentInvoice.balanceForwardAmount)"></strong><strong
+                                    ng-if="trackerBillingData.reinstatementAmount > 0"
+                                    ng-bind="padAmt(trackerBillingData.reinstatementAmount)"></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

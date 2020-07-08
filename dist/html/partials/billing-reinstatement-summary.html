@@ -1,0 +1,26 @@
+<div class="flex-row flex-center-center alert-red mt2">
+  <h3><i class="fc fa-2x fc-circleoutline-warning p0 pl2 pr2"></i></h3>
+  <h3>
+    <span class="half-width-xs" ng-bind="::loc.BP_POLICY_TERMINATED"></span>
+  </h3>
+</div>
+<p class="alert-red text-center" ng-bind="::loc.BP_REINSTATEMENT_TERMINATED"></p>
+<div ng-if="reinstatementEligible && reinstatementAmount > 0" class="text-left ml2 mr2 pt2 pb2 univers black row">
+  <p>
+    <span ng-bind="::loc.BP_PAY_TOTAL_REINSTATEMENT_AMOUNT"></span>
+    <span ng-bind="::loc.BP_PAY_TOTAL_REINSTATEMENT_AMOUNT_LINE2"></span>
+  </p>
+  <p>
+    <span ng-bind="::loc.BP_REINSTATEMENT_QUESTIONS"></span>
+    <span class="link fc-es" ng-click="gotoView('/customer-service')" ng-bind="::' ' + loc.APP_FEEDBACK_CUSTOMER_SERVICE + '.'"></span>
+  </p>
+</div>
+
+<div ng-if="reinstatementEligible === false" class="text-left ml2 mr2">
+  <p>
+    <span ng-bind="::loc.BP_CALL_FOR_INFORMATION"></span>
+    <span ng-if="onHomePage === true && !isPolicyTerminated" ng-bind="::loc.APP_FEEDBACK_CUSTOMER_SERVICE"></span>
+    <span ng-if="onHomePage === false && !isPolicyTerminated" class="call-customer-service-link med-blue" ng-click="gotoView('/customer-service')" ng-bind="::loc.APP_FEEDBACK_CUSTOMER_SERVICE"></span>
+    <span ng-bind="::loc.BP_CALL_FOR_INFORMATION_LINE2"></span>
+  </p>
+</div>

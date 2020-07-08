@@ -1,0 +1,12 @@
+<div class="id-card-info-container">
+  <div class="gray-box id-card-info" ng-if="noImages">
+    <dynamic-help-icon class="id-card-help" info="imageTypes[1].infoHtml"></dynamic-help-icon>
+      <table class="id-card-info-text">
+        <tr class="id-card-icon" ng-repeat="type in imageTypes[0].images">
+          <td class="id-card-image-icon"><i class="fc-{{type.icon}} fc-lg2"></i></td>
+          <td class="id-card-image-name" ng-bind="type.title"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

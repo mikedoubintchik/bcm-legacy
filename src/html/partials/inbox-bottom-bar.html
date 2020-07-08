@@ -1,0 +1,14 @@
+<nav class="navbar navbar-fixed-bottom navbar-light bg-faded bottom-bar">
+  <div class="navbar-header-item text-center compose-nav-border">
+    <button class="navbar-toggler med-light-blue" type="button" ng-click="gotoView('/inbox/search')" track-action="{action: 'inbox:search', section: analyticConstants.INBOX_SECTION}">
+      <i class="fc-utility-search fc-sm"></i>
+      <p class="bottom-btn"><span ng-bind="loc.SEARCH"></span></p>
+    </button>
+  </div>
+  <div class="navbar-header-item text-center">
+    <button class="navbar-toggler med-light-blue" type="button" ng-click="gotoView('/inbox/compose' + '?returnTo=' + returnPath)" track-action="{action: 'inbox:compose', section: analyticConstants.INBOX_SECTION}">
+      <i class="fc-utility-compose fc-sm"></i>
+      <p class="bottom-btn"><span ng-bind="loc.COMPOSE"></span></p>
+    </button>
+  </div>
+</nav>

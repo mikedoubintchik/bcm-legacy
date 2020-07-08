@@ -1,0 +1,87 @@
+<div class="feedback-content col-xs-12 col-sm-8 col-sm-offset-2" ng-class="{'android-scroll': device==='Android'}">
+
+	<form name="feedbackForm" class="feedback-form" ng-submit="submitFeedback(feedbackForm.$valid)" novalidate>
+		<p class="blue-box">
+			<span ng-bind="data.experienceText"></span>
+		</p>
+
+		<div class="blue-box">
+			<div class="stars">
+				<div class="star" ng-click="setExperience(1)" ng-class="{active: data.experience>=1}">
+					<i class="fa fa-star" aria-hidden="true"><i class="fa fa-star" aria-hidden="true"></i></i>
+				</div>
+				<div class="star" ng-click="setExperience(2)" ng-class="{active: data.experience>=2}">
+					<i class="fa fa-star" aria-hidden="true"><i class="fa fa-star" aria-hidden="true"></i></i>
+				</div>
+				<div class="star" ng-click="setExperience(3)" ng-class="{active: data.experience>=3}">
+					<i class="fa fa-star" aria-hidden="true"><i class="fa fa-star" aria-hidden="true"></i></i>
+				</div>
+				<div class="star" ng-click="setExperience(4)" ng-class="{active: data.experience>=4}">
+					<i class="fa fa-star" aria-hidden="true"><i class="fa fa-star" aria-hidden="true"></i></i>
+				</div>
+				<div class="star" ng-click="setExperience(5)" ng-class="{active: data.experience>=5}">
+					<i class="fa fa-star" aria-hidden="true"><i class="fa fa-star" aria-hidden="true"></i></i>
+				</div>
+			</div>
+		</div>
+
+		<div ng-repeat="question in data.questions" data-question="{{$index}}">
+			<p class="blue-box">
+				<span ng-bind="question.questionVariableName"></span>
+			</p>
+
+			<div class="box">
+				<label for="{{question.uniqueSelector}}-topic">
+					<span ng-bind="question.selectTopicText"></span>
+				</label>
+					<select class="{{question.uniqueSelector}}-topic" id="{{question.uniqueSelector}}-topic"
+						ng-model="value"
+						ng-options="option.value as option.text for option in question.topics"
+						required>
+						<option disabled selected value="">{{question.selectOptionText}}</option>
+					</select>
+          			<div class="dropdown-icon"><i class="fc-dropdown fc-md"></i></div>
+			</div>
+
+			<div class="blue-box">
+				<label for="{{question.uniqueSelector}}-comment">
+					<span ng-bind="question.feedbackYourCommentsText"></span>
+				</label>
+				<textarea minlength="1" maxlength=300 id="{{question.uniqueSelector}}-comment" class="{{question.uniqueSelector}}-comment" ng-model="question.chosenComment" required></textarea>
+			</div>
+		</div>
+
+		<div class="blue-box">
+			<div class="feedback-warning" ng-show="feedbackForm.$submitted && feedbackForm.yourEmailAddress.$invalid">
+				<p ng-show="feedbackForm.yourEmailAddress.$error.required"><span ng-bind="data.requiredText"></span></p>
+				<p ng-show="feedbackForm.yourEmailAddress.$error.email"><span ng-bind="data.invalidEmailFormatText"></span></p>
+			</div>
+			<label for="yourEmailAddress">
+				<span ng-bind="data.yourEmailText"></span>
+			</label>
+			<input type="email" id="yourEmailAddress" name="yourEmailAddress" ng-model="data.yourEmailAddress" required>
+		</div>
+
+		<div class="feedback-warning" ng-show="feedbackForm.$submitted && feedbackForm.$invalid">
+			<p><span ng-bind="data.warningText"></span></p>
+		</div>
+
+		<button track-action="{action: 'feedbackSubmitted', section: analyticConstants.HELP_SECTION}">
+			<span ng-bind="data.submitText"></span>
+		</button>
+	</form>
+
+
+	<div class="feedback-thankyou" ng-class="{'android-margin': device==='Android'}">
+		<h5>
+			<span ng-bind="data.thankYouText"></span>
+		</h5>
+		<h6>
+			<span ng-bind="data.appreciateText"></span>
+		</h6>
+		<button ng-click="formDone()">
+			<span ng-bind="data.doneText"></span>
+		</button>
+	</div>
+
+</div>

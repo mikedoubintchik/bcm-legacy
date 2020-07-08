@@ -1,0 +1,21 @@
+<div class="col-sm-8 col-sm-offset-2 medicare-more-info-container">
+  <list-messaging class="medicare-error-message" ng-bind="loc.MED_INFO_ABOUT_PLAN_NO_LONGER_AVAILABLE" ng-if="medicareMoreInformationPdfDetails.policy[medicareMoreInformationPdfDetails.policyIndex].active == false"></list-messaging>
+  <div id="accordion" class="more-info-container" ng-if="medicareMoreInformationPdfDetails.policy.active == true">
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <label class="more-info-title" ng-bind="medicareMoreInformationPdfDetails.mainTitle"></label>
+          <help-icon header="medicareMoreInformationPdfDetails.glossaryHeader" class="coverage-help" file-name="'help/benefits-medicare-help'"></help-icon>
+        </div>
+      </div>
+      <div id="accordionItems" ng-repeat="item in medicareMoreInformationPdfDetails.mainData" class="open-div more-info-pdf-container">
+        <div>
+          <button class="button-pdf" ng-click="openInBrowser(item.url)" >
+            <span ng-bind="item.title"></span>
+            <i class="{{item.icon}}"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

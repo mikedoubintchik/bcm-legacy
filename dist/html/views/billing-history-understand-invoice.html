@@ -1,0 +1,133 @@
+<div class="payment-container bg-dark-blue">
+    <basic-navbar class="basic-navbar-dark" navbar-details="navbarDetails.display" left-click="gotoView('/billing-invoice-history')" right-click="basicNavbarRightClick()"></basic-navbar>
+    <div ng-form="billingHistoryUnderstandInvoiceForm" id="pf-scrollable-section" class="policy-header-margin bg-dark-blue payment-flow-phone-scroll univers-cn white pl4 pr4">
+    <p id="top"><h4 class="univers-cn white"  ng-bind="::loc.BP_UNDERSTANDING_INVOICE"></h4></p>
+    <p ng-bind="::loc.BP_INVOICE_MAY_LOOK_DIFFERENT"></p>
+    <p><a class="univers-cn white understand-invoice" ng-click="gotoAnchor('medicare')" ng-bind="::loc.BP_INVOICE_MEDICARE_TERMS_ANCHOR"></a></p>
+    <img ng-click="gotoAnchor('info')" src="images/billing-invoice-1.png" width="100%" alt=""/>
+    <img ng-click="gotoAnchor('summary')" src="images/billing-invoice-2.png" width="100%" alt=""/>
+    <img ng-click="gotoAnchor('payment')" src="images/billing-invoice-3.png" width="100%" alt=""/>
+    <p></p>
+    <p><a class="univers-cn white understand-invoice" ng-click="gotoAnchor('top')" ng-bind="::loc.BP_BACK_TO_TOP"></a></p>
+    <span class= "row">
+      <h4 class="col-xs-1 bg-med-light-blue univers-cn white text-center pt1">1</h4>
+      <h4 class="col-xs-11 univers-cn white pl2" id="info" ng-bind="::loc.BP_INVOICE_INFO_SECTION"></h4>
+    </span>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_SUBSCRIBER_NAME"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_SUBSCRIBER_NAME_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_GROUP_NUMBER"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_GROUP_NUMBER_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_SUBSCRIBER_NUMBER"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_SUBSCRIBER_NUMBER_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_BILLING_GENERATED"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_BILLING_GENERATED_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_PAID_THROUGH"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_PAID_THROUGH_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_PAYMENT_DUE"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_PAYMENT_DUE_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_BILLING_PERIOD"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_BILLING_PERIOD_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_GRACE_PERIOD"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_GRACE_PERIOD_DEF"></span>
+    </p>
+    <p ng-bind="::loc.BP_INVOICE_GRACE_PERIOD_DEF2"></p>
+    <p><a class="univers-cn white understand-invoice" ng-click="gotoView('/faq?expand=BILLING_PAYMENTS')" ng-bind="::loc.BP_BILLING_PAYMENT_FAQ"></a></p>
+    <p><a class="univers-cn white understand-invoice" ng-click="gotoAnchor('top')" ng-bind="::loc.BP_BACK_TO_TOP"></a></p>
+    <p><pf-divider class="light-gray"></pf-divider></p>
+    <span class="row">
+      <h4 class="col-xs-1 bg-med-light-blue univers-cn white text-center pt1">2</h4>
+      <h4 class="col-xs-11 univers-cn white pl2" id="summary" ng-bind="::loc.BP_INVOICE_SUMMARY_SECTION"></h4>
+    </span>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_SUMMARY_VIEW"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_SUMMARY_VIEW_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_RETROACTIVITY"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_RETROACTIVITY_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_CURRENT_BILLING_PERIOD"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_CURRENT_BILLING_PERIOD_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_BALANCE_FORWARD"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_BALANCE_FORWARD_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_TOTAL_AMOUNT_DUE"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_TOTAL_AMOUNT_DUE_DEF"></span>
+    </p>
+    <p><a class="univers-cn white understand-invoice" ng-click="gotoAnchor('top')" ng-bind="::loc.BP_BACK_TO_TOP"></a></p>
+    <p><pf-divider class="light-gray"></pf-divider></p>
+    <span class= "row">
+      <h4 class="col-xs-1 bg-med-light-blue univers-cn white text-center pt1">3</h4>
+      <h4 class="col-xs-11 univers-cn white pl2" id="payment" ng-bind="::loc.BP_INVOICE_PAYMENT_SECTION"></h4>
+    </span>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_PAYMENT_COUPON"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_PAYMENT_COUPON_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_BILLING_ADDRESS"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_BILLING_ADDRESS_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_PAYMENT_COVERS"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_PAYMENT_COVERS_DEF"></span>
+    </p>
+    <p id="medicare" ng-bind="::loc.BP_INVOICE_MEDICARE_TERMS"></p>
+    <img src="images/billing-coupon1.png" width="100%" alt=""/>
+    <p></p>
+    <img src="images/billing-coupon2.png" width="100%" alt=""/>
+    <p></p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_MEMBER_ID_NUMBER"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_MEMBER_ID_NUMBER_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_GROUP_NUMBER"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_GROUP_NUMBER_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_AMOUNT_BILLED"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_AMOUNT_BILLED_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_BILLING_PERIOD"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_BILLING_PERIOD_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_LATE_ENROLLMENT"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_LATE_ENROLLMENT_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_BALANCE_FORWARD"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_BALANCE_FORWARD_DEF"></span>
+    </p>
+    <p>
+      <span ng-bind="::loc.BP_INVOICE_TOTAL_AMOUNT_DUE"></span><br/>
+      <span ng-bind="::loc.BP_INVOICE_TOTAL_AMOUNT_DUE_DEF"></span>
+    </p>
+    <cta-button-row class="bg-dark-blue">
+        <cta-button class="blue" type="button" ng-click="gotoView('/billing-invoice-history')">
+            <span ng-bind="::loc.BP_RETURN_PAYMENT_HISTORY"></span>
+        </cta-button>
+    </cta-button-row>
+    </div>
+</div>

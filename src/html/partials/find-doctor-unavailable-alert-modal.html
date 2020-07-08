@@ -1,0 +1,20 @@
+<div class="modal fad-unavailable-alert-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-modal-header">
+                <button type="button" class="close" ng-click="alertModal.result()">
+                    <i class="fc-close fc-lg" id="closeButton"></i>
+                </button>
+                <h4 class="modal-title" ng-bind="alertModal.title"></h4>
+            </div>
+            <div class="modal-body alert-modal-body">
+                <div class="alert-text-wrapper fd-distance-alert">
+                    <div><label class="blockedMsg-l" ng-bind="alertModal.message"></label></div>
+                </div>
+                <div class="confirm-btn" ng-click="alertModal.result()"
+                    ng-bind="alertModal.confirmBtn"></div>
+            </div>
+            
+        </div>
+    </div>
+</div>

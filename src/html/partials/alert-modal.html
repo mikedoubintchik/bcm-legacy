@@ -1,0 +1,19 @@
+<div class="modal alert-modal" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div ng-class="{'modal-header-dark': alertModal.style === 'dark',  'modal-header': alertModal.style !== 'dark'}">
+        <button type="button" class="close" ng-click="alertModal.result(false)">
+          <i class="fc-close fc-lg"></i>
+        </button>
+        <h4 class="modal-title" ng-bind="alertModal.title"></h4>
+      </div>
+      <div ng-class="{'modal-body-dark': alertModal.style === 'dark',  'modal-body': alertModal.style !== 'dark'}" ng-if="alertModal.body">
+        <div class="alert-text-wrapper" ng-bind-html="alertModal.body"></div>
+      </div>
+      <div ng-class="{'modal-footer-dark': alertModal.style === 'dark',  'modal-footer': alertModal.style !== 'dark'}">
+        <div class="alert-btn alert-btn-50 cancel-btn" ng-class="{'alert-btn-red': alertModal.cancelButton.color === 'red', 'alert-btn-blue': alertModal.cancelButton.color === 'blue', 'alert-btn-green': alertModal.cancelButton.color === 'green'}" ng-click="alertModal.result()" ng-bind="alertModal.cancelButton.title" ng-if="alertModal.cancelButton"></div>
+        <div class="alert-btn confirm-btn" ng-class="{'alert-btn-red': alertModal.confirmButton.color === 'red', 'alert-btn-blue': alertModal.confirmButton.color === 'blue', 'alert-btn-green': alertModal.confirmButton.color === 'green','alert-btn-50': alertModal.cancelButton}" ng-click="alertModal.result(true)" ng-bind="alertModal.confirmButton.title || loc.OK || loc.SEND"></div>
+      </div>
+    </div>
+  </div>
+</div>

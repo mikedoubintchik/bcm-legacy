@@ -1,0 +1,29 @@
+<div class="modal fad-refine-search-modal" id="refine-search-modal" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="alertModal.result(false)">
+                    <i class="fc-close fc-lg" id="closeButton"></i>
+                </button>
+                <h4 class="modal-title"><span ng-bind="alertModal.modalTitle"></span></h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert-text-wrapper fd-distance-alert">
+                    <div class="text"><span ng-bind="alertModal.modalText"></span></div>
+                    <cta-button ng-show="alertModal.peoplePlacesLength" ng-click="alertModal.result('peoplePlaces')" class="mt1 white text-center bold-text">
+                        <span ng-bind="alertModal.peoplePlacesButton.title"></span>&nbsp;
+                        "<span ng-bind="query"></span>"
+                    </cta-button>
+                    <cta-button ng-show="alertModal.specialistsWhoLength" ng-click="alertModal.result('specialistsWho')" class="mt1 white text-center bold-text">
+                        <span ng-bind="alertModal.specialistButton.title"></span>&nbsp;
+                        "<span ng-bind="query"></span>"
+                    </cta-button>
+                    <cta-button ng-show="alertModal.providersPerformLength" ng-if="loggedIn && !medicareUser" ng-click="alertModal.result('providersPerform')" class="mt1 white text-center bold-text">
+                        <span ng-bind="alertModal.procedureButton.title"></span>&nbsp;
+                        "<span ng-bind="query"></span>"
+                    </cta-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="home-card home-card-inbox" id="live-chat-home-card">
+  <div class="home-card-header" ng-click="gotoView('/inbox')"
+    track-action="{action: 'homeSecureInbox', section: analyticConstants.HOME_SECTION}">
+    <div>
+      <h3>
+        <i class="fc-circlefill fc-xl fc-underlay white"></i>
+        <i class="fc-circle-chat fc-xl fc-overlay"></i>
+      </h3>    
+    </div>
+    <div class="home-card-header-text">
+        <p><strong ng-bind="loc.LIVE_CHAT_CHAT"></strong></p>
+      </div>
+  </div>
+  <div class="home-card-body">
+    <div class="home-card-chat-body">
+      <span ng-bind="loc.LIVE_CHAT_DESCRIPTION"></span>
+    </div>
+    <div class="small-padding">
+        <button  id="live-chat-available-button" token="{{chatButtons[0].token}}"
+        class="btn btn-default btn-block ng-binding ng-scope" ng-click="startChat(chatButtons[0].token)"
+        track-action="{action: 'homeChatStarted', section: analyticConstants.HOME_SECTION}">
+        <span ng-bind="loc.LIVE_CHAT_CHAT_NOW"></span>
+      </button>
+      <button id="live-chat-not-available-button" token="{{chatButtons[0].token}}"
+        style="display:none" class="btn btn-default btn-block ng-binding ng-scope" ng-click="liveChatAlert()"
+        track-action="{action: 'homeChatNotAvailable', section: analyticConstants.HOME_SECTION}">
+        <span ng-bind="loc.LIVE_CHAT_CHAT_NOW"></span>
+      </button>
+      </div>
+    </div>
+</div>

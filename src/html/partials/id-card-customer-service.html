@@ -1,0 +1,14 @@
+<div class="help-item-group id-card-customer-service-bottom" ng-class="contactDetails.buttons[0].class">
+  <div class="blue-bar-label">
+    <label ng-bind="contactDetails.title"></label>
+  </div>
+  <div class="help-item-button text-left" ng-click="gotoView(contactDetails.buttons[0].url);" track-action="{action: 'idCardCustomerService', section: analyticConstants.IDCARD_SECTION}">
+    <div class="help-item-icon">
+      <i class="fc-{{contactDetails.buttons[0].icon}} fc-lg2"></i>
+    </div>
+    <div class="help-item-title" ng-bind="contactDetails.buttons[0].title"></div>
+    <div class="help-item-arrow">
+      <i class="fa fa-angle-right fa-2x"></i>
+    </div>
+  </div>
+</div>

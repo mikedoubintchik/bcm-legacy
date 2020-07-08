@@ -1,0 +1,19 @@
+<div class="col-xs-12 col-sm-8 col-sm-offset-2 document-button-container benefits-document-container">
+  <find-doctor-zip-alert-modal open-modal-fn-alias="openModal" confirm-fn="confirmFunc" modal-info="modalObj"></find-doctor-zip-alert-modal>
+  <div class="document-buttons document-btn">
+    <div class="blue-bar-label">
+      <label ng-bind="benefitBooklets.informationTitle"></label>
+      <help-icon  class="coverage-help" file-name="'help/plan-help'"></help-icon>
+    </div>
+    <div class ="benefit-document-list" ng-repeat="button in benefitBooklets.bookletsButtons">
+      <button ng-attr-id="{{button.id}}" type="button" class="btn btn-default btn-block {{button.class}}" ng-click="this[button.onClick](button.id, button.documentType);" ng-if="button.onClick">
+        <span ng-attr-id="span{{button.id}}" ng-bind="button.title"></span>
+        <i ng-attr-id="icon{{button.id}} " class="{{button.icon}}"></i>
+      </button>
+      <button ng-attr-id="{{button.id}}" type="button" class="btn btn-default btn-block {{button.class}}" ng-click="navigatePageRequested(button.url, button.searchTerm);" ng-if="button.url" track-action="{action: 'benefitsCostEstimator', section: analyticConstants.BENEFITS_SECTION}">
+        <span ng-attr-id="span{{button.id}}" ng-bind="button.title"></span>
+        <i ng-attr-id="icon{{button.id}} " class="{{button.icon}}"></i>
+      </button>
+    </div>
+  </div>
+</div>

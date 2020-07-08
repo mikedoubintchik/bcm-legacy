@@ -4,14 +4,10 @@ import uiRouter from 'angular-ui-router';
 
 const BCMLegacy = singleSpaAngularJS({
   angular: angular,
-  mainAngularModule: "account-settings",
+  mainAngularModule: "blueconnect.mobile.app",
   uiRouter: true,
   preserveGlobal: false,
   template: "<account-settings />",
-  domElementGetter: function() {
-    require('./account-settings.css');
-    return document.getElementById('angularjs-container');
-  },
 });
 
 export const bootstrap = BCMLegacy.bootstrap;

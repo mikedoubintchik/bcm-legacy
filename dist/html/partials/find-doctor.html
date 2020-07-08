@@ -1,0 +1,86 @@
+<div class="find-doctor-container">
+    <div class="panel-heading" ng-click="togglePlan()" ng-hide="loggedIn === true">
+        <div class="panel-title">
+            <div class="">
+                <div class="row flex-row univers-cn pt2 pb2">
+                    <i class="col-xs-2 text-center pl3 heading-icon fc-circle-allplans fc-lg white"></i>
+                    <span class="col-xs-8 pl2 white" ng-bind="::findDoctorDetails.selectYourPlan"></span>
+                    <i ng-class="{'fc-plus-expand': !expandedPlan, 'fc-minus-collapse': expandedPlan}" class="col-xs-2 text-center pr3"></i>
+                </div>
+            </div>
+        </div>
+        <div ng-class="{'open-div-dark': expandedPlan, 'close-div-dark': !expandedPlan}" class="bg-dark-blue" ng-hide="loggedIn === true">
+            <div class="small-margin-top font-univers-420">
+                <payment-flow-title-bar title="{{::findDoctorDetails.medicarePlans}}"></payment-flow-title-bar>
+                <section class="plan-section">
+                    <div class="row m0 p0" block-under-click ng-repeat="plan in plans.medicarePlans" ng-click="gotoPlanDetails(plan)">
+                        <div class="col-xs-10">
+                            <h4 class="plan-title p4 pr0 m0" ng-bind="::plan.name"></h4>
+                        </div>
+                        <div class="col-xs-2 pl2 flex-center-icon">
+                            <i class="fa fa-caret-right light-gray p3 pr1"></i>
+                        </div>
+                    </div>
+                </section>
+                <payment-flow-title-bar title="{{::findDoctorDetails.individualFamilyPlan}}"></payment-flow-title-bar>
+                <section class="plan-section">
+                    <div class="row m0 p0" block-under-click ng-repeat="plan in plans.nonMedicarePlans" ng-click="gotoPlanDetails(plan)">
+                        <div class="col-xs-10">
+                            <h4 class="plan-title p4 pr0 m0" ng-bind="::plan.name"></h4>
+                        </div>
+                        <div class="col-xs-2 pl2 flex-center-icon">
+                            <i class="fa fa-caret-right p3 pr1 light-gray"></i>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- End Plan Type section -->
+    <!-- begin don't know your plan section -->
+    <div class="panel-heading" ng-click="toggleQuestion()" ng-hide="loggedIn === true">
+        <div class="panel-title">
+            <div class="">
+                <div class="row flex-row univers-cn pt2 pb2">
+                    <i class="col-xs-2 pl3 text-center heading-icon fc-help fc-lg white"></i>
+                    <span class="col-xs-8 pl2 white" ng-bind="::findDoctorDetails.dontKnowPlan"></span>
+                    <i ng-class="{'fc-plus-expand': !expandedQuestion, 'fc-minus-collapse': expandedQuestion}" class="col-xs-2 text-center pr3"></i>
+                </div>
+            </div>
+        </div>
+        <div ng-class="{'open-div': expandedQuestion, 'close-div': !expandedQuestion}">
+            <div class="pl3 pr3 pt3 small-margin-top font-univers-420">
+                <span class="font-italic" ng-bind="::findDoctorDetails.idInstructions"></span>
+            </div>
+            <div class="pl3 pr3 pt3 pb3">
+                <span><img src="images/id-card-sample.svg" alt=""/></span>
+            </div>
+            <div class="customer-service-card">
+                <div class="customer-service-header">
+                    <h6 ng-bind="::findDoctorDetails.customerService"></h6>
+                </div>
+                <div class="customer-service-card-body">
+                    <div class="customer-service-hours">
+                        <strong ng-bind="::findDoctorDetails.hours + ':'"></strong>
+                        <br>
+                        <div><span ng-bind="::findDoctorDetails.monday + ' - '"></span><span ng-bind="::findDoctorDetails.thursday + ': 8 a.m. - 6 p.m. EST'"></span></div>
+                        <div ng-bind="::findDoctorDetails.friday + ': 8 a.m. - 5 p.m. EST'"></div>
+                    </div>
+                </div>
+                <div class="customer-service-footer">
+                    <div class="phone-number phone-container">
+                        <i class="fc-phone-nocircle fc-lg"></i>
+                        <a href="tel://1-888-206-4697">
+                            <span class="customer-service-phone">1-888-206-4697</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End customer service box -->
+
+    </div><!-- End Don't know your plan type section -->
+    <div class="font-italic pt3 pl3 pr3 pb3" ng-class="{'navbar-fixed-bottom': !expandedQuestion && !expandedPlan, 'navbar-relative-bottom': expandedQuestion || expandedPlan}">
+        <span class="light-gray" ng-bind="::findDoctorDetails.doctorInstructions"></span>
+    </div>
+    <find-doctor-zip-alert-modal open-modal-fn-alias="openModal" confirm-fn="confirmFunc" modal-info="modalObj"></find-doctor-zip-alert-modal>
+</div><!-- End find-doctor-container -->

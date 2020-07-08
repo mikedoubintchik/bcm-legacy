@@ -1,0 +1,40 @@
+<div class="settings-list">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="settings-content" ng-repeat="settingGroup in settingData">
+          <div ng-if="settingGroup.key === 'securitySettings' && loginSettings.touchIdAvailable === true">
+            <blue-bar-label ng-bind="settingGroup.categoryLabel"></blue-bar-label>
+            <div class="settings-content-section">
+              <toggle-switch class="pull-left" controlled="true" model="loginSettings.biometricEnabled" on-click="onToggleTouchId"></toggle-switch>
+              <div class="security-details-name" ng-bind="touchIdDisplayText"></div>
+            </div>
+          </div>
+          <div ng-if="settingGroup.key == 'login'">
+            <blue-bar-label ng-bind="settingGroup.categoryLabel"></blue-bar-label>
+            <div class="settings-content-security-button">
+              <label ng-bind="loc.USER_ID + ':' + settingGroup.settings.userId"></label>
+              <button class="btn btn-default btn-block update-security-button" ng-click="gotoResetPassword();" track-action="{action: 'settings:resetPassword', section: analyticConstants.SETTINGS_SECTION}">
+                <span ng-bind="loc.RESET_PASSWORD"></span>
+                <i class="fc-external-link light-gray"></i>
+              </button>
+            </div>
+          </div>
+          <div class="settings-content-language" ng-if="settingGroup.key == 'appLanguage'">
+            <blue-bar-label ng-bind="settingGroup.categoryLabel"></blue-bar-label>
+            <div class="settings-content-security-button">
+             <div class="radio-btn" ng-click="toggleLanguage('en')" track-action= "{action: 'settings:language:en', section: analyticConstants.SETTINGS_SECTION}">
+              <div type="radio" ng-class="{'selected-button': language == 'en', 'unselected-button': language == 'es'}">
+              <span class="settings-radio-btn" ng-bind="loc.ENGLISH"></span></div>
+             </div>
+            <div class="radio-btn" ng-click="toggleLanguage('es')" track-action= "{action: 'settings:language:es', section: analyticConstants.SETTINGS_SECTION}">
+              <div type="radio" ng-class="{'selected-button': language == 'es', 'unselected-button': language == 'en'}">
+              <span class="settings-radio-btn" ng-bind="loc.ESPANOL"></span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

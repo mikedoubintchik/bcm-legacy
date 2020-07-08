@@ -1,0 +1,36 @@
+<div class="graphArea">
+  <div class="leftArea">
+    <div class="sideTitle" ng-repeat="sideTitle in graphValues.leftSide" ng-if="graphValues.leftSide">
+      <label ng-style="{color: sideTitle.color}" ng-bind="sideTitle.name"></label>
+      <div class="titleLabel" ng-bind="sideTitle.value"></div>
+    </div>
+  </div>
+  
+  <div class="vertical-bar-graph" ng-style="{'height': graphHeight + 'rem'}">
+      <div ng-class="(graphValues.legendLines) ? 'bar-stacked' : 'bar'" ng-repeat="bar in graphValues.bars" ng-style="{'background': bar.color, 'bottom': bar.bottom + '%', 'height': bar.height + '%'}"></div>
+      <div class="legend-outline" ng-style="{'height': (graphValues.graphHeight + 1) + 'rem'}" ng-if="graphValues.outline"></div>
+      <div class="legend-line" ng-repeat="legendLine in graphValues.legendLines" ng-style="{'height': legendLine.height + 'rem', 'width': legendLine.rightvalue ? '7.3rem' : '1rem', 'bottom': legendLine.bottom ?  legendLine.bottom + '%': legendLine.height + '%', left: graphValues.outline ? '1.5rem' : '-3.5rem'}" ng-if="graphValues.legendLines">
+          <div class="point" ng-show="legendLine.name">
+          </div>
+          <div class="pointBill" ng-show="legendLine.name">
+            <label ng-bind="legendLine.name"></label>
+            <label ng-bind="legendLine.value"></label>
+          </div>      
+        <div class="pointBill-left">
+          <div class="linename-left">
+            {{legendLine.leftname}} 
+  
+          </div>
+          <div class="linevalue-left">{{legendLine.leftvalue}}</div>
+        </div>
+        <div class="pointBill-right" ng-if="legendLine.rightvalue"> 
+           <div class="linename-right">
+            {{legendLine.rightvalue}} 
+          </div>
+          <div class="linevalue-right">to go</div>
+        </div>
+        <i id="fc-check-filled" class="fc-check-filled" ng-show="!legendLine.rightvalue && !legendLine.name"></i>
+      </div>
+  </div>
+  </div>
+  

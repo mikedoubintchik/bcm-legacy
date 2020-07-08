@@ -1,0 +1,16 @@
+<nav class="navbar navbar-fixed-bottom navbar-dark bg-primary login-bottom-bar">
+    <div class="navbar-header-item text-center" ng-bind="loc.HELP" ng-click="gotoView('/help'); trackClick('help')"></div>
+    <div class="navbar-header-item text-center" ng-bind="loc.MENU_FIND_A_MED_SERVICE_LINK" ng-click="gotoView('/healthnav'); trackClick('Health Nav')"></div>
+    <div ng-if="language === 'en'"
+        class="navbar-header-item text-center"
+        ng-click="toggleLanguage()"
+        track-action="{action:'loginLanguageSpanish',section: analyticConstants.LOGIN_SECTION}">
+        <span ng-bind="loc.ESPANOL"></span>
+    </div>
+    <div ng-if="language === 'es'"
+        class="navbar-header-item text-center"
+        ng-click="toggleLanguage()"
+        track-action="{action:'loginLanguageEnglish',section: analyticConstants.LOGIN_SECTION}">
+        <span ng-bind="loc.ENGLISH"></span>
+    </div>
+</nav>

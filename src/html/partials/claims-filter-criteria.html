@@ -1,0 +1,38 @@
+<div class="claims-filter-criteria">
+  <form name="claimsFilterForm" ng-submit="filterClaims()">
+    <div class="darkblue-bar-label">
+      <label for="claimMembers"><span ng-bind="loc.FILTER_CLAIMS_MEMBERS"></span></label>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 filter-members-dependents">
+      <check-box-group model="members" selection="selection" ng-click="action()"></check-box-group>
+    </div>
+    <div class="darkblue-bar-label">
+      <label for="statusType"><span ng-bind="loc.FILTER_CLAIMS_STATUS"></span></label>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 filter-claim-status">
+      <radio-button buttons="claimStatusButtons" value="claimsFilter.claimsStatus"></radio-button>
+    </div>
+    <div class="darkblue-bar-label">
+      <label for="dateRange"><span ng-bind="loc.FILTER_CLAIMS_DATE_RANGE"></span></label>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 filter-date-range">
+      <div class="filter-dates">
+        <div class="gray-box date-area">
+          <div>
+            <label ng-bind="loc.FILTER_CLAIMS_DATE_FROM"></label>
+          </div>
+          <select ng-model="claimsFilter.startMonth" ng-options="month.value as month.name for month in filteredDates.startDates| fromDropDownFilter:claimsFilter.endMonth"  ng-change="validateDates()"></select>
+        </div>
+        <div class="gray-box date-area">
+          <div>
+            <label ng-bind="loc.FILTER_CLAIMS_DATE_TO"></label>
+          </div>
+          <select ng-model="claimsFilter.endMonth" ng-options="month.value as month.name for month in filteredDates.endDates | toDropDownFilter:claimsFilter.startMonth" ng-change="validateDates()"></select>
+        </div>
+      </div>
+      <div class="claims-filter-submit-button">
+        <button type="submit" class="btn btn-default btn-block" ng-bind="loc.FILTER_CLAIMS_APPLY_FILTER_BUTTON" ng-disabled="selection.length==0 || claimsFilterForm.$invalid" track-action="{action: 'claimsSearch:applyFilter', section: analyticConstants.CLAIMS_SECTION}"></button>
+      </div>
+    </div>
+  </form>
+</div>

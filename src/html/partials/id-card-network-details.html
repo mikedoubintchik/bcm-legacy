@@ -1,0 +1,14 @@
+<div class="id-card-info-container">
+  <div class="gray-box id-card-info" ng-if="noBenefits">
+    <dynamic-help-icon class="id-card-help" info="networkDetails[1].infoHtml"></dynamic-help-icon>
+    <div>
+      <label ng-bind="loc.IN_NET_MEM_RESPONSIBILITY"></label>
+      <table>
+        <tr ng-repeat="network in networkResponsibilities">
+          <td class="id-card-network-info" ng-bind="(loc[network.benefitItemShortDescriptionLocalization]) || (network.benefitItemShortDescription)"></td>
+          <td class="id-card-network-info id-card-item-description" ng-bind="network.benefitItemDescription"></td>
+        </tr>
+      </table>
+    </div>
+    </div>
+  </div>

@@ -1,0 +1,116 @@
+<div class="row payment-flow-plan-details">
+    <div class="payment-flow-title-bar-gray">
+      <h6 ng-bind="::loc.BP_TITLE_PLAN_DETAILS"></h6>
+    </div>
+    <div class="row m0 mt3 pt0 payment-row">
+        <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_POLICY_NUMBER"></span>
+        <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="reviewDetails.policyMembership.policyId"></span>
+    </div>
+    <div class="row m0 mt3 pt0 payment-bottom-row">
+        <span class="col-xs-7 mb3 mt3" ng-bind="::loc.SUBSCRIBER_ID"></span>
+        <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="reviewDetails.policyMembership.fullExternalId"></span>
+    </div>
+    <div class="payment-flow-title-bar-gray">
+      <h6 ng-bind="::loc.BP_TITLE_PAYMENT_METHOD"></h6> 
+    </div>
+    <div class="row m0 mt3 pt0 payment-row">
+        <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_TITLE_PAYMENT_FREQUENCY"></span>
+        <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="localizedPaymentFrequency"></span>
+    </div>
+    <div class="row m0 mt3 pt0 payment-row" ng-if="!reviewDetails.preferences.isOTP">
+        <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_MONTHLY_DRAFT_DATE"></span>
+        <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="::loc.BP_MONTHLY_DRAFT"></span>
+    </div>
+    <div class="row m0 mt3 pt0 payment-row">
+        <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_MONTHLY_PREMIUM_AMOUNT"></span>
+        <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="reviewDetails.currentInvoice.billedAmount | currency"></span>
+    </div>
+    <div class="row m0 mt3 pt0 payment-row" ng-if="reviewDetails.reinstatementAmount > 0">
+        <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_REINSTATEMENT_TOTAL_AMOUNT"></span>
+        <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="reviewDetails.reinstatementAmount | currency"></span>
+    </div>
+    <div class="row m0 mt3 pt0 payment-row">
+        <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_TOTAL_ACCOUNT_BALANCE"></span>
+        <span ng-if="!reviewDetails.reinstatementAmount > 0" class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="reviewDetails.currentInvoice.totalDueAmount | currency"></span>
+        <span ng-if="reviewDetails.reinstatementAmount > 0" class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="reviewDetails.reinstatementAmount | currency"></span>
+    </div>
+    <div class="row m0 mt3 pt0 payment-row">
+        <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_AMOUNT_PAID_TODAY"></span>
+        <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="selectedPaymentAmount | currency"></span>
+    </div>
+    <div class="row m0 mt3 pt0 payment-row-none" ng-if="reviewDetails.isPaymentProcessing">
+        <span class="col-xs-7 mb1 mt3 med-dark-gray" ng-bind="::loc.BP_PREVIOUS_PAYMENT"></span>
+        <span class="col-xs-5 mb1 mt3 med-dark-gray text-bold" ng-bind="::reviewDetails.lastPaymentAmount | currency"></span>
+    </div>
+    <div class="row m0 mt3 pt0 payment-row" ng-if="reviewDetails.isPaymentProcessing">
+        <span class="col-xs-7 mb3 med-dark-gray" ng-bind="'(' + loc.BP_CURRENTLY_PROCESSING + ')'"></span>
+    </div>
+    <div class="row m0 mt3 pt0 payment-row">
+        <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_TITLE_PAYMENT_METHOD"></span>
+        <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="localizedPaymentMethod"></span>
+    </div>
+    <div class="row m0 mt3 pt0 payment-bottom-row" ng-if="reviewDetails.preferences.isPaperless === false && localizedBillingMethod">
+        <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_TITLE_BILLING_METHOD"></span>
+        <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="localizedBillingMethod"></span>
+    </div>
+
+    <edit-credit-details-button
+        class="pl2 pr2 flex-row"
+        payment-method="userData.paymentMethod"
+        cancel-route="/payment/method"
+        button-title="loc.BP_EDIT_METHOD">
+    </edit-credit-details-button>
+
+    <div class="payment-flow-title-bar-gray">
+      <h6 ng-bind="::loc.BP_HEADER_PAYMENT_DETAILS"></h6>
+    </div>
+    <div ng-if="userData.paymentMethod === 'bankdraft'">
+        <div class="row m0 mt3 pt0 payment-row">
+            <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_NAME_ON_ACCOUNT"></span>
+            <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="userData.accountHolderName"></span>
+        </div>
+        <div class="row m0 mt3 pt0 payment-row">
+            <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_ACCOUNT_TYPE"></span>
+            <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="localizedAccountType"></span>
+        </div>
+        <div class="row m0 mt3 pt0 payment-row">
+            <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_ROUTING_NUMBER"></span>
+            <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="userData.routingNumber"></span>
+        </div>
+        <div class="row m0 mt3 pt0 payment-bottom-row">
+            <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_BANK_ACCOUNT_NUMBER"></span>
+            <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left">{{::userData.accountNumber | maskAccount}}</span>
+        </div>
+    </div>
+    <div ng-if="userData.paymentMethod === 'creditcard'">
+        <div class="row m0 mt3 pt0 payment-row">
+            <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_NAME_ON_CARD"></span>
+            <span class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left" ng-bind="::userData.creditCardDetails.firstName"></span>
+        </div>
+        <div class="row m0 mt3 pt0 payment-row">
+            <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_CARD_NUMBER"></span>
+            <span
+              class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left"
+              ng-bind="::userData.creditCardDetails.lastFour | maskAccount">
+            </span>
+        </div>
+        <div class="row m0 mt3 pt0 payment-bottom-row">
+            <span class="col-xs-7 mb3 mt3" ng-bind="::loc.BP_EXPIRATION_DATE"></span>
+            <span
+              class="col-xs-5 mb3 mt3 med-dark-gray text-bold text-left"
+              >
+            {{::userData.creditCardDetails.month}}/20{{::userData.creditCardDetails.year}}
+            </span>
+        </div>
+    </div>
+    <edit-credit-details-button
+        class="pl2 pr2 flex-row"
+        payment-method="userData.paymentMethod"
+        cancel-route="/payment/details"
+        button-title="loc.BP_EDIT_DETAILS">
+    </edit-credit-details-button>
+
+    <div class="pl2 pr2 pt4" ng-hide="$parent.paymentFlowReviewForm.$dirty">
+        <pf-divider></pf-divider>
+    </div>
+</div>

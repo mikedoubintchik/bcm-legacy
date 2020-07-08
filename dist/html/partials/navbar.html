@@ -1,0 +1,109 @@
+<nav class="navbar navbar-fixed-top navbar-dark bg-primary">
+  <div class="navbar-header-item">
+    <button class="navbar-toggler" type="button" ng-click="gotoView('/help'); closePolicySelect();" ng-if="leftNavButtonIs('HELP')">
+      <i class="fc-help fc-lg"></i>
+    </button>
+    <button class="navbar-toggler" type="button" ng-click="gotoView('/home')" ng-if="leftNavButtonIs('HOME')">
+      <i class="fc-home fc-lg"></i>
+    </button>
+    <button class="navbar-toggler" type="button" ng-if="leftNavButtonIs('BACK')" go-back>
+      <i class="fc-back fc-lg"></i>
+    </button>
+    <button class="navbar-toggler" type="button" ng-if="leftNavButtonIs('INBOX')" go-inbox>
+      <i class="fc-back fc-lg"></i>
+    </button>
+    <button class="navbar-toggler" type="button" ng-if="leftNavButtonIs('BACK_TO_BILLING')" ng-click="gotoView('/billing')">
+      <i class="fc-back fc-lg"></i>
+    </button>
+  </div>
+  <div class="navbar-header-item full-width text-center">
+    <a class="navbar-brand full-width" ng-bind-html="getPageTitle()"></a>
+  </div>
+  <div class="navbar-header-item">
+    <button ng-class="{'no-show-no-click': rightNavIconHidden()}" class="navbar-toggler open-navbar-button" type="button" ng-click="toggleMenuOpen()">
+      <i class="fc-menu fc-lg"></i>
+    </button>
+  </div>
+  <div class="navbar-shadow" ng-click="toggleMenuOpen()" ng-if="menuOpen"></div>
+  <div class="navbar-menu" ng-swipe-right="toggleMenuOpen()" ng-class="{'open': menuOpen, 'closed': menuOpen === false}">
+    <div class="navbar-menu-header"><!-- Menu head -->
+      <div class="navbar-header-item navbar-header-logo">
+        <div class="navbar-header-item full-width text-center">
+          <a class="navbar-brand full-width">
+            <span ng-bind="navbarDetails.title" ng-if="!navbarDetails.image"></span>
+            <img class="navbar-menu-header-image" ng-src="images/{{navbarDetails.image}}" ng-if="navbarDetails.image"></img>
+            <img class="navbar-menu-header-image" ng-src="images/{{navbarDetails.subimage}}" ng-if="navbarDetails.subimage"></img>
+          </a>
+        </div>
+      </div>
+      <div class="navbar-header-item navbar-header-close">
+        <button class="navbar-toggler" type="button" ng-click="toggleMenuOpen()">
+          <i class="fc-close fc-lg"></i>
+        </button>
+      </div>
+      <div class="clearfix"></div>
+      <div class="navbar-header-item full-width">
+        <div class="pull-left navbar-menu-item-icon">
+          <div class="icon-initials" ng-bind="navbarDetails.name.initials"></div>
+          <i class="fc-{{navbarDetails.name.icon}} fc-lg"></i>
+        </div>
+        <div class="pull-left navbar-menu-item-name" ng-bind="navbarDetails.name.name"></div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <ul class="navbar-menu-list"><!-- The menu -->
+      <li ng-repeat="menuItem in navbarDetails.menuItems"
+        ng-click="toggleMenuOpen();gotoView('menu', $index)"
+        name="{{chatButtons[menuItem.index].id}}"
+        token="{{chatButtons[menuItem.index].token}}" 
+        id="{{menuItem.id}}"     
+        track-action="{{menuItem.trackAction}}">
+        <div class="pull-left navbar-menu-item-icon {{menuItem.class}}">
+          <i class="fc-{{menuItem.icon}} fc-lg"></i>
+        </div>
+        <div class="pull-left navbar-menu-item-title" ng-bind="menuItem.title" ng-class="{'fc-es': $root.language == 'es', 'fc-en': !$root.language == 'es'}"></div>
+        <div class="pull-right navbar-menu-item-badge" ng-class="{'badge-red': menuItem.badgeColor === 'red', 'badge-blue': menuItem.badgeColor === 'blue'}" ng-bind="menuItem.badge" ng-if="menuItem.badge"></div>
+        <div class="clearfix"></div>
+      </li>
+      <div class="navbar-find-care-header" ng-if="navbarDetails.findCareItems.length >0"> <!-- header for Find Care-->
+        <label ng-bind="navbarDetails.findCareTitle"></label>
+      </div>
+      <!-- end of header for Find Care -->
+      <!-- The menu for find care list -->
+      <find-doctor-navbar-list-item
+        ng-repeat="menuItem in returnFADLinks()"
+        name="{{menuItem.name}}"
+        title="{{menuItem.title}}"
+        description= "{{menuItem.description}}"
+        icon="{{menuItem.icon}}"
+        external-link="{{menuItem.externalLink}}"
+        link="{{menuItem.link}}"
+        toggle-menu-open="toggleMenuOpen"
+        goto-navigated-page= "gotoNavigatedPage">
+      </find-doctor-navbar-list-item>
+      <!-- end of The menu for find care list -->
+    </ul>
+    <find-doctor-zip-alert-modal open-modal-fn-alias="openModal" confirm-fn="confirmFunc" modal-info="modalObj"></find-doctor-zip-alert-modal>
+    <find-doctor-unavailable-alert-modal open-modal-fn-alias="openAlertModal" modal-info="alertModalObj"></find-doctor-unavailable-alert-modal>
+
+    <div class="navbar-menu-bottom">
+      <div ng-repeat="menu in navbarDetails.menuPolicyDescription" class="navbar-menu-item-title {{menu.class}}">
+      <span ng-click="toggleMenuOpen();openInBrowser(menu.link)"
+        ng-bind="menu.title"
+        track-action="{{menu.trackAction}}"></span>
+      </div>
+      <div>
+      <div class="navbar-menu-bottom-btn {{menuItem.class}}"
+        ng-repeat="menuItem in navbarDetails.menuBottomItems"
+        ng-click="toggleMenuOpen();gotoView(menuItem.link)"
+        track-action="{{menuItem.trackAction}}">
+        <span class="navbar-menu-item-icon">
+          <i class="fc-{{menuItem.icon}} fc-sm"></i>
+        </span>
+        <span class="navbar-menu-item-title" ng-bind="menuItem.title" ng-class="{'fc-es': $root.language == 'es', 'fc-en': !$root.language == 'es'}"></span>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    </div>
+  </div>
+</nav>

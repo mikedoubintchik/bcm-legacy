@@ -1,0 +1,343 @@
+<div class="billing-summary">
+  <div>
+    <div class="billing-header-text">
+      <p>
+        <span
+          ng-if="!policy.selectedPolicy.active && !policy.future"
+          ng-class="{'inactive-text': !planDetails.active}"
+          ng-bind="(loc.INACTIVE | uppercase)"
+        ></span>
+      </p>
+      <span
+        ng-if="policy.future"
+        class="future-text"
+        ng-bind="(loc.BP_FUTURE_POLICY | uppercase)"
+      ></span>
+      <span></span>
+      <plan-details
+        ng-if="policy.selectedPolicy"
+        policy="policy.selectedPolicy"
+      ></plan-details>
+    </div>
+  </div>
+  <div class="small-padding" ng-if="!policy.medicareSSA">
+    <div
+      class="billing-summary-body"
+      ng-class="{'policy-terminated': billingDetails.isPolicyTerminated, 'reinstatement': billingDetails.reinstatement, 'paid-in-full': policy.selectedPolicy.active === false && billingDetails.reinstatement === false && !policy.future && !billingDetails.isPolicyTerminated}"
+    >
+      <div class="small-padding">
+        <div
+          ng-if="billingDetails.currentAmtDue > 0 && billingDetails.reinstatement === false && !billingDetails.isPolicyTerminated  && policy.selectedPolicy.active"
+          class="flex-row flex-center-start univers-cn"
+        >
+          <div class="billing-dollar-sign">
+            <h1>$</h1>
+          </div>
+          <div class="payment-dollars">
+            <h1>
+              <span class="payment-dollars" ng-bind="getAmountDollars()"></span>
+            </h1>
+          </div>
+          <div class="billing-cents" ng-bind="getAmountCents()"></div>
+        </div>
+        <h5
+          ng-if="billingDetails.currentAmtDue > 0 && !billingDetails.reinstatement && !billingDetails.balanceForwardAmount > 0 && !billingDetails.paymentOverdue && policy.selectedPolicy.active"
+          class="text-center font-univers-420"
+        >
+          <span class="payment-due-text" ng-bind="loc.PAYMENT_DUE"></span>
+          <span
+            class="payment-due-date"
+            ng-bind="billingDetails.paymentDueDate"
+          ></span>
+        </h5>
+        <h5
+          ng-if="billingDetails.paymentOverdue &&
+                    billingDetails.currentAmtDue > 0 &&
+                    billingDetails.reinstatement === false && !billingDetails.isPolicyTerminated && !policy.future"
+          class="text-center font-univers-420"
+        >
+          <span
+            class="payment-due-text"
+            ng-bind="loc.BP_PAYMENT_OVERDUE"
+          ></span>
+          <span
+            class="past-due-date"
+            ng-bind="billingDetails.paymentDueDate"
+          ></span>
+        </h5>
+        <div class="text-center total-remaining-balance">
+          <h5
+            ng-if="billingDetails.processingPay === true && billingDetails.currentAmtDue > 0 && !billingDetails.isPolicyTerminated && policy.selectedPolicy.active === true && policy.selectedPolicy.sourceSystem != 'Amisys'"
+            class="total-remaining-balance-text med-gray"
+            ng-bind="::loc.BP_TOTAL_REMAINING_BALANCE"
+          ></h5>
+        </div>
+
+        <h5
+          class="billing-summary-pending text-center font-univers-420"
+          ng-if="billingDetails.currentAmtDue > 0 && billingDetails.processingPay && policy.selectedPolicy.sourceSystem == 'Amisys' && policy.selectedPolicy.active"
+        >
+          <span
+            class="payment-due-text-pending"
+            ng-bind="loc.BP_TOTAL_INCLUDES_PASTDUE_AMOUNT_FROM + ' '"
+          >
+          </span>
+          <span
+            class="past-due-date"
+            ng-bind="billingDetails.previousStartMonth"
+          >
+          </span>
+        </h5>
+
+        <h5
+          class="text-center font-univers-420"
+          ng-if="billingDetails.currentAmtDue > 0 && billingDetails.balanceForwardAmount > 0 && billingDetails.processingPay === false && policy.selectedPolicy.active"
+        >
+          <span
+            class="payment-due-text"
+            ng-bind="loc.BP_TOTAL_INCLUDES_PASTDUE_AMOUNT_1"
+          >
+          </span
+          ><br />
+          <span
+            class="payment-due-text"
+            ng-bind="loc.BP_TOTAL_INCLUDES_PASTDUE_AMOUNT_2"
+          >
+          </span>
+          <span class="payment-due-text" ng-bind="balanceForwardAmount"> </span>
+          <span
+            class="payment-due-text"
+            ng-bind="loc.BP_FROM_DATE + ' '"
+          ></span>
+          <span
+            class="past-due-date"
+            ng-bind="billingDetails.previousStartMonth"
+          >
+          </span>
+        </h5>
+
+        <!-- active paid members -->
+        <paid-component
+          ng-if="billingDetails.currentAmtDue === 0 && billingDetails.reinstatementAmount === 0 && billingDetails.processingPay === false && billingDetails.active === true  && policy.selectedPolicy.active === true && policy.selectedPolicy.isNew != true"
+        >
+        </paid-component>
+
+        <!-- inactive paid members -->
+        <billing-status-paid-in-full
+          ng-if="policy.selectedPolicy.active === false && billingDetails.reinstatement === false && !policy.future && !billingDetails.isPolicyTerminated"
+        >
+        </billing-status-paid-in-full>
+
+        <!-- new paid members -->
+        <billing-summary-new-member
+          plan-name="policy.selectedPolicy.lobDesc"
+          ng-if="policy.selectedPolicy.isNew === true || policy.future"
+        ></billing-summary-new-member>
+
+        <!-- Policy Terminated message -->
+        <div
+          class="flex-row flex-center-center alert-red"
+          ng-if="billingDetails.reinstatementAmount > 0 && billingDetails.reinstatementEligible === false"
+        >
+          <h3><i class="fc fa-2x fc-circleoutline-warning p0 pl2 pr2"></i></h3>
+          <h3>
+            <span
+              class="half-width-xs"
+              ng-bind="loc.BP_POLICY_TERMINATED"
+            ></span>
+          </h3>
+        </div>
+        <div>
+          <p
+            class="ml3 mr3 text-center univers alert-red row"
+            ng-if="billingDetails.reinstatementAmount > 0 && billingDetails.reinstatementEligible === false"
+          >
+            <span ng-bind="loc.BP_POLICY_CANCELED_NONPAYMENT"></span>
+          </p>
+        </div>
+
+        <reinstatement-summary
+          ng-if="!billingDetails.isPolicyTerminated && billingDetails.reinstatement === true && !policy.future"
+          reinstatement-eligible="billingDetails.reinstatementEligible"
+          reinstatement-amount="billingDetails.reinstatementAmount"
+          on-home-page="false"
+        >
+        </reinstatement-summary>
+
+        <!-- policy terminated for medicare users other than med supp-->
+        <reinstatement-summary
+          ng-if="!billingDetails.policyPaidInFull && billingDetails.isPolicyTerminated && !billingDetails.active && !billingDetails.reinstatementEligible && !policy.future"
+          reinstatement-eligible="billingDetails.reinstatementEligible"
+          reinstatement-amount="billingDetails.reinstatementAmount"
+          medicare-policy-terminated="billingDetails.isPolicyTerminated"
+        >
+        </reinstatement-summary>
+        <!-- end of policy terminated for medicare users other than med supp-->
+        <payment-processing
+          ng-if="policy.selectedPolicy.active && !billingDetails.isPolicyTerminated && billingDetails.processingPay && !billingDetails.invoicePayments.length"
+          payment-amount="billingDetails.lastPaymentAmount"
+          payment-date="billingDetails.paymentDate"
+        >
+        </payment-processing>
+        <!-- Only display payment activities for not terminated policies -->
+        <div ng-if="!billingDetails.isPolicyTerminate">
+          <!--This outer div is necessary for an nth-child css psudo-selector -->
+          <invoice-payments
+            ng-if="billingDetails.invoicePayments.length"
+            ng-class="{'reinstatement-payment-divider': billingDetails.reinstatement && !policy.selectedPolicy.active}"
+            ng-repeat="payment in billingDetails.invoicePayments track by $index"
+            payment="payment"
+          >
+          </invoice-payments>
+        </div>
+
+        <billing-next-invoice-date
+          ng-if="billingDetails.currentAmtDue === 0 || !billingDetails.nextInvoiceDate || billingDetails.processingPay === true"
+          next-invoice-date="billingDetails.nextInvoiceDate"
+        >
+        </billing-next-invoice-date>
+
+        <div
+          class="padding-sides-3 font-univers-420 text-center ng-scope"
+          ng-if="billingDetails.active && billingDetails.autoPay && !billingDetails.isPolicyTerminated && !policy.future"
+        >
+          <h3
+            class="billing-details dark-green font-size-24 flex-row flex-center-center"
+          >
+            <i class="fa fa-2x fc-autopay mr2" aria-hidden="true"></i
+            ><span
+              class="half-width-xs text-left"
+              ng-bind="loc.AUTO_PAY"
+            ></span>
+          </h3>
+          <p class="billing-details dark-green">
+            <span ng-bind="::loc.BP_AUTOPAY_PAYMENTS_DRAFTED"></span>
+          </p>
+        </div>
+        <reinstatement-amount
+          ng-if="billingDetails.reinstatement === true && billingDetails.processingPay === false && !billingDetails.isPolicyTerminated"
+          reinstatement-amount="billingDetails.reinstatementAmount"
+        >
+        </reinstatement-amount>
+        <div
+          ng-if="billingDetails.active && !billingDetails.autoPay && billingDetails.reinstatement === false && !billingDetails.isPolicyTerminated"
+        >
+          <button
+            ng-hide="billingDetails.processingPay && policy.selectedPolicy.sourceSystem == 'Amisys'"
+            ng-if="billingDetails.processingPay && billingDetails.currentAmtDue > 0 && policy.selectedPolicy.active"
+            class="btn btn-primary btn-block"
+            ng-click="enterPaymentFlow('otp')"
+            ng-bind="::loc.BP_PAY_REMAINING_BALANCE"
+          ></button>
+          <button
+            ng-hide="billingDetails.processingPay && policy.selectedPolicy.sourceSystem == 'Amisys'"
+            ng-if="policy.selectedPolicy.active && billingDetails.autoPay === false && policy.selectedPolicy.isNew === false && policy.medicare === false"
+            class="btn btn-block"
+            ng-class="billingDetails.processingPay && billingDetails.currentAmtDue > 0 ? 'btn-default': 'btn-primary'"
+            ng-click="billingDetails.currentAmtDue? enterPaymentFlow('autopay'): enterPaymentFlow('autopay-no-balance')"
+            ng-bind="::loc.SETUP_AUTOPAY"
+          ></button>
+          <button
+            ng-if="billingDetails.processingPay === false && !policy.future && (billingDetails.currentAmtDue > 0 || billingDetails.reinstatementAmount > 0) && policy.selectedPolicy.active"
+            class="btn btn-default btn-block"
+            ng-bind="::loc.MAKE_PAYMENT"
+            ng-click="enterPaymentFlow('otp')"
+          ></button>
+        </div>
+        <div
+          ng-if="billingDetails.reinstatement === true && billingDetails.reinstatementEligible === true && billingDetails.processingPay === false && !billingDetails.isPolicyTerminated"
+        >
+          <hr />
+          <button
+            class="btn btn-primary btn-block"
+            ng-click="enterPaymentFlow('otp')"
+            ng-bind="::loc.MAKE_PAYMENT"
+          ></button>
+        </div>
+
+        <div
+          ng-class="{'billing-summary-text': !billingDetails.paymentOverdue,'billing-past-due-text': billingDetails.paymentOverdue}"
+          ng-if="(billingDetails.currentAmtDue > 0 && billingDetails.reinstatement === false && !billingDetails.isPolicyTerminated && policy.selectedPolicy.active) || (billingDetails.currentAmtDue > 0 && billingDetails.paymentOverdue && !policy.future && (!billingDetails.isPolicyTerminated && !billingDetails.reinstatement))"
+        >
+          <div class="small-padding mt4">
+            <h5
+              class="current-billing-summary-header mb2"
+              ng-if="!billingDetails.paymentOverdue"
+              ng-bind="loc.CURRENT_BILLING_SUMMARY"
+            ></h5>
+            <h5
+              class="current-billing-summary-header mb2"
+              ng-if="billingDetails.paymentOverdue "
+              ng-bind="loc.BP_PAST_DUE_BILLING_SUMMARY"
+            ></h5>
+            <p class="mb1">
+              <span
+                ng-class="{'billing-summary-text': !billingDetails.paymentOverdue,'billing-past-due-text': billingDetails.paymentOverdue}"
+                ng-bind="loc.INVOICE_DATE + ' - '"
+              ></span>
+              <strong ng-bind="billingDetails.invoiceDate"></strong>
+            </p>
+            <p class="mb1">
+              <span
+                ng-class="{'billing-summary-text': !billingDetails.paymentOverdue,'billing-past-due-text': billingDetails.paymentOverdue}"
+                ng-bind="::loc.BILLING_PERIOD + ' - '"
+              ></span>
+              <strong ng-bind="::billingDetails.billingPeriodStart"></strong> -
+              <strong ng-bind="::billingDetails.billingPeriodEnd"></strong>
+            </p>
+            <p class="mb1">
+              <span
+                class="billing-summary-text"
+                ng-if="!billingDetails.paymentOverdue"
+                ng-bind="loc.CURRENT_AMOUNT_DUE + ' - '"
+              ></span>
+              <span
+                class="billing-past-due-text"
+                ng-if="billingDetails.paymentOverdue && !billingDetails.processingPay"
+                ng-bind="loc.BP_PAST_DUE_AMOUNT + ' - '"
+              ></span>
+              <strong ng-bind="billedAmount"></strong>
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="billing-past-due-text"
+          ng-show="billingDetails.currentInvoice.balanceForwardAmount > 0 && billingDetails.currentAmtDue > 0 && !billingDetails.isPolicyTerminated && policy.selectedPolicy.active"
+        >
+          <div class="small-padding">
+            <h5
+              class="current-billing-summary-header mb2"
+              ng-bind="loc.BP_PAST_DUE_BILLING_SUMMARY"
+            ></h5>
+            <p class="mb1">
+              <span
+                class="billing-past-due-text"
+                ng-bind="loc.INVOICE_DATE + ' - '"
+              ></span>
+              <strong ng-bind="billingDetails.previousInvoiceDate"></strong>
+            </p>
+            <p class="mb1">
+              <span
+                class="billing-past-due-text"
+                ng-bind="loc.BILLING_PERIOD + ' - '"
+              ></span>
+              <strong ng-bind="billingDetails.previousPeriodStart"></strong> -
+              <strong ng-bind="billingDetails.previousPeriodEnd"></strong>
+            </p>
+            <p
+              ng-hide="billingDetails.processingPay && policy.selectedPolicy.sourceSystem == 'Amisys'"
+              class="mb1"
+            >
+              <span
+                class="billing-past-due-text"
+                ng-bind="loc.BP_PAST_DUE_AMOUNT + ' - '"
+              ></span>
+              <strong ng-bind="currentInvoiceBalanceForwardAmount"></strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

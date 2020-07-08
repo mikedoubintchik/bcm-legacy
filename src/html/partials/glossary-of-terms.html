@@ -1,0 +1,6 @@
+<div class="claims-help-container">
+	<div class="glossary-container" ng-repeat="term in helpModal.data" ng-class="{'last-item':$last}">
+		<h5 ng-bind="term.term" class="glossary-term"></h5>
+		<div ng-bind="term.definition" class="glossary-definition"></div>
+	</div>
+</div>

@@ -1,0 +1,26 @@
+<div class="home-card home-card-news-update">
+  <div class="home-card-header" ng-click="handleLink();" track-action="{action: 'readTheFullArticle:{{newsDetails.copy}}', section: analyticConstants.HOME_SECTION}">
+    <div>
+      <h3>
+        <i class="fc-circlefill fc-xl fc-underlay white"></i>
+        <i class="fc-news fc-xl fc-overlay"></i>
+      </h3>
+    </div>
+    <div class="home-card-header-text">
+      <p><strong ng-bind="loc.NEWS_UPDATE"></strong></p>
+      <p ng-bind="newsDetails.type"></p>
+    </div>
+  </div>
+  <div class="home-card-body">
+    <div class="small-padding">
+      <div class="small-margin-bottom text-center">
+        <img ng-src="{{newsDetails.image}}" class="home-card-news-image" />
+        <div class="home-card-news-text" ng-bind="newsDetails.copy"></div>
+        <div class="home-card-news-summary" ng-bind="newsDetails.summary"></div>
+        <div class="clearfix"></div>
+        <hr ng-if="newsDetails.link"/>
+        <div class="home-card-news-read" ng-bind="newsDetails.linkCopy" ng-if="newsDetails.link"></div>
+      </div>
+    </div>
+  </div>
+</div>

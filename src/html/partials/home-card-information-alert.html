@@ -1,0 +1,25 @@
+<div class="home-card home-card-information-alert">
+  <div class="home-card-header">
+    <div>
+      <h3>
+        <i class="fc-circlefill fc-xl fc-underlay white"></i>
+        <i class="fc-circle-warning fc-xl fc-overlay"></i>
+      </h3>
+    </div>
+    <div class="home-card-header-text">
+      <p><strong ng-bind="informationDetails.type"></strong></p>
+    </div>
+  </div>
+  <div class="home-card-body">
+    <div class="small-padding">
+      <div class="small-margin-bottom text-center">
+        <div class="home-card-news-text" ng-bind="informationDetails.copy" ng-if="!informationDetails.displayCovidInfo"></div>
+        <div class="home-card-news-text" ng-if="informationDetails.displayCovidInfo">
+          <span ng-bind="informationDetails.copy"></span>
+          <span  class="information-alert-external-link med-light-blue" ng-bind="informationDetails.copy2" ng-click="openInBrowser(informationDetails.link)"></span>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="modal help-modal" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <button type="button" class="close" ng-click="cancel()">
+        <i class="fc-close fc-lg"></i>
+      </button>
+      <h4 class="modal-title" ng-bind="headerTerm"></h4>
+    </div>
+    <div class="modal-body">
+      <ng-include src="helpModal.helpPath"></ng-include>
+      <div class="help-id-card" ng-repeat="help in helpModal.helpIn" ng-if="help.title">
+        <div class="id-card-help-icon" ng-bind-html="help.title"></div>
+      </div>
+      <div class="help-text" ng-bind-html="helpModal.helpIn.benefitsModalText"
+        ng-if="helpModal.helpIn.contraceptiveInfo"></div>
+      <div class="help-text" ng-bind-html="helpModal.helpIn.pcpModalText" ng-if="helpModal.helpIn.pcpInfo"></div>
+      <div class="help-text" id="out-of-network-pcp-modal" ng-if="helpModal.helpIn.makePcpInfo">
+        <div class="font-weight-500" ng-bind-html="helpModal.helpIn.makeMyPcpQuestion"></div>
+        <div class="mt2" ng-bind-html="helpModal.helpIn.makeMyPcpAnswer"></div>
+      </div>
+      <div class="help-id-card" ng-if="helpModal.helpIn.smartShopperInfo">
+        <div class="help-text pb0" ng-bind-html="helpModal.helpIn.introText_1"></div>
+        <b></b>
+        <div class="help-text pb0" ng-bind="helpModal.helpIn.introText_2"></div>
+        <hr class="pb0 divider" />
+        <div class="help-tittle pb1 pl4" ng-bind="helpModal.helpIn.title"></div>
+        <div class="pt3 pl4 pr4" ng-class="{'pb4': $index === 2}" ng-repeat="help in helpModal.helpIn.contents"
+          ng-if="help.title">
+          <div class="help-sub-tittle" ng-bind="help.title"></div>
+          <div class="help-item-content" ng-bind-html="help.text"></div>
+        </div>
+      </div>
+      <div class="help-text" ng-bind-html="helpModal.helpIn.tierModalText"
+        ng-if="helpModal.helpIn.tierInfo"></div>
+    </div>
+  </div>
+</div>

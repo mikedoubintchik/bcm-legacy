@@ -1,0 +1,7 @@
+<div ng-repeat="member in model">
+  <div class="check-box-grouping" ng-click="toggleSelection(member.dependentNo)">
+    <span ng-class="{'check-box': (selection.indexOf(member.dependentNo) <= -1), 'selected': (selection.indexOf(member.dependentNo) > -1)}" ng-checked="selection.indexOf(member.dependentNo) > -1"   value="{{member.dependentNo}}">
+    </span>
+    <label ng-bind="member.memberName"></label>
+  </div>
+</div>

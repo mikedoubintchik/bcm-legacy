@@ -1,8 +1,0 @@
-/* roughly using BEM syntax */
-.account-settings__container {
-  margin-top: var(--navbar-height);
-}
-
-.account-settings__home {
-  background-color: white;
-}

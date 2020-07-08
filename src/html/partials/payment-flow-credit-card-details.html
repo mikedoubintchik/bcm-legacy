@@ -1,0 +1,122 @@
+<payment-flow-title-bar title="{{::loc.BP_CREDIT_CARD_DETAILS}}"></payment-flow-title-bar>
+<div class="mt2 mb2">
+
+  <mobile-credit-cards></mobile-credit-cards>
+  <div class="mt2 mb2" ng-form="creditCardDetailsForm">
+    <a class="btn btn-default btn-scan-your-credit-card mb2 p0 pt3 pb2" ng-click="scanCreditCard()">
+      <i class="fc fc-camera mr3"></i>
+      {{::loc.BP_SCAN_CREDIT_CARD}}
+    </a>
+    <!-- start name on card -->
+    <pf-error-message
+      ng-show="creditCardDetailsForm.firstName.$dirty && !userData.creditCardDetails.firstName">
+      {{::loc.BP_REQUIRED}}
+    </pf-error-message>
+    <payment-flow-input
+      placeholder="{{::loc.BP_FIRST_LAST_NAME}}"
+      form-label="firstName"
+      required="true"
+      type="text"
+      value="userData.creditCardDetails.firstName"
+      title="{{loc.BP_NAME_ON_CARD}}">
+    </payment-flow-input>
+    <!-- end name on card -->
+
+    <!-- start card number -->
+    <pf-error-message
+      ng-show="creditCardDetailsForm.creditCardNumber.$dirty && creditCardDetailsForm.creditCardNumber.$error.required">
+      {{::loc.BP_REQUIRED}}
+    </pf-error-message>
+    <pf-error-message
+      ng-show="creditCardDetailsForm.creditCardNumber.$dirty && (creditCardDetailsForm.creditCardNumber.$viewValue.length < 13)">
+      {{::loc.BP_CARD_NUMBER_MUST_BE_DIGITS}}
+    </pf-error-message>
+    <pf-error-message
+      ng-show="(creditCardDetailsForm.creditCardNumber.$viewValue.length > 12) && (!creditCardDetailsForm.creditCardNumber.$error.required && creditCardDetailsForm.creditCardNumber.$error.pattern)">
+      {{::loc.BP_CARD_TYPE_NOT_ACCEPTED}}
+    </pf-error-message>
+    <payment-flow-input
+      number="true"
+      required="true"
+      form-label="creditCardNumber"
+      value="userData.creditCardDetails.lastFour"
+      placeholder="{{::loc.BP_UP_TO_16_DIGITS}}"
+      max-length="19"
+      max-length-enforce
+      required="true"
+      pattern="cardRegex"
+      type="number"
+      title="{{::loc.BP_CARD_NUMBER}}">
+    </payment-flow-input>
+    <!-- end card number -->
+
+    <!-- start flex row -->
+    <pf-error-message
+      ng-show="(creditCardDetailsForm.month.$dirty && creditCardDetailsForm.year.$dirty) && (!userData.creditCardDetails.month || !userData.creditCardDetails.year)">
+      {{::loc.BP_ENTER_VALID_EXPIRATION_DATE}}
+    </pf-error-message>
+    <div class="flex-row flex-center-center">
+      <div class="mr1 width-50">
+        <payment-flow-select
+          value="userData.creditCardDetails.month"
+          form-label="month"
+          required="true"
+          title="{{::loc.BP_EXPIRATION_MONTH}}">
+          <option selected disabled value="">{{::loc.BP_MONTH}}</option>
+          <option
+            ng-repeat="month in monthArr track by $index"
+            value="{{$index + 1 | leadingZero}}">
+            {{::$index + 1 | leadingZero}}
+          </option>
+        </payment-flow-select>
+      </div>
+      <div class="ml1 width-50">
+        <payment-flow-select
+          form-label="year"
+          required="true"
+          value="userData.creditCardDetails.year"
+          title="{{::loc.BP_EXPIRATION_YEAR}}">
+          <option selected disabled value="">{{::loc.BP_YEAR}}</option>
+          <option
+            ng-repeat="year in yearsArr track by $index"
+            ng-value="{{year.value}}"
+            ng-bind="{{::year.label}}">
+          </option>
+        </payment-flow-select>
+      </div>
+    </div>
+    <!-- end flex row -->
+
+    <!-- start cvn -->
+    <pf-error-message
+      ng-show="creditCardDetailsForm.cvn.$dirty && !userData.creditCardDetails.cvn && !creditCardDetailsForm.cvn.$error.pattern">
+      {{::loc.BP_REQUIRED}}
+    </pf-error-message>
+    <pf-error-message
+      ng-show="creditCardDetailsForm.cvn.$error.pattern">
+      {{::loc.BP_ENTER_VALID_CVN}}
+
+    </pf-error-message>
+    <payment-flow-input
+      number="true"
+      form-label="cvn"
+      max-length="4"
+      max-length-enforce
+      required="true"
+      pattern="'(?!000)[0-9]{3,4}'"
+      type="number"
+      cvn-validation="userData.creditCardDetails.cvn"
+      placeholder="{{::loc.BP_UP_TO_4_DIGITS}}"
+      value="userData.creditCardDetails.cvn"
+      title="{{::loc.BP_CARD_VERIFICATION_NUMBER_CVN}}"
+      modal-name="cvnModal">
+    </payment-flow-input>
+    <!-- end cvn -->
+
+  </div>
+</div>
+
+<pf-modal modal-title="{{::loc.BP_CARD_VERIFICATION_NUMBER_CVN}}" name="cvnModal">
+  <p ng-bind="::loc.BP_CREDIT_CARD_VERIFICATION_MODAL"></p>
+  <img class="mt4" ng-src="images/cvn{{::language === 'en' ? '' : '-esp'}}.svg" alt="" />
+</pf-modal>
