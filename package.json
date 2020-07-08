@@ -37,6 +37,7 @@
     "yarn": "^1.22.4"
   },
   "dependencies": {
+    "http-server": "^0.12.3",
     "single-spa-angularjs": "^3.2.0"
   }
 }
