@@ -17,6 +17,8 @@ function copyStatic() {
   return gulp.src([
     'src/**/*.html',
     'src/**/*.css',
+    'src/**/*.svg',
+    'src/**/*.png',
   ])
     .pipe(gulp.dest('dist/'))
 }
