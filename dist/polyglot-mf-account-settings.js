@@ -173,20 +173,18 @@ angular
     template: '<settings-home></settings-home>'
   })
 }])
-import * as accountSettingsTemplate from "./components/account-settings.template.html";
-
 angular.module("account-settings").component("accountSettings", {
-  template: accountSettingsTemplate.default,
+  template: require("./components/account-settings.template.html").default,
 });
 
-import * as settingsHomeTemplate from "./components/settings-home.template.html";
+import CrossShieldImg from './images/crossshield.svg';
 
 angular.module("account-settings").component("settingsHome", {
-  template: settingsHomeTemplate.default,
+  template: require("./components/settings-home.template.html").default,
   controller: [
-    "$rootScope",
-    function ($rootScope) {
-      console.log("root scope", $rootScope);
+    "$scope",
+    function ($scope) {
+      $scope.exampleImg = CrossShieldImg;
     },
   ],
 });
