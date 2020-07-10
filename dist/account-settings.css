@@ -1,8 +1,21 @@
 /* roughly using BEM syntax */
 .account-settings__container {
-  margin-top: var(--navbar-height);
+    margin-top: var(--navbar-height);
 }
 
 .account-settings__home {
-  background-color: white;
+    background-color: white;
+}
+
+.check-box-selected {
+    border: 5px solid black;
+    width: 15rem;
+    height: 15rem;
+    background: url('images/icon_checkbox-checked.svg');
+    background-repeat: no-repeat;
+    border-radius: 3px;
+    display: inline-block;
+    padding-top: .25rem;
+    font-size: .85rem;
+    text-align: center;
 }
