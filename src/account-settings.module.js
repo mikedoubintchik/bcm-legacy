@@ -1,3 +1,1 @@
-angular.module('account-settings', [
-  'ui.router'
-]);
+angular.module("account-settings", ["ui.router"]);

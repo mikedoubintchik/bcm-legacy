@@ -1,3 +1,3 @@
 angular.module("account-settings").component("accountSettings", {
-  template: require("./components/account-settings.template.html").default,
+  template: require("./account-settings.template.html").default,
 });
