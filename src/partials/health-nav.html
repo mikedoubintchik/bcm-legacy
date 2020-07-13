@@ -1,0 +1,26 @@
+<div class="health-nav col-sm-8 col-sm-offset-2">
+  <find-doctor-unavailable-alert-modal open-modal-fn-alias="openAlertModal" modal-info="alertModalObj"></find-doctor-unavailable-alert-modal>
+  <div class="health-nav-header">
+    <span ng-bind="healthNavDetails.mainTitle"></span>
+    <img class="navbar-menu-header-image" ng-src="images/{{healthNavDetails.image}}" ng-if="faqDetails.image"></img>
+  </div>
+  <div class="health-nav-content">
+    <div id="accordion">
+      <div class="panel panel-default"  ng-repeat="item in healthNavDetails.group">
+        <div class="panel-heading" ng-if="item.icon == 'circle-healthnav'" ng-click="checkVitalsError()">
+          <p class="panel-title">
+            <i class="heading-icon fc-{{item.icon}} fc-lg white"></i>
+            <a ng-bind="item.title" ng-class="{'fc-es': $root.language == 'es'}"></a>
+          </p>
+        </div>
+        <div class="panel-heading" ng-click="openInSecureBrowser(item.url)" ng-if="item.url && item.icon != 'finddoctor'">
+          <p class="panel-title" ng-click="toggleItem(item, $index)">
+            <i class="heading-icon fc-{{item.icon}} fc-lg white"></i>
+            <a ng-bind="item.title" ng-class="{'fc-es': $root.language == 'es'}"></a>
+            <i class="fc-external-link white"></i>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

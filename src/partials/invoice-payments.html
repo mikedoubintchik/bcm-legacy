@@ -1,0 +1,3 @@
+<payment-success ng-if="payment.paymentStatus === 'Successful'" payment-amount="payment.paymentAmount" payment-date="payment.paymentDate"></payment-success>
+<payment-processing class="billing-summary-pending-icon" ng-if="payment.paymentStatus === 'Pending'" payment-amount="payment.paymentAmount" payment-date="moment(payment.paymentDate).format('M/D/YYYY')"></payment-processing>
+<payment-unsuccessful ng-if="payment.paymentStatus === 'Failed' || payment.paymentStatus === 'Rejected'" payment-amount="payment.paymentAmount" payment-date="moment(payment.paymentDate).format('M/D/YYYY')"></payment-unsuccessful>

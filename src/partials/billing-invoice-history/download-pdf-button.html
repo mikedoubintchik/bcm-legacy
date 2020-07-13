@@ -1,0 +1,25 @@
+
+  <cta-button ng-if="!failedToLoad && !pdfReady" ng-click="downloadInvoice(invoice)" class="download-pdf-button">
+
+    <div ng-if="downloadAll && !loading" class="mr6" ng-bind="::loc.BP_DOWNLOAD_ALL_RESULTS"></div>
+    <div ng-if="!downloadAll && !loading" class="mr6" ng-bind="::loc.BP_DOWNLOAD_INVOICE"></div>
+    <div ng-if="loading && !pdfReady" class="mr6" ng-bind="::loc.LOADING_PLEASE_WAIT"></div>
+    <i ng-if="!loading" class="fa fc fc-pdf"></i>
+    <i ng-if="loading" class="fa fa-spinner fa-pulse"></i>
+  </cta-button>
+
+  <cta-button ng-if="!failedToLoad && pdfReady" ng-click="viewPdf()" class="download-pdf-button readyforview">
+    <div ng-if="downloadAll && !loading" class="mr6" ng-bind="::loc.BP_DOWNLOAD_ALL_RESULTS"></div>
+    <div ng-if="!downloadAll && !loading" class="mr6" ng-bind="::loc.BP_DOWNLOAD_INVOICE"></div>
+    <i class="fa fc fc-pdf"></i>
+    <hr class="bg-white" class="mb0 mt0">
+    <div ng-if="!loading && pdfReady" class="mr6 bottom-text" ng-bind="::loc.READY_TO_VIEW"></div>
+  </cta-button>
+
+  <div class="download-pdf-button failed" ng-if="failedToLoad">
+    <p class="text-center">
+      <span ng-if="!downloadAll" ng-bind="::loc.BP_INVOICE_NOT_FOUND"></span><br ng-if="!downloadAll">
+      <span ng-if="downloadAll" ng-bind="::loc.BP_INVOICES_NOT_FOUND"></span>
+      <span ng-bind="::loc.BP_PLEASE_TRY_AGAIN"></span>
+    </p>
+  </div>

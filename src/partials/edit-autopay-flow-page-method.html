@@ -1,0 +1,36 @@
+<div ng-form="editAutopayMethodForm">
+  <payment-flow-tracker tracker-info="trackerInfo" flow-is-autopay="true"></payment-flow-tracker>
+  <payment-flow-auto-pay-setup billing-info="serviceResponse" user-selected-auto-pay="true" flow-is-autopay="true"></payment-flow-auto-pay-setup>
+  <payment-flow-title-bar title="{{::loc.BP_TITLE_PAYMENT_FREQUENCY}}"></payment-flow-title-bar>
+  <pf-error-message ng-if="editAutopayMethodForm.frequencyRadioSelected.$dirty && editAutopayMethodForm.frequencyRadioSelected.$error.required"></pf-error-message>
+
+  <payment-flow-radio-group group-value="paymentFrequency">
+    <payment-flow-radio-button value="RECURRING"><p ng-bind="::loc.AUTO_PAY"></p></payment-flow-radio-button>
+    <input type="radio" class="hidden" name="frequencyRadioSelected" ng-model="paymentFrequency">
+  </payment-flow-radio-group>
+
+  <payment-flow-title-bar title="{{::loc.BP_TITLE_PREMIUM_ACCCONT}}"></payment-flow-title-bar>
+  <p ng-if="serviceResponse.account.currentInvoice.remainingBalance == 0" class="pt2 pl4 pr2"><span ng-bind="::loc.BP_YOU_HAVE_PAID + ' '"></span><span ng-bind="::serviceResponse.currMonthName + ' '"></span>
+    <span ng-bind="::loc.BP_YOUR_NEXT_AUTOMATIC_PAYMENT + ' '"></span><span ng-bind="::serviceResponse.nextMonthName"></span>
+    <span ng-bind="::loc.BP_BILL"></span></p>
+  <pf-error-message ng-if="editAutopayMethodForm.premiumRadioSelected.$dirty && editAutopayMethodForm.premiumRadioSelected.$error.required" ng-bind="::loc.BP_REQUIRED"></pf-error-message>
+
+  <payment-flow-radio-group group-value="premiumSelected">
+    <payment-flow-radio-button value="TRUE">
+      <p><span ng-bind="::loc.BP_MONTHLY_PREMIUM_AMOUNT"></span></p>
+      <p><strong ng-bind="padAmt(serviceResponse.account.currentInvoice.billedAmount)"></strong></p>
+      <input ng-required="true" name="premiumRadioSelected" ng-model="premiumSelected" type="radio" class="hidden">
+    </payment-flow-radio-button>
+  </payment-flow-radio-group>
+
+  <payment-flow-payment-method method-info="serviceResponse"></payment-flow-payment-method>
+  <div ng-if="serviceResponse.preferences.isPaperless === false">
+    <autopay-flow-billing-method balance-info="serviceResponse" user-data="userSetData"></autopay-flow-billing-method>
+    <payment-flow-paperless-agreement required="true"></payment-flow-paperless-agreement>
+  </div>
+
+  <cta-button-row>
+    <cta-button class="blue" ng-click="validateEditAutopayMethod(editAutopayMethodForm)" ng-bind="::loc.BP_CONTINUE_AUTOPAY_DETAILS"></cta-button>
+  </cta-button-row>
+  <payment-flow-cancel-button></payment-flow-cancel-button>
+</div>

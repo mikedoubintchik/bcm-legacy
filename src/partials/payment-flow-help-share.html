@@ -1,0 +1,16 @@
+<div>
+  <nav class="navbar navbar-fixed-bottom navbar-light bg-faded bottom-bar">
+    <div class="navbar-header-item text-center compose-nav-border">
+      <button class="navbar-toggler med-light-blue" type="button" ng-click="gotoView('/help')">
+        <i class="fc-utility-help"></i>
+        <p class="bottom-btn"><span ng-bind="loc.HELP"></span></p>
+      </button>
+    </div>
+    <div class="navbar-header-item text-center">
+      <button class="navbar-toggler med-light-blue" type="button" ng-click="shareReceipt()">
+        <i ng-class="{'fc-utility-share': $root.device === 'Android' || 'amazon-fireos', 'fc-utility-share-ios': $root.device === 'iOS'}"></i>
+        <p class="bottom-btn"><span ng-bind="loc.SHARE"></span></p>
+      </button>
+    </div>
+  </nav>
+</div>

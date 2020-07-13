@@ -1,0 +1,8 @@
+<p>
+  <span ng-bind="::loc.BP_YOUR_PAYMENT"></span>
+  <span ng-bind="::paymentAmount | currency"></span> 
+  <span ng-bind="::loc.BP_MADE_ON"></span>
+  <br>
+  <span ng-bind="::moment(paymentDate).format('M/D/YYYY')"></span>
+  <span ng-bind="::loc.BP_SUCCESSFUL"></span>
+</p>

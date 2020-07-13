@@ -1,0 +1,10 @@
+<div class="payment-container" ng-form="paymentDetailsForm" ng-submit="validateForm(paymentDetailsForm)">
+    <basic-navbar navbar-details="navbarDetails" left-click="basicNavbarLeftClick()" right-click="basicNavbarRightClick()"></basic-navbar>
+    <policy-header-gray></policy-header-gray>
+    <payment-flow-tracker tracker-info="trackerInfo" flow-is-autopay="false"></payment-flow-tracker>
+    <tracker-billing-summary tracker-billing-data="balanceInfo" ng-if="!balanceInfo.memberInReinstatement"></tracker-billing-summary>
+
+    <!-- <button type="submit" class="btn btn-primary btn-block" ng-click="validateForm(paymentDetailsForm)">{{::loc.BP_CONTINUE_TO_PAYMENT_REVIEW}}</button> -->
+    <button type="submit" class="btn btn-primary btn-block" ng-click="gotoView('/payment/review')">{{::loc.BP_CONTINUE_TO_PAYMENT_REVIEW}}</button>
+
+</div>

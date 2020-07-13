@@ -1,0 +1,27 @@
+<div class="find-doctor-container">
+  <list-messaging  ng-bind="findCareDetails.selectPlanMessage"></list-messaging>
+    <div class="small-margin-plans font-univers-420">
+            <payment-flow-title-bar title="{{::findCareDetails.medicarePlans}}"></payment-flow-title-bar>
+            <section class="plan-section">
+                <div class="row m0 p0" block-under-click ng-repeat="plan in plans.medicarePlans" ng-click="gotoPlanSearchDetails(plan)">
+                    <div class="col-xs-10">
+                        <h4 class="plan-title p4 pr0 m0" ng-bind="::plan.name"></h4>
+                    </div>
+                    <div class="col-xs-2 pl2 flex-center-icon">
+                        <i class="fa fa-caret-right light-gray p3 pr1"></i>
+                    </div>
+                </div>
+            </section>
+            <payment-flow-title-bar title="{{::findCareDetails.individualFamilyPlan}}"></payment-flow-title-bar>
+            <section class="plan-section">
+                <div class="row m0 p0" block-under-click ng-repeat="plan in plans.nonMedicarePlans" ng-click="gotoPlanSearchDetails(plan)">
+                    <div class="col-xs-10">
+                        <h4 class="plan-title p4 pr0 m0" ng-bind="::plan.name"></h4>
+                    </div>
+                    <div class="col-xs-2 pl2 flex-center-icon">
+                        <i class="fa fa-caret-right p3 pr1 light-gray"></i>
+                    </div>
+                </div>
+            </section>
+        </div>
+</div>

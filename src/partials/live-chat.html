@@ -1,0 +1,8 @@
+<div class="live-chat-container" ng-show="memberHasLiveChat()">
+  <button class="live-chat-init-button"
+    ng-click="initializeChat()" ng-show="memberInitializedLiveChat === false">Live Chat
+  </button>
+  <div id="member-initialized-live-chat" ng-show="memberInitializedLiveChat === true">
+    <button ng-repeat="button in chatButtons track by $index" ng-disabled="$index === 1" id="{{button.id}}" token="{{button.token}}" ng-bind="button.label" ng-click="startChat(button.token)"></button>
+  </div>
+</div>

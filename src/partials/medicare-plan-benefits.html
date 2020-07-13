@@ -1,0 +1,38 @@
+<div class="col-sm-8 col-sm-offset-2">
+  <div id="accordion" class="medicare-benefit-plan" ng-if="medicarePlanBenefitsDetails.policy.active == true">
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <div class="plus-icon-container" ng-click="toggleItem()">
+            <i class="fc-plus-expand fc-lg white" ng-if="!expandedDiv"></i>
+            <i class="fc-minus-collapse fc-lg white" ng-if="expandedDiv"></i>
+          </div>
+          <label ng-bind="medicarePlanBenefitsDetails.mainTitle"></label>
+          <help-icon header="medicarePlanBenefitsDetails.glossaryHeader" class="coverage-help" file-name="'help/benefits-medicare-help'"></help-icon>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div id="accordionItems" class="plan-benefits-items"  ng-class="{'close-div': !expandedDiv, 'open-div': expandedDiv}" ng-if="!medicarePlanBenefitsDetails.ppoPlanBenefits">
+        <div ng-repeat="item in medicarePlanBenefitsDetails.planBenefitsData track by $index">
+          <div class="item-container" >
+            <div class="item-title" ng-bind="item.title"></div>
+            <div class="item-data" ng-bind-html="item.data"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Used for displaying PPO-Enhanced Plan Benefits -->
+      <div id="accordionItems" class="plan-benefits-items ppo-plan-benefits"  ng-class="{'close-div': !expandedDiv, 'open-div': expandedDiv}" ng-if="medicarePlanBenefitsDetails.ppoPlanBenefits">
+        <div ng-repeat="items in medicarePlanBenefitsDetails.planBenefitsData">
+          <div class="item-container">
+            <div class="item-title" ng-bind="items.title"></div>
+            <div class="item-data" ng-repeat="data in items.data">
+              <div class="item-data-text" ng-bind-html="data.dataText"></div>
+              <div class="item-data-value" ng-bind-html="data.dataValue"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

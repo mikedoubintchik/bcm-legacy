@@ -1,0 +1,21 @@
+<basic-navbar navbar-details="navbarDetails" left-click="navbarDetails.onLeftClick()" right-click="basicNavbarRightClick()"></basic-navbar>
+<div ng-form="paymentFlowReviewForm" id="pf-scrollable-section" class="policy-header-margin payment-flow-phone-scroll">
+  <extendable-alert-modal open-modal-fn-alias="navbarDetails.openClearCardModal" confirm-fn="navbarDetails.confirmCancelModal" modal-info="navbarDetails.cancelModalObj"></extendable-alert-modal>
+  <policy-header-gray></policy-header-gray>
+  <payment-flow-tracker tracker-info="trackerInfo" flow-is-autopay="false"></payment-flow-tracker>
+  <tracker-billing-summary tracker-billing-data="billingInfo" ng-if="!billingInfo.memberInReinstatement"></tracker-billing-summary>
+  <payment-flow-total-balance balance-info="billingInfo"></payment-flow-total-balance>
+  <payment-flow-auto-pay-setup billing-info="billingInfo" user-selected-auto-pay="userData.paymentFrequency === 'autopay'"></payment-flow-auto-pay-setup>
+  <payment-flow-review-details review-details="billingInfo"></payment-flow-review-details>
+  <review-page-payment-error ng-if="paymentFlowReviewForm.$dirty"></review-page-payment-error>
+  <div class="pb2 pt2 bg-lightest-gray">
+    <cta-button-row>
+        <cta-button loading="$parent.paymentInProgress" loading-text="loc.BP_SUBMITTING_PAYMENT" ng-click="validateForm(paymentFlowReviewForm)" class="blue"
+        ng-class="{'darker-blue' : $parent.paymentInProgress}">
+            <i class="fa fc-lock-nocircle mr2"></i>{{loc.BP_SUBMIT_SECURE_PAYMENT}}
+        </cta-button>
+    </cta-button-row>
+
+  </div>
+  <payment-flow-cancel-button></payment-flow-cancel-button>
+</div>

@@ -1,0 +1,75 @@
+<div class="inbox-message-list col-sm-8 col-sm-offset-2">
+  <div class="list-messaging" ng-if="messages.length === 0">
+    <label ng-bind-html="noMessages"></label>
+  </div>
+  <div class="inbox-message" ng-class="{'unread': message.unread}" ng-repeat="message in messages | orderBy : 'createdDate': true" ng-swipe-left="swipeMessage(message)" ng-swipe-right="unswipeMessage(message)">
+    <!-- duplicate for auto height. keep the style element -->
+    <div class="message-contents" style="opacity: 0; z-index: 0">
+      <div class="message-header">
+        <div>
+          <h5>
+            <img ng-src="images/crossshield.svg" class="inbox-logo-icon" ng-if="message.messageInitiatedBy === 'BCBSNC'">
+            <i class="fc-circlefill med-blue icon-inital-bg" ng-if="message.messageInitiatedBy != 'BCBSNC'"></i>
+            <span class="icon-initials" ng-if="message.messageInitiatedBy != 'BCBSNC'" ng-bind="message.messageInitiatedBy"></span>
+            <span class="message-subject" ng-bind="message.subject"></span>
+          </h5>
+        </div>
+        <div class="message-date text-right">
+          <span ng-bind="getMessageDisplayDate(message)"></span>
+          <i class="fa fa-lg fa-fw fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="message-snippet" ng-bind-html="getMessageBodySnippet(message)"></div>
+    </div>
+
+    <div class="message-actions">
+      <div class="message-action green swipe-read" ng-class="{'shadowed': !lowResDevice}" ng-click="toggleRead(message)">
+        <div class="action-content">
+          <div>
+            <i class="fc-lg2" ng-class="{'fc-swipe-mark-read': message.unread, 'fc-swipe-mark-unread': !message.unread}"></i>
+            <div class="action-title" ng-bind="loc.MARK_READ" ng-if="message.unread"></div>
+            <div class="action-title" ng-bind="loc.MARK_UNREAD" ng-if="!message.unread"></div>
+          </div>
+        </div>
+      </div>
+      <div class="message-action blue swipe-bookmark" ng-class="{'shadowed': !lowResDevice}" ng-click="toggleBookmarked(message)">
+        <div class="action-content">
+          <div>
+            <i class="fc-lg2" ng-class="{'fc-swipe-unbookmark': message.bookmarked, 'fc-swipe-bookmark': !message.bookmarkd}"></i>
+            <div class="action-title" ng-bind="loc.BOOKMARK" ng-if="!message.bookmarked"></div>
+            <div class="action-title" ng-bind="loc.UNBOOKMARK" ng-if="message.bookmarked"></div>
+          </div>
+        </div>
+      </div>
+      <div class="message-action red swipe-delete" ng-class="{'shadowed': !lowResDevice}" ng-click="confirmDeletion(message)">
+        <div class="action-content">
+          <div>
+            <i class="fc-swipe-delete fc-lg2"></i>
+            <div class="action-title" ng-bind="loc.DELETE"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="message-main" ng-class="{'unswiped': message.swiped === false, 'swiped': message.swiped}" ng-click="openMessage(message)">
+      <div class="message-contents">
+        <div class="message-header">
+          <div class="message-subject">
+            <h5>
+              <img ng-src="images/crossshield.svg" class="inbox-logo-icon" ng-if="message.messageInitiatedBy === 'BCBSNC'">
+              <i class="fc-circlefill med-blue icon-inital-bg" ng-if="message.messageInitiatedBy != 'BCBSNC'"></i>
+              <span class="icon-initials" ng-if="message.messageInitiatedBy != 'BCBSNC'" ng-bind="message.messageInitiatedBy"></span>&nbsp;
+              <span ng-bind-html="getMessageSubjectSnippet(message)"></span>
+            </h5>
+          </div>
+          <div class="message-date text-right">
+            <span ng-bind="getMessageDisplayDate(message)"></span>
+            <i class="fa fa-lg fa-fw fa-angle-right"></i>
+          </div>
+        </div>
+        <div class="message-snippet" ng-bind-html="getMessageBodySnippet(message)"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="col-sm-8 col-sm-offset-2">
+  <div id="accordion" class="medicare-benefit-coverage-gap" ng-if="medicareDrugBenefitsCoverageGapDetails.policy.active == true">
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="panel-title blue-bar-label">
+          <div class="plus-icon-container" ng-click="toggleItem()">
+            <i class="fc-plus-expand fc-lg white" ng-if="!expandedDiv"></i>
+            <i class="fc-minus-collapse fc-lg white" ng-if="expandedDiv"></i>
+          </div>
+          <label ng-bind="medicareDrugBenefitsCoverageGapDetails.mainTitle"></label>
+          <help-icon header="medicareDrugBenefitsCoverageGapDetails.glossaryHeader" class="coverage-help" file-name="'help/benefits-medicare-help'"></help-icon>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div id="accordionItems" ng-repeat="item in medicareDrugBenefitsCoverageGapDetails.mainData" ng-class="{'close-div': !expandedDiv, 'open-div': expandedDiv}">
+        <div>
+          <div class="item-container">
+            <div class="item-title" ng-bind="item.title"></div>
+            <div class="item-data" ng-bind-html="item.data"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

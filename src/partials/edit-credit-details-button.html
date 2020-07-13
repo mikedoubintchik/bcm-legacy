@@ -1,0 +1,4 @@
+<cta-button-row>
+  <cta-button ng-click="paymentMethod === 'creditcard'? openModal(): gotoView(cancelRoute)" class="white"><span ng-bind="::buttonTitle"></span></cta-button>
+</cta-button-row>
+<extendable-alert-modal open-modal-fn-alias="openModal" confirm-fn="goToBillingSummary" modal-info="cancelModalObj"></extendable-alert-modal>

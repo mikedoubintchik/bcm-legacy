@@ -1,0 +1,15 @@
+<policy-header-gray></policy-header-gray>
+<div class="payment-container bg-lightest-gray pl4 pr4 pt4 pb1 m0">
+    <p><span ng-bind="loc.BP_FOR_YOUR_SECURITY"></span></p>
+    <p><span ng-bind="loc.BP_TO_UNENROLL"></span></p>
+    <pf-divider></pf-divider>
+    <cta-button-row>
+        <cta-button ng-click="gotoView('/edit-autopay-flow/method')" class="blue">{{::loc.BP_SET_UP_NEW_AUTOPAY_DETAILS}}</cta-button>
+    </cta-button-row>
+    <cta-button-row>
+        <cta-button ng-click="gotoView('/stop-autopay')" class="red">{{::loc.BP_STOP_AUTOPAY}}</cta-button>
+    </cta-button-row>
+    <cta-button-row>
+        <cta-button ng-click="gotoView('/billing-preferences')" class="white">{{::loc.CANCEL}}</cta-button>
+    </cta-button-row>
+</div>

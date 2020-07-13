@@ -1,0 +1,31 @@
+<div class="home-card home-card-customer-service">
+  <div class="home-card-header" ng-click="gotoView('/help')" track-action="{action: 'homeHelp', section: analyticConstants.HOME_SECTION}">
+    <div>
+      <h3>
+      <i class="fc-circlefill fc-xl fc-underlay white"></i>
+      <i class="fc-help fc-xl fc-overlay"></i>
+      </h3>
+    </div>
+    <div class="home-card-header-text">
+      <p><strong ng-bind="loc.CUSTOMER_SERVICE_AND_HELP_PAGE"></strong></p>
+    </div>
+  </div>
+  <div class="home-card-body">
+    <div class="customer-row" ng-repeat="customer in customerDetails1" ng-class="{'customer-row-rearrange': customer.length === 1}">
+      <div class="customer-item" ng-repeat="row in customer">
+        <div ng-click="checkVitalsError(row.url)" ng-if="row.url" track-action="{action: 'home:{{row.description}}', section: analyticConstants.HOME_SECTION}">
+          <i class="fc-{{row.icon}} fc-xl"></i>
+          <div class="icon-text-description" ng-bind="row.description"></div>
+        </div>
+        <div ng-click="gotoView('/feedback')" ng-if="!row.url" track-action="{action: 'home:provideAppFeedback', section: analyticConstants.HOME_SECTION}">
+          <i class="fc-{{row.icon}} fc-xl"></i>
+          <div class="icon-text-description" ng-bind="loc.PROVIDE_APP_FEEDBACK"></div>
+        </div>
+      </div>
+    </div>
+    <div class="small-padding" ng-click="gotoView('/help'); " track-action="{action: 'homeCustomerServiceAndHelp', section: analyticConstants.HOME_SECTION}">
+      <button class="btn btn-default btn-block ng-binding" ng-bind="loc.CUSTOMER_SERVICE_AND_HELP"></button>
+    </div>
+  </div>
+  <find-doctor-unavailable-alert-modal open-modal-fn-alias="openAlertModal" modal-info="alertModalObj"></find-doctor-unavailable-alert-modal>
+</div>

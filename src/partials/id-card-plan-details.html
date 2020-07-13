@@ -1,0 +1,40 @@
+<div class="id-card-info-container">
+  <div class="gray-box">
+    <div class="id-card-plan-details-message p2 mt2 ml2 mr2 mb0" ng-bind="idCardPolicyDetails.message"></div>
+    <div class="pl2 pt2">
+      <div>
+        <label ng-bind="loc.PLAN"></label>
+        <div class="id-card-plan-info-text" ng-bind="idCardPolicyDetails.details.planName"></div>
+      </div>
+      <hr>
+      <div>
+        <label id="subscriberTitle" ng-bind="loc.SUBSCRIBER_NAME + ' (' + loc.MEMBER_CODE + ')' "></label>
+        <div class="id-card-plan-info-text" ng-bind="idCardPolicyDetails.details.subscriberName"></div>
+      </div>
+      <div ng-show="idCardPolicyDetails.details.coveredMembers.length > 0">
+        <label id="coveredMembersTitle" ng-bind="loc.COVERED_MEMBERS + ' (' + loc.MEMBER_CODE + ')' "></label>
+        <div class="id-card-plan-info-text" ng-repeat="member in idCardPolicyDetails.details.coveredMembers">
+          <div ng-bind="member"></div>
+        </div>
+      </div>
+      <hr>
+      <div>
+        <label ng-bind="loc.SUBSCRIBER_ID"></label>
+        <div class="id-card-plan-info-text" ng-bind="idCardPolicyDetails.details.subscriberId"></div>
+      </div>
+      <div>
+        <label ng-bind="loc.GROUP_NUMBER"></label>
+        <div class="id-card-plan-info-text" ng-bind="idCardPolicyDetails.details.groupNumber"></div>
+      </div>
+      <div>
+        <label ng-bind="loc.RX_BIN"></label>
+        <div class="id-card-plan-info-text" ng-bind="idCardPolicyDetails.details.rxBinNumber"></div>
+      </div>
+      <hr>
+      <div>
+        <label ng-bind="loc.EFFECTIVE_DATES"></label>
+        <div class="id-card-plan-info-text" ng-bind="idCardPolicyDetails.details.effectiveDates"></div>
+      </div>
+    </div>
+  </div>
+</div>

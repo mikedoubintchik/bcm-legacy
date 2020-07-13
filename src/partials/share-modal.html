@@ -1,0 +1,16 @@
+<div class="share" ng-click="shareModal.result();">
+  <div class="share-modal">
+    <div class="share-header">
+      <h6 ng-bind="loc[shareModal.title]"></h6>
+    </div>
+    <div class="share-options">
+      <div class="share-option" ng-repeat="option in shareModal.options" ng-click="shareModal.result(option);event.stopPropagation();">
+        <i class="{{option.icon}}"></i>
+        <span class="share-option-title" ng-bind="loc[option.title]"></span>
+      </div>
+    </div>
+    <div class="share-cancel" ng-click="shareModal.result();event.stopPropagation()">
+      <h6 ng-bind="loc.CANCEL"></h6>
+    </div>
+  </div>
+</div>

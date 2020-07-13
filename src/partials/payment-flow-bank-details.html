@@ -1,0 +1,92 @@
+<!-- Only show if the user selected bank draft in -->
+<payment-flow-title-bar title="{{loc.BP_TITLE_BANK_DRAFT_DETAILS}}"></payment-flow-title-bar>
+<div ng-form="bankDraftForm" class="draft-details-inputs">
+  <pf-error-message
+    ng-if="(bankDraftForm.accountOwnersName.$dirty || bankDraftForm.accountOwnersName.$touched)
+    && !bankDraftForm.accountOwnersName.$viewValue">{{loc.BP_REQUIRED}}</pf-error-message>
+  <payment-flow-input
+    type="text"
+    pattern="namePattern"
+    value="userData.accountHolderName"
+    title="{{loc.BP_NAME_ON_ACCOUNT}}"
+    placeholder="{{loc.BP_FIRST_LAST_NAME}}"
+    form-label="accountOwnersName"
+    required="userData.paymentMethod === 'bankdraft'">
+  </payment-flow-input>
+  <pf-error-message ng-if="(bankDraftForm.accountType.$dirty || bankDraftForm.accountType.$touched)
+    && !bankDraftForm.accountType.$viewValue">{{loc.BP_REQUIRED}}</pf-error-message>
+  <payment-flow-select
+    title="{{loc.BP_ACCOUNT_TYPE}}"
+    value="userData.accountType"
+    form-label="accountType"
+    value="userData.accountType"
+    required="userData.paymentMethod === 'bankdraft'">
+      <option value="" ng-selected="!userData.accountType">{{::loc.BP_SELECT_OPTION}}</option>
+      <option value="Checking">{{::loc.BP_CHECKING}}</option>
+      <option value="Savings">{{::loc.SAVINGS}}</option>
+  </payment-flow-select>
+  <pf-error-message ng-if="(bankDraftForm.bankRoutingNumber.$dirty || bankDraftForm.bankRoutingNumber.$touched)
+    && !bankDraftForm.bankRoutingNumber.$viewValue">{{loc.BP_REQUIRED}}</pf-error-message>
+  <pf-error-message ng-if="bankDraftForm.bankRoutingNumber.$invalid
+    && bankDraftForm.bankRoutingNumber.$touched
+    && bankDraftForm.bankRoutingNumber.$viewValue
+    && bankDraftForm.bankRoutingNumber.$viewValue.length != 9">{{loc.BP_ROUTING_NUMBER_MUST_BE_DIGITS}}</pf-error-message>
+  <pf-error-message ng-if="bankDraftForm.bankRoutingNumber.$touched
+   && bankDraftForm.bankRoutingNumber.$invalid
+   && bankDraftForm.bankRoutingNumber.$viewValue.length === 9">{{loc.BP_INVALID_ROUTING_NUMBER}}</pf-error-message>
+  <routing-number-input
+    type="text"
+    number="true"
+    pattern="routingNumberPattern"
+    value="userData.routingNumber"
+    title="{{loc.BP_ROUTING_NUMBER}}"
+    placeholder="{{loc.BP_MUST_BE_9_DIGITS}}"
+    form-label="bankRoutingNumber"
+    modal-name="routingAccount"
+    required="userData.paymentMethod === 'bankdraft'"
+    bank-name="userData.bankName">
+  </routing-number-input>
+  <pf-error-message ng-if="(bankDraftForm.bankAccountNumber.$dirty || bankDraftForm.bankAccountNumber.$touched)
+    && !bankDraftForm.bankAccountNumber.$viewValue">{{loc.BP_REQUIRED}}</pf-error-message>
+  <pf-error-message ng-if="bankDraftForm.bankAccountNumber.$error.pattern
+    && bankDraftForm.bankAccountNumber.$touched
+    && bankDraftForm.bankAccountNumber.$viewValue">{{loc.BP_ACCOUNT_NUMBER_MUST_BE_BETWEEN}}</pf-error-message>
+  <payment-flow-input
+    type="text"
+    number="true"
+    pattern="accountNumberPattern"
+    value="userData.accountNumber"
+    title="{{loc.BP_BANK_ACCOUNT_NUMBER}}"
+    placeholder="{{loc.BP_MUST_BE_BETWEEN}}"
+    form-label="bankAccountNumber"
+    modal-name="routingAccount"
+    required="userData.paymentMethod === 'bankdraft'">
+  </payment-flow-input>
+  <pf-error-message ng-if="(bankDraftForm.confirmAccountNumber.$dirty || bankDraftForm.confirmAccountNumber.$touched)
+    && !bankDraftForm.confirmAccountNumber.$viewValue">{{loc.BP_REQUIRED}}</pf-error-message>
+  <pf-error-message ng-if="bankDraftForm.confirmAccountNumber.$error.pattern
+    && bankDraftForm.confirmAccountNumber.$touched
+    && bankDraftForm.confirmAccountNumber.$viewValue">{{loc.BP_ACCOUNT_NUMBER_MUST_BE_BETWEEN}}</pf-error-message>
+  <pf-error-message ng-if="bankDraftForm.confirmAccountNumber.$error.match
+    && !bankDraftForm.confirmAccountNumber.$error.pattern
+    && bankDraftForm.confirmAccountNumber.$touched
+    && bankDraftForm.bankAccountNumber.$touched
+    && bankDraftForm.confirmAccountNumber.$viewValue
+    && bankDraftForm.bankAccountNumber.$viewValue">{{loc.BP_BANK_ACCOUNT_NUMBERS_MUST_MATCH}}</pf-error-message>
+  <payment-flow-input
+    type="text"
+    number="true"
+    pattern="accountNumberPattern"
+    value="userData.confirmedAccountNumber"
+    match-input="bankDraftForm.bankAccountNumber"
+    title="{{loc.BP_REENTER_BANK_ACCOUNT_NUMBER}}"
+    placeholder="{{loc.BP_MUST_BE_BETWEEN}}"
+    form-label="confirmAccountNumber"
+    required="userData.paymentMethod === 'bankdraft'">
+  </payment-flow-input>
+</div>
+
+<pf-modal name="routingAccount" modal-title="{{loc.BP_ROUTING_ACCOUNT_NUMBER}}">
+  <p>{{loc.BP_ROUTING_ACCOUNT_NUMBER_MODAL}}</p>
+  <p><img ng-src="images/{{loc.BP_ROUTING_IMAGE}}" alt="" /></p>
+</pf-modal>

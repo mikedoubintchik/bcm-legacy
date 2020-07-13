@@ -1,0 +1,10 @@
+<div class="payment-container bg-lightest-gray">
+  <basic-navbar ng-if="flowStep !== 'confirmation'" navbar-details="navbarDetails.display" left-click="navbarDetails.onLeftClick()"></basic-navbar>
+  <policy-header-gray ng-class="{'policy-header-margin': flowStep !== 'confirmation'}"></policy-header-gray>
+  <div ng-if="serviceResponse" id="pf-scrollable-section">
+    <edit-autopay-flow-page-method service-response="serviceResponse" ng-if="flowStep === 'method'"></edit-autopay-flow-page-method>
+    <edit-autopay-flow-page-details service-response="serviceResponse" ng-if="flowStep === 'details'"></edit-autopay-flow-page-details>
+    <edit-autopay-flow-page-review service-response="serviceResponse" ng-if="flowStep === 'review'"></edit-autopay-flow-page-review>
+    <edit-autopay-flow-page-confirmation service-response="serviceResponse" ng-if="flowStep === 'confirmation'"></edit-autopay-flow-page-confirmation>
+  </div>
+</div>

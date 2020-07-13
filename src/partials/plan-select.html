@@ -1,0 +1,45 @@
+<div class="policy-select nav-margin-top" ng-class="{'blur': selectOpen ? '': blurContent && !lowResDevice}">
+  <div class="policy-select-header" ng-click="togglePlan()">
+    <div class="policy-header-small-box">
+      <span ng-bind="planSelectDetails.nowViewing"></span>
+    </div>
+    <div class="header-text pt1 pb1">
+      <div class="icon-display">
+        <i ng-class="{'fc-health-only': selectedPlan.isMedical, 'fc-dental-only': selectedPlan.isDental}"></i>
+        <div>
+            <h5 class="univers-cn" ng-if="selectedPlan.isMedical" ng-bind="planSelectDetails.healthPlan">:</h5>
+            <h5 class="univers-cn" ng-if="selectedPlan.isDental" ng-bind="planSelectDetails.dentalPlan">:</h5>
+            <h5 class="univers-cn" ng-bind="selectedPlan.name"></h5>
+        </div>
+      </div>
+    </div>
+    <div class="policy-header-small-box">
+      <i class="fa fa-fw fc-dropdown-reverse" ng-if="expandedPlan"></i>
+      <span ng-bind="planSelectDetails.change"></span>
+      <i class="fa fa-fw fc-dropdown" ng-if="!expandedPlan"></i>
+    </div>
+  </div>
+
+  <div class="policy-select-options" ng-class="{'open open-height': expandedPlan,  'close': !expandedPlan}">
+    <div class="small-margin-top font-univers-420">
+      <payment-flow-title-bar title="{{::planSelectDetails.medicarePlans}}"></payment-flow-title-bar>
+      <section class="plan-section bg-white">
+        <div class="row m0 p0" block-under-click ng-repeat="plan in planSelectDetails.plans.medicarePlans" ng-click="selectPlan(plan)">
+          <div class="col-xs-10">
+            <h4 class="plan-title p4 pr0 m0" ng-bind="::plan.name"></h4>
+          </div>
+        </div>
+      </section>
+      <payment-flow-title-bar title="{{::planSelectDetails.individualFamilyPlan}}"></payment-flow-title-bar>
+      <section class="plan-section bg-white">
+        <div class="row m0 p0" block-under-click ng-repeat="plan in planSelectDetails.plans.nonMedicarePlans" ng-click="selectPlan(plan)">
+          <div class="col-xs-10">
+            <h4 class="plan-title p4 pr0 m0" ng-bind="::plan.name"></h4>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="policy-select-shadow" ng-if="expandedPlan" ng-click="togglePlan()"></div>
+</div>

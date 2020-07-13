@@ -1,0 +1,50 @@
+<div class="total-account-balance pl4 pr4">
+  <!-- total account balance due 1: account balance > 0, no payment pending -->
+  <div class="row m0"
+    ng-if="balanceInfo.currentInvoice.totalDueAmount > 0 && !balanceInfo.isPaymentProcessing && !balanceInfo.memberInReinstatement">
+    <div class="col-xs-8">
+      <h4 class="pt1" ng-bind="loc.BP_TOTAL_ACCOUNT_BALANCE"></h4>
+    </div>
+    <div class="col-xs-4 text-right">
+      <sup class="payment-dollar-sign">$</sup><span
+        class="payment-dollars"
+        ng-bind="getDollars(balanceInfo.currentInvoice.totalDueAmount)">
+      </span><sup
+        class="payment-cents"
+        ng-bind="getCents(balanceInfo.currentInvoice.totalDueAmount)">
+      </sup>
+    </div>
+  </div>
+  <!-- total account balance due 2: account balance > 0, payment pending -->
+  <div class="row m0"
+    ng-if="balanceInfo.currentInvoice.remainingBalance > 0 && balanceInfo.isPaymentProcessing && !balanceInfo.memberInReinstatement">
+    <div class="col-xs-8">
+       <h4 class="pt1" ng-bind="loc.BP_REMAINING_BALANCE_DUE"></h4>
+    </div>
+    <div class="col-xs-4 text-right">
+      <sup class="payment-dollar-sign">$</sup><span
+        class="payment-dollars"
+        ng-bind="getDollars(balanceInfo.currentInvoice.remainingBalance)">
+      </span><sup
+        class="payment-cents"
+        ng-bind="getCents(balanceInfo.currentInvoice.remainingBalance)">
+      </sup>
+    </div>
+  </div>
+  <!-- total account balance due 3: member in reinstatement -->
+  <div class="row m0 total-amount-container"
+    ng-if="balanceInfo.memberInReinstatement">
+    <div class="col-xs-8">
+      <h4 class="pt1" ng-bind="loc.BP_REINSTATEMENT_TOTAL_AMOUNT"></h4>
+    </div>
+    <div class="col-xs-4 text-right">
+      <sup class="payment-dollar-sign">$</sup><span
+        class="payment-dollars"
+        ng-bind="getDollars(balanceInfo.reinstatementAmount)">
+      </span><sup
+        class="payment-cents"
+        ng-bind="getCents(balanceInfo.reinstatementAmount)">
+      </sup>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+<div ng-disabled="loading">
+    <i ng-if="loading" class="fa fa-spinner fa-pulse fc-ml"></i>
+    <span ng-if="loading" >{{loadingText}}</span>
+    <span ng-if="!loading" ng-transclude></span>
+</div>

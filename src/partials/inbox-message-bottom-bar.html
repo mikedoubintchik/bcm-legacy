@@ -1,0 +1,33 @@
+<nav class="navbar navbar-fixed-bottom navbar-light bg-faded bottom-bar" ng-class="{'nav-zindex': hideNav}">
+  <div class="navbar-header-item text-center message-nav-border" ng-class="{'utility-active': message.bookmarked, 'utility-inactive':!message.bookmarked}" track-action="{action: 'inbox:messageDetails:{{getBookmarkTitle()}}', section: analyticConstants.INBOX_SECTION}">
+    <button class="navbar-toggler" type="button" ng-click="bookmarkMessage();">
+      <i class="fc-utility-bookmark"></i>
+      <p class="bottom-btn"><span ng-bind="getBookmarkTitle()"></span></p>
+    </button>
+  </div>
+  <div class="navbar-header-item text-center message-nav-border"  track-action="{action: 'inbox:messageDetails:share', section: analyticConstants.INBOX_SECTION}">
+    <button class="navbar-toggler med-light-blue" type="button" ng-click="shareMessage()">
+      <i ng-class="{'fc-utility-share': $root.device === 'Android' || 'amazon-fireos', 'fc-utility-share-ios': $root.device === 'iOS'}" class=""></i>
+      <!-- The device is {{$root.device}} -->
+      <p class="bottom-btn"><span ng-bind="loc.SHARE"></span></p>
+    </button>
+  </div>
+  <div class="navbar-header-item text-center message-nav-border">
+    <button class="navbar-toggler med-light-blue" type="button" ng-click="confirmDeleteMessage()" track-action="{action: 'inbox:messageDetails:delete', section: analyticConstants.INBOX_SECTION}">
+      <i class="fc-utility-trash"></i>
+      <p class="bottom-btn"><span ng-bind="loc.DELETE"></span></p>
+    </button>
+  </div>
+  <div class="navbar-header-item text-center message-nav-border">
+    <button class="navbar-toggler med-light-blue" ng-class="{'btn-disabled': !message.canReply}" type="button" ng-click="gotoView('/inbox/compose/' + message.messageId + '?returnTo=' + returnPath)" ng-disabled="!message.canReply"  track-action="{action: 'inbox:messageDetails:reply', section: analyticConstants.INBOX_SECTION}">
+      <i class="fc-utility-reply"></i>
+      <p class="bottom-btn"><span ng-bind="loc.REPLY"></span></p>
+    </button>
+  </div>
+  <div class="navbar-header-item text-center">
+    <button class="navbar-toggler med-light-blue" type="button" ng-click="gotoView('/inbox/compose' + '?returnTo=' + returnPath)" track-action="{action: 'inbox:messageDetails:compose', section: analyticConstants.INBOX_SECTION}">
+      <i class="fc-utility-compose"></i>
+      <p class="bottom-btn"><span ng-bind="loc.COMPOSE"></span></p>
+    </button>
+  </div>
+</nav>

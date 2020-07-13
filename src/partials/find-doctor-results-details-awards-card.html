@@ -1,0 +1,37 @@
+<div class="row m0 p2">
+  <div class="col-xs-12 find-doctor-result-detail-card doctor-name">
+    <div class="row m0 inline-block-children p1 bg-dark-blue white" ng-click="toggleItem()">
+      <i class="fc-reward float-left mr2"></i>
+      <h6 ng-bind="::loc.RESULTS_DETAILS_AWARDS_CARD" class="mb0 float-left card-title title-width"></h6>
+      <i class="float-right pr1 white toggle-collapse-icon" ng-class="awardsCardOpen ? 'fc-minus-collapse' : 'fc-plus-expand'"></i>
+    </div>
+    <div class="row m0 collapsible-section" ng-class="awardsCardOpen ? 'contents-open': 'contents-collapsed'">
+
+    <div class="m4" ng-if="providerAwards.awardCount === 0">
+      <h7 class="med-dark-gray" ng-bind="::loc.PROVIDER_NO_AWARDS_LISTED"></h7>
+    </div>
+    <div class="negtive-margin" ng-if="providerAwards.awardCount > 0">
+      <div class="row m0 p0 negtive-margin" ng-repeat="grouping in providerAwards.awardsGrouping">
+        <div class="m0 grouping-title p3" ng-hide="grouping.name === 'Accreditations' || grouping.name === 'Certification' || grouping.name === 'General'" ng-bind="grouping.name"></div>
+        <div class="m0 grouping-title p3" ng-if="grouping.name === 'Accreditations'" ng-bind="::loc.RESULTS_DETAILS_ACCREDITATIONS"></div>
+        <div class="m0 grouping-title p3" ng-if="grouping.name === 'Certification'" ng-bind="::loc.RESULTS_DETAILS_CERTIFICATION"></div>
+        <div class="m0 grouping-title p3" ng-if="grouping.name === 'General'" ng-bind="::loc.RESULTS_DETAILS_GENERAL"></div>
+        <div class="m3 grouping-description" ng-bind="grouping.description"></div>
+        <div class="award-item" ng-repeat="award in grouping.awards">
+          <div class="mb0">
+            <p class="award-item pt2 pr0 m0" ng-bind="award.name"></p>
+            <img class="pt1 pb2 m2" ng-src="{{award.logo}}"/>
+            <hr class="mt1 mb1 ml3 mr3" ng-show="!$last"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="mt3 mb3 awards-card-loading-spinner">
+        <div class="spinner">
+          <i class="fa fa-2x fa-spinner fa-pulse"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

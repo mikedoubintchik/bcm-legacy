@@ -1,0 +1,26 @@
+<div class="payment-method-selected-container">
+  <payment-flow-title-bar title="{{::loc.BP_TITLE_PAYMENT_METHOD_SELECTED}}">
+  </payment-flow-title-bar>
+  <div class="payment-method-selected pl5 mt4">
+    <p class="mb0">
+      <i class="fc-check-only mr4"></i>
+      {{::localizedPaymentFrequency}}
+    </p>
+    <p class="mb0 pt3">
+      <i class="fc-check-only mr4"></i>
+      <span ng-if="totalAccountBalance"> {{::loc.BP_TOTAL_ACCOUNT_BALANCE}}</span>
+      <span ng-if="minAmountDue">{{::loc.BP_MINIMUM_AMOUNT_DUE}}</span>
+      <span ng-if="amountDue">{{::loc.BP_TITLE_PAYMENT_AMOUNT}}</span>
+      <span ng-if="billingInfo.memberInReinstatement">{{::loc.BP_REINSTATEMENT_TOTAL_AMOUNT}}</span>
+      <span ng-bind="selectedPaymentAmount | padCurrencyAmount | currency"></span>
+    </p>
+    <p ng-class="{'pb0':localizedBillingMethod, 'pb4':!localizedBillingMethod}" class="mb0 pt3">
+      <i class="fc-check-only mr4"></i>
+      {{::localizedPaymentMethod}}
+    </p>
+    <p class="mb0 pt3 pb4" ng-if="localizedBillingMethod">
+      <i class="fc-check-only mr4"></i>
+      {{loc.BP_TITLE_BILLING_METHOD + ' - ' + localizedBillingMethod}}
+    </p>
+  </div>
+</div>

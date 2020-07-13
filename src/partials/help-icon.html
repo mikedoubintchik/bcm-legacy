@@ -1,0 +1,5 @@
+<div class="help-icon" ng-click="showHelp();">
+  <i class="fc-feature-info fc-ml" ng-if="!item"></i>
+  <i class="heading-icon fc-{{item.icon}} fc-lg white" ng-if="item"></i>
+  <a ng-bind="loc[item.category] || item.category" ng-if="item"></a>
+</div>

@@ -1,0 +1,22 @@
+<div class="home-card home-card-id-card" track-action="{action: 'homeIdCard', section: analyticConstants.HOME_SECTION}">
+  <div class="home-card-header" ng-click="gotoView('/id-card')">
+    <div>
+      <h3>
+        <i class="fc-circlefill fc-xl fc-underlay white"></i>
+        <i class="fc-id-card fc-xl fc-overlay"></i>
+      </h3>
+    </div>
+    <div class="home-card-header-text">
+      <p><strong ng-bind="loc.ID_CARD"></strong></p>
+      <p ng-bind="getPolicyPlanTitle(policyIndex) + ' ' + getPolicyDates(policyIndex)" class="policy-description"></p>
+    </div>
+  </div>
+  <div class="home-card-body">
+    <div class="small-padding">
+      <div class="small-margin-bottom">
+        <img class="id-card-dummy" src="images/id-card.svg"></img>
+      </div>
+      <button class="btn btn-primary btn-block" ng-bind="loc.VIEW_CARD_DETAILS" ng-click="gotoView('/id-card')" track-action="{action: 'homeViewCardDetails', section: analyticConstants.HOME_SECTION}"></button>
+    </div>
+  </div>
+</div>

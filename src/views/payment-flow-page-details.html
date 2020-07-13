@@ -1,0 +1,21 @@
+<basic-navbar navbar-details="navbarDetails" left-click="navbarDetails.onLeftClick()" right-click="basicNavbarRightClick()"></basic-navbar>
+<div ng-form="paymentFlowDetailsForm" id="pf-scrollable-section" class="policy-header-margin bg-lightest-gray payment-flow-phone-scroll">
+  <policy-header-gray></policy-header-gray>
+  <payment-flow-tracker tracker-info="trackerInfo" flow-is-autopay="false"></payment-flow-tracker>
+  <tracker-billing-summary tracker-billing-data="billingInfo" ng-if="!billingInfo.memberInReinstatement"></tracker-billing-summary>
+  <payment-flow-total-balance balance-info="billingInfo"></payment-flow-total-balance>
+  <payment-flow-auto-pay-setup billing-info="billingInfo" user-selected-auto-pay="userData.paymentFrequency === 'autopay'"></payment-flow-auto-pay-setup>
+  <payment-flow-payment-method-selected method-info="billingInfo"></payment-flow-payment-method-selected>
+  <payment-flow-credit-card-details ng-if="userData.paymentMethod === 'creditcard'" billing-info="billingInfo" user-data="userData"></payment-flow-credit-card-details>
+  <payment-flow-bank-details user-data="userData" ng-if="userData.paymentMethod === 'bankdraft'" billing-info="billingInfo"></payment-flow-bank-details >
+  <payment-flow-terms-conditions terms-conditions="termsConditions"></payment-flow-terms-conditions>
+  <details-page-payment-error ng-if="paymentFlowDetailsForm.paymentError.$dirty"></details-page-payment-error>
+  <input class="hidden"
+         name="paymentError"
+         type="checkbox"
+         ng-model="checkboxValue">
+  <div class="pl4 pr4 pb2 pt2 bg-lightest-gray">
+    <button class="btn btn-primary btn-block call-to-action-button" ng-click="validateForm(paymentFlowDetailsForm)" ng-bind="loc.BP_CONTINUE_TO_PAYMENT_REVIEW"></button>
+  </div>
+  <payment-flow-cancel-button></payment-flow-cancel-button>
+</div>

@@ -1,0 +1,21 @@
+<div class="nav-margin-bottom payment-flow-phone-scroll" class="margin-bottom">
+    <payment-flow-tracker tracker-info="trackerInfo" flow-is-autopay="true"></payment-flow-tracker>
+    <payment-flow-auto-pay-success ng-if="::userSetData.paymentErrorCode === 100" billing-info="serviceResponse"></payment-flow-auto-pay-success>
+    <div class="row pl4 pr4 bg-light-green text-center" ng-if="::userSetData.paymentErrorCode === 100">
+        <p class="dark-green m0 pt1 pb1">
+            <span ng-bind="::loc.BP_CONFIRMATION_CODE"></span>
+            <span> - </span>
+            <span ng-bind="::userSetData.successConfirmationCode"></span>
+        </p>
+    </div>
+    <payment-flow-auto-pay-pending></payment-flow-auto-pay-pending>
+    <payment-flow-title-bar title="{{::loc.BP_HEADER_PAYMENT_DETAILS}}"></payment-flow-title-bar>
+    <edit-autopay-flow-payment-receipt service-response="serviceResponse"></edit-autopay-flow-payment-receipt>
+    <payment-flow-paperless-success ng-if="::userSetData.billingMethod !== 'postal'"></payment-flow-paperless-success>
+    <cta-button-row>
+        <cta-button ng-click="returnToAccountSummary()" class="blue">
+            <p class="mb0" ng-bind="::loc.BP_RETURN_TO_ACCOUNT_SUMMARY"></p>
+        </cta-button>
+    </cta-button-row>
+</div>
+<payment-flow-help-share payment-receipt="serviceResponse" flow-is-autopay="true"></payment-flow-help-share>

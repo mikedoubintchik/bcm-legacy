@@ -1,0 +1,12 @@
+<li ng-click="toggleMenuOpen();checkForSso(link, description, externalLink);">
+  <div class="pull-left navbar-menu-item-icon col-xs-1">
+    <i class="fc-lg" ng-class="icon"></i>
+  </div>
+  <div class="pull-left navbar-find-item-title col-xs-10">
+    <a ng-bind="::title"
+      ng-class="{'fc-es': $root.language == 'es', 'fc-en': !$root.language == 'es'}">
+    </a>
+    <i class="fc-external-link white" ng-if="externalLink"></i>
+  </div>
+  <div class="clearfix"></div>
+</li>

@@ -1,0 +1,6 @@
+<nav class="navbar navbar-fixed-bottom navbar-light bg-faded bottom-bar">
+  <div class="search-bottom-bar bottom-bar-new-search {{item.class}}" ng-class="{'bottom-bar-width-unauth-flow': (!loggedIn || pcpDetails)}" ng-repeat= "item in bottomBarDetails" ng-click="bottomBarSelected(item.url, item.title);">
+      <i class="fc-{{item.icon}} fc-md"></i>
+      <p><span class="search-box-text" ng-bind="item.title"></span></p>
+    </div>
+</nav>

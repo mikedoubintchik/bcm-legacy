@@ -1,0 +1,18 @@
+<div class="payment-flow-billing-method">
+  <payment-flow-title-bar title="{{::loc.BP_TITLE_BILLING_METHOD}}"></payment-flow-title-bar>
+  <p class="row pl4 pr4 m0 pt2 bg-lightest-gray" ng-bind="::loc.BP_RECEIVE_PAPER_COPY">
+  </p>
+  <p class="row pl4 pr4 m0 pt2 bg-lightest-gray text-center">
+    {{userData.preferences.mailingAddress.addressLine1}} <br />
+    <span ng-if="userData.preferences.mailingAddress.addressLine2">
+        {{userData.preferences.mailingAddress.addressLine2}} <br />
+    </span>
+    {{userData.preferences.mailingAddress.cityName}}
+    {{userData.preferences.mailingAddress.stateCode}},
+    {{userData.preferences.mailingAddress.postalCode}}
+  </p>
+  <div class="row pl4 pr4 m0 pt2 bg-lightest-gray">
+    <p class="row m0 p2 bg-lightest-blue edit-mailing-address-box" ng-bind="::loc.BP_AUTOPAY_CONTACT_CUSTOMER_SERVICE">
+    </p>
+  </div>
+</div>

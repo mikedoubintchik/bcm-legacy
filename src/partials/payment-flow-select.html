@@ -1,0 +1,11 @@
+<payment-flow-input-label info-modal="{{modalName}}">{{::title}}</payment-flow-input-label>
+<div class="arrow-row">
+  <i class="fa fc-dropdown"></i>
+</div>
+<select
+  name="{{::formLabel}}"
+  ng-model="value"
+  ng-required="required"
+  class="disable-native-select"
+  ng-transclude>
+</select>

@@ -1,0 +1,66 @@
+<div class="home-card home-card-id-card" ng-hide="findCareDetails.hideFindCare">
+  <div class="home-card-header" ng-click="checkVitalsUp()">
+    <div>
+      <h3>
+        <i class="fc-circlefill fc-xl fc-underlay white"></i>
+        <i class="fc-circle-healthnav fc-xl fc-overlay"></i>
+      </h3>
+    </div>
+    <div class="home-card-header-text">
+      <p><strong ng-bind="loc.FIND_CARE"></strong></p>
+      <p>
+        <span ng-bind="findCareDetails.planType"></span>
+        <span ng-if="findCareDetails.active"
+          ng-bind="loc[findCareDetails.startMonth] + ' ' + findCareDetails.startYear + '-'"></span>
+        <span ng-if="!findCareDetails.active && !findCareDetails.future" ng-bind="loc.INACTIVE"></span>
+        <span ng-if="findCareDetails.active" ng-bind="loc.ACTIVE"></span>
+        <span ng-if="findCareDetails.future" ng-bind="loc.FUTURE"></span>
+    </div>
+  </div>
+  <div class="home-card-body">
+    <div class="home-card-no-secure-messages" ng-if="findCareDetails.message && findCareDetails.active">
+      <span ng-bind="findCareDetails.message"></span>
+    </div>
+    <div ng-if="(!findCareDetails.active || findCareDetails.future)"
+      class="home-card-no-secure-messages home-card-no-messages">
+      <span ng-bind="loc.RESTRICT_ACCESS"></span>
+    </div>
+    <div ng-if="findCareDetails.active">
+      <div ng-if="findCareDetails.homeCardMessage" class="home-card-no-secure-messages home-card-no-messages">
+        <span>{{ findCareDetails.homeCardMessage }}</span>
+      </div>
+      <div class="small-padding" ng-click="gotoView('/fad-auth/find-doctor');" ng-if="findCareDetails.showSearchNav">
+        <button class="btn btn-primary btn-block" ng-bind="loc.SEARCH"></button>
+      </div>
+
+      <div ng-repeat="care in careDetailsRow"
+        ng-class="{'odd-customer-row': hasOddItems(care), 'customer-row': !hasOddItems(care)}">
+        <div class="customer-item" ng-repeat="row in care">
+          <div ng-click="checkForSso(row.link, row.description, findCareDetails.searchParams, row.externalLink)">
+            <i class="{{row.icon}} fc-xl"></i>
+            <div class="icon-text-description" ng-bind="row.description"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <hr class="divider" ng-if="findCareDetails.isSmartShopperEligible" />
+    <div class="small-padding text-center" ng-if="findCareDetails.isSmartShopperEligible">
+      <button class="btn btn-default btn-block smart-shopper-btn" ng-click="openTermsModal(); $event.stopPropagation()"
+        track-action="{action: 'homeSmartShopperButton', section: analyticConstants.HOME_SECTION}">
+        <i class="fc-smartshopper-outline fc-lg2 icon-margin"></i>
+        <p class="btn-tittle mb0" ng-class="{'wrap-text': language === 'es'}"
+          ng-bind="loc.SMARTSHOPPER_HOMECARD_HEADING"></p>
+      </button>
+      <span ng-click="openInfoModal()" ng-bind="loc.SMARTSHOPPER_HOMECARD_LEARN_MORE"
+        track-action="{action: 'homeSmartShopperInfo', section: analyticConstants.HOME_SECTION}"
+        class="home_card_link modal-link"></span>
+    </div>
+    <find-doctor-zip-alert-modal open-modal-fn-alias="openModal" confirm-fn="confirmFunc" modal-info="modalObj">
+    </find-doctor-zip-alert-modal>
+    <find-doctor-unavailable-alert-modal open-modal-fn-alias="openAlertModal" modal-info="alertModalObj">
+    </find-doctor-unavailable-alert-modal>
+    <smart-shopper-confirm-terms-alert-modal open-modal-fn-alias="openTermsModal" confirm-fn="confirmTermsFunc"
+      modal-info="termsModalObj">
+    </smart-shopper-confirm-terms-alert-modal>
+  </div>

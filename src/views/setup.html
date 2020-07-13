@@ -1,0 +1,215 @@
+<div class="setup-container">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="col-xs-12 col-sm-6 col-sm-offset-3 setup-content">
+        <div class="setup-logo-container">
+          <img class="full-width setup-bcbsnc-logo" src="images/logo.svg" ng-swipe-left="gotoView('/login')"></img>
+        </div>
+        <div class="setup-carousel">
+          <div class="setup-carousel-item setup-preferences" ng-class="{'active': itemIndex === 0, 'inactive': itemIndex !== 0}">
+            <div class="setup-carousel-item-content">
+              <div class="setup-carousel-item-header setup-preferences-header">
+                <div>
+                  <i class="fc-circlefill fc-xxl fc-underlay white"></i>
+                  <i class="fc-security fc-xxl fc-overlay med-blue"></i>
+                </div>
+                <div class="setup-carousel-preference-text" ng-bind="loc.SELECT_PREFERENCES"></div>
+              </div>
+              <div class="setup-carousel-item-subheader" ng-bind="loc.EDIT_LATER"></div>
+              <div class="setup-carousel-item-well setup-high">
+                <div class="setup-carousel-item-well-content green">
+                  <div class="setup-carousel-item-well-subheader">
+                    <h4 ng-bind="loc.HIGH"></h4>
+                    <ul>
+                      <li ng-bind="loc.DO_NOT_REMEMBER"></li>
+                      <li ng-bind="loc.LOCK_WHEN_INACTIVE"></li>
+                    </ul>
+                  </div>
+                  <div class="setup-carousel-item-toggle">
+                    <toggle-switch class="pull-right toggle-high" model="securitySetting.high"></toggle-switch>
+                  </div>
+                </div>
+              </div>
+              <div class="setup-carousel-item-well setup-medium">
+                <div class="setup-carousel-item-well-content yellow">
+                  <div class="setup-carousel-item-well-subheader">
+                    <h4 ng-bind="loc.MEDIUM"></h4>
+                    <ul>
+                      <li ng-bind="loc.REMEMBER_USER_ID"></li>
+                      <li ng-bind="loc.LOCK_AFTER_20"></li>
+                    </ul>
+                  </div>
+                  <div class="setup-carousel-item-toggle">
+                    <toggle-switch class="pull-right toggle-medium" model="securitySetting.medium"></toggle-switch>
+                  </div>
+                </div>
+              </div>
+              <div class="setup-carousel-item-well setup-standard">
+                <div class="setup-carousel-item-well-content orange">
+                  <div class="setup-carousel-item-well-subheader">
+                    <h4 ng-bind="loc.STANDARD"></h4>
+                    <ul>
+                      <li ng-bind="loc.REMEMBER_USER_ID"></li>
+                      <li ng-bind="loc.STAY_LOGGED_IN"></li>
+                      <div ng-if="iphone">
+                        <li ng-if="touchIdAvailable==='touch'" ng-bind="loc.TOUCH_ID_AVAILABLE"></li>
+                        <li ng-if="touchIdAvailable==='face'" ng-bind="loc.FACE_ID_AVAILABLE"></li>
+                      </div>
+                      <div ng-if="android">
+                        <li ng-if="touchIdAvailable" ng-bind="loc.FINGERPRINT_AUTH_AVAILABLE"></li>
+                      </div>
+                    </ul>
+                  </div>
+                  <div class="setup-carousel-item-toggle">
+                    <toggle-switch class="pull-right toggle-standard" model="securitySetting.standard"></toggle-switch>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="setup-carousel-item setup-touchId" ng-class="{'active': itemIndex === 1, 'inactive': itemIndex !== 1}">
+            <!-- iphone touch id -->
+            <div class="setup-carousel-item-content" ng-if="iphone">
+              <div class="setup-carousel-item-header setup-touchId-header">
+                <div>
+                  <i class="fc-circlefill fc-xxl fc-underlay white"></i>
+                  <i ng-if="touchIdAvailable==='touch'" class="fc-touchid-circle fc-xxl fc-overlay med-blue"></i>
+                  <i ng-if="touchIdAvailable==='face'" class="fc-circle-face-id fc-xxl fc-overlay med-blue"></i>
+                </div>
+                <div class="setup-touchId-text" ng-if="touchIdAvailable==='touch'" ng-bind="loc.ENABLE_TOUCH_ID"></div>
+                <div class="setup-touchId-text" ng-if="touchIdAvailable==='face'" ng-bind="loc.ENABLE_FACE_ID"></div>
+              </div>
+              <div class="univers-cn text-center enable-touch-container">
+                <div ng-if="touchIdAvailable==='touch'" ng-bind="loc.ENABLE_TOUCH_QUESTION"></div>
+                <div ng-if="touchIdAvailable==='face'" ng-bind="loc.ENABLE_FACE_QUESTION"></div>
+              </div>
+              <div class="text-center touchId-icon-wrapper">
+                <i ng-if="touchIdAvailable==='touch'" class="fc-touchid"></i>
+                <i ng-if="touchIdAvailable==='face'" class="fc-face-id"></i>
+              </div>
+              <div ng-if="!appSettings.login || !appSettings.login.useTouchId">
+                <button class="btn btn-primary btn-block confirm-touchid-button" ng-click="confirmFingerprint()" ng-if="touchIdAvailable==='touch'" ng-bind="loc.ENABLE_TOUCH_ID"></button>
+                <button class="btn btn-primary btn-block confirm-touchid-button" ng-click="confirmFingerprint()" ng-if="touchIdAvailable==='face'" ng-bind="loc.ENABLE_FACE_ID"></button>
+                <button class="btn btn-default btn-block skip-touchid-button" ng-click="disableTouchId()" ng-bind="loc.NOT_RIGHT_NOW"></button>
+              </div>
+              <div ng-if="appSettings.login.useTouchId">
+                <button class="btn btn-primary btn-block confirm-touchid-button" ng-click="confirmFingerprint()" ng-if="touchIdAvailable==='touch'" ng-bind="loc.CONTINUE_TOUCH_ID"></button>
+                <button class="btn btn-primary btn-block confirm-touchid-button" ng-click="confirmFingerprint()" ng-if="touchIdAvailable==='face'" ng-bind="loc.CONTINUE_FACE_ID"></button>
+                <button class="btn btn-default btn-block skip-touchid-button" ng-click="disableTouchId()" ng-if="touchIdAvailable==='touch'" ng-bind="loc.DISABLE_TOUCH_ID"></button>
+                <button class="btn btn-default btn-block skip-touchid-button" ng-click="disableTouchId()" ng-if="touchIdAvailable==='face'" ng-bind="loc.DISABLE_FACE_ID"></button>
+              </div>
+            </div>
+            <!-- android fingerprint authorization -->
+            <div class="setup-carousel-item-content" ng-if="android">
+              <div class="setup-carousel-item-header setup-touchId-header">
+                <div>
+                  <i class="fc-circlefill fc-xxl fc-underlay white"></i>
+                  <i class="fc-circle-android-fingerprint-id fc-xxl fc-overlay med-blue"></i>
+                </div>
+                <div class="setup-touchId-text" ng-bind="loc.ENABLE_FINGERPRINT_AUTH"></div>
+                <!--<div class="setup-touchId-text" ng-bind="device"></div>-->
+              </div>
+              <div class="univers-cn text-center enable-touch-container">
+                <div ng-bind="loc.ENABLE_FINGERPRINT_QUESTION"></div>
+              </div>
+              <div class="text-center touchId-icon-wrapper">
+                <i style="font-size: 58pt;" class="fc-android-fingerprint-id"></i>
+              </div>
+              <div ng-if="!appSettings.login || !appSettings.login.useTouchId">
+                <button class="btn btn-primary btn-block confirm-touchid-button" ng-click="confirmFingerprint()" ng-bind="loc.ENABLE_FINGERPRINT_AUTH"></button>
+                <button class="btn btn-default btn-block skip-touchid-button" ng-click="disableTouchId()" ng-bind="loc.NOT_RIGHT_NOW"></button>
+              </div>
+              <div ng-if="appSettings.login.useTouchId">
+                <button class="btn btn-primary btn-block confirm-touchid-button" ng-click="confirmFingerprint()" ng-bind="loc.CONTINUE_FINGERPRINT_AUTH"></button>
+                <button class="btn btn-default btn-block skip-touchid-button" ng-click="disableTouchId()" ng-bind="loc.DISABLE_FINGERPRINT_AUTH"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="setup-carousel-item setup-details" ng-class="{'active': itemIndex === 2, 'inactive': itemIndex !== 2}">
+            <div class="setup-carousel-item-content">
+              <div class="univers-cn text-center setup-details-header">
+                <div ng-bind="loc.SECURITY_SUCCESS"></div>
+              </div>
+              <div class="setup-carousel-item-well" style="margin-bottom: .5rem">
+                <div class="setup-carousel-item-well-content" ng-class="{'green': securitySetting.high, 'yellow': securitySetting.medium, 'orange': securitySetting.standard}">
+                  <div class="setup-carousel-item-well-subheader security-details">
+                    <div style="display: table-cell">
+                      <i class="fc-circlefill fc-xl fc-underlay white"></i>
+                      <i class="fc-security fc-xl fc-overlay med-blue"></i>
+                    </div>
+                    <div class="security-details-name" ng-bind="loc.SECURITY_SETTING + ': ' + getCustomSecurityText()"></div>
+                    <ul ng-if="securitySetting.high">
+                      <li ng-bind="loc.DO_NOT_REMEMBER"></li>
+                      <li ng-bind="loc.LOCK_WHEN_INACTIVE"></li>
+                    </ul>
+                    <ul ng-if="securitySetting.medium">
+                      <li ng-bind="loc.REMEMBER_USER_ID"></li>
+                      <li ng-bind="loc.LOCK_AFTER_20"></li>
+                    </ul>
+                    <ul ng-if="securitySetting.standard">
+                      <li ng-bind="loc.REMEMBER_USER_ID"></li>
+                      <li ng-bind="loc.STAY_LOGGED_IN"></li>
+                      <div ng-if="iphone">
+                        <li ng-if="touchIdAvailable && touchIdAvailable==='touch'" ng-bind="loc.TOUCH_ID_AVAILABLE"></li>
+                        <li ng-if="touchIdAvailable && touchIdAvailable==='face'" ng-bind="loc.FACE_ID_AVAILABLE"></li>
+                      </div>
+                      <div ng-if="android">
+                        <li ng-if="touchIdAvailable" ng-bind="loc.FINGERPRINT_AUTH_AVAILABLE"></li>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="setup-carousel-item-well" style="margin-bottom: .5rem" ng-if="touchIdAvailable">
+                <div class="setup-carousel-item-well-content">
+                  <div class="setup-carousel-item-well-subheader security-details">
+                    <div ng-if="iphone">
+                      <div style="display: table-cell">
+                        <i ng-if="touchIdAvailable==='touch'" class="fc-touchid fc-xl white"></i>
+                        <i ng-if="touchIdAvailable==='face'" class="fc-face-id fc-xl white"></i>
+                      </div>
+                      <div class="security-details-name" ng-if="useTouchId && touchIdAvailable==='touch'" ng-bind="loc.TOUCH_ID_ENABLED"></div>
+                      <div class="security-details-name" ng-if="useTouchId && touchIdAvailable==='face'" ng-bind="loc.FACE_ID_ENABLED"></div>
+                      <div class="security-details-name" ng-if="!useTouchId && touchIdAvailable==='touch'" ng-bind="loc.TOUCH_ID_DISABLED"></div>
+                      <div class="security-details-name" ng-if="!useTouchId && touchIdAvailable==='face'" ng-bind="loc.FACE_ID_DISABLED"></div>
+                    </div>
+                    <div ng-if="android">
+                      <div style="display: table-cell">
+                        <i class="fc-android-fingerprint-id fc-xl white"></i>
+                      </div>
+                      <div class="security-details-name" ng-if="useTouchId" ng-bind="loc.FINGERPRINT_AUTH_ENABLED"></div>
+                      <div class="security-details-name" ng-if="!useTouchId" ng-bind="loc.FINGERPRINT_AUTH_DISABLED"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button class="continue-button btn btn-primary btn-block" ng-click="loadHomePage()" ng-bind="loc.CONTINUE" track-action="{action: 'settings:continue', section: analyticConstants.SETTINGS_SECTION}"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="setup-carousel-pagination">
+          <div class="setup-carousel-pagination-cell">
+            <i class="fc-lg2 fc-back" ng-if="itemIndex === 0"></i>
+            <i class="fc-lg2 fc-back" ng-click="gotoItem(itemIndex - 1)" ng-if="itemIndex !== 0"></i>
+          </div>
+          <div class="setup-carousel-pagination-cell full-width">
+            <div class="setup-carousel-page-indicators">
+              <div class="setup-carousel-page-indicator-bar">
+                <div class="setup-carousel-page-indicator-amount" ng-style="{'width': (itemIndex / 2 * 100) + '%'}"></div>
+              </div>
+            </div>
+          </div>
+          <div class="setup-carousel-pagination-cell" ng-class="{'invisible': itemIndex === 3}">
+            <i class="fc-lg2 fc-next" ng-click="gotoItem(itemIndex + 1)" ng-if="itemIndex < 2"></i>
+            <i class="fc-lg2 fc-next" ng-click="loadHomePage()" ng-if="itemIndex >= 2" track-action="{action: 'settings:continue', section: analyticConstants.SETTINGS_SECTION}"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-bind-html-compile="pageHtml"></div>
+</div>

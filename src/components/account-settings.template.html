@@ -1,4 +1,6 @@
-<div class="account-settings__container">
-  <ui-view></ui-view>
-  This is BCM Legacy with active development
+<div id="app-container" ng-controller="MainController"
+  ng-class="{'no-scroll': blurContent && !lowResDevice}">
+  <div class="main-wrapper"
+    ng-class="{'nav-margin-top': (showNav && !showPolicySelect) || hasBasicNavbar(), 'blur': blurContent && !lowResDevice}"
+    ng-view></div>
 </div>

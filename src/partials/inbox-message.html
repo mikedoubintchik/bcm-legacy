@@ -1,0 +1,20 @@
+<div class="inbox-message-view col-sm-8 col-sm-offset-2">
+  <div class="message-header">
+    <div class="inbox-icon-div">
+      <h5>
+        <img ng-src="images/crossshield.svg" class="inbox-logo-icon" ng-if="message.messageInitiatedBy === 'BCBSNC'">
+        <i class="fc-circlefill med-blue icon-inital-bg" ng-if="message.messageInitiatedBy != 'BCBSNC'"></i>
+        <span class="icon-initials" ng-if="message.messageInitiatedBy != 'BCBSNC'" ng-bind="message.messageInitiatedBy"></span>
+        <span class="message-subject" ng-bind="message.subject"></span>
+      </h5>
+    </div>
+    <div class="message-date text-right">
+      <span ng-bind="getMessageDisplayDate(message)"></span>
+    </div>
+  </div>
+  <div class="message-body" ng-bind-html="getMessageBodyHtml(message)"></div>
+  <div class="bookmark-alert">
+    <div ng-bind="loc.MESSAGE_BOOKMARKED" ng-if="bookmarked"></div>
+    <div ng-bind="loc.MESSAGE_UNBOOKMARKED" ng-if="!bookmarked"></div>
+  </div>
+</div>

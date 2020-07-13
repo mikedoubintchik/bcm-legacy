@@ -5,10 +5,10 @@ const del = require("del");
 function buildJs() {
   return gulp
     .src([
-      "node_modules/single-spa-angularjs/lib/single-spa-angularjs.js",
+      // "node_modules/single-spa-angularjs/lib/single-spa-angularjs.js",
       "src/bcm-legacy.js",
-      "src/account-settings.module.js",
-      "src/**/*.js",
+      // "src/account-settings.module.js",
+      // "src/**/*.js",
     ])
     .pipe(concat("polyglot-mf-account-settings.js"))
     .pipe(gulp.dest("dist/"));

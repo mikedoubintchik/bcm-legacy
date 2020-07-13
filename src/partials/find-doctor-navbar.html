@@ -1,0 +1,180 @@
+<nav class="navbar navbar-fixed-top navbar-dark bg-primary" style="display:block;">
+    <div class="navbar-header-item">
+      <button class="navbar-toggler" type="button" go-back>
+        <i class="fc-{{navbarDetails.leftNavButton.icon}} fc-lg"></i>
+      </button>
+    </div>
+    <div class="navbar-header-item full-width text-center" ng-if="!navbarDetails.isSearchBar">
+      <a class="navbar-brand full-width" ng-bind-html="navbarDetails.title"></a>
+    </div>
+    <div class="navbar-header-item full-width text-center" ng-if="navbarDetails.isSearchBar">
+      <!-- Filter for the browser result -->
+      <input type="text" class="form-control input-search input-text-overflow" ng-class="{'input-search-focus':queryHasFocus===true}"
+      ng-model="filterText" 
+      ng-model-options="{debounce: 800}" ng-focus="toggleQueryHasFocus(true)"
+      ng-change="displayFlyout(filterText)" ng-keypress="refineSearchClick($event, filterText)">
+      <i class="search-input-icon fc-search-nocircle" ng-click="focusOnSearchInput()"></i>
+      <i class="search-input-clear fc-clear fc-ml" ng-show="filterText && queryHasFocus" ng-click="clearQueryAndTypeaheadResults()"></i>
+    </div>
+    <div class="navbar-header-item">
+      <button ng-class="{'no-show-no-click': rightNavIconHidden()}" class="navbar-toggler open-navbar-button" type="button" ng-click="toggleMenuOpen()">
+        <i class="fc-menu fc-lg"></i>
+      </button>
+    </div>
+    <find-doctor-refine-search-modal open-modal-fn-alias="openModal" confirm-fn="confirmModal" modal-info="modalObj"></find-doctor-refine-search-modal>
+
+    <div class="nav-bar-search-results-container" ng-if="queryHasFocus===true">
+      <!-- Type Ahead -->
+      <div class="univers bold-text bg-white">
+          <div ng-show="filterText && typeaheadResults" class="row m0">
+              <p class="mt4 col-xs-10 col-xs-offset-1 typeahead-no-search-results-found"
+              ng-show="!typeaheadResults.search_specialties.length && !typeaheadResults.providers.length && !typeaheadInProgress" ng-bind="::loc.UNAUTHENTICATED_NO_RESULTS_LINE_1"></p>
+              <p class="col-xs-10 col-xs-offset-1 typeahead-no-search-results-found"
+              ng-show="!typeaheadResults.search_specialties.length && !typeaheadResults.providers.length && !typeaheadInProgress" ng-bind="::loc.UNAUTHENTICATED_NO_RESULTS_LINE_2"></p>
+          </div>
+          <div ng-show="filterText && typeaheadInProgress" class="row m0 mb1 mt2 text-center flex-center-center">
+              <i class="fa fa-spinner fa-2x fa-spin mr1"></i>
+              <span class="mt-1" ng-bind="::loc.BP_LOADING"></span>
+              &nbsp;
+              <span class="mt-1" ng-bind="::loc.RESULTS"></span>
+          </div>
+      </div>
+      <div ng-show="filterText && typeaheadError">
+        <h5 class="type-ahead-error pl4 pt5 pb4" ng-bind="::loc.TYPE_AHEAD_ERROR"></h5>
+      </div>
+      <!-- Common Searches -->
+      <div ng-show="showCommonSearch && !typeaheadError && ((filterText && (!typeaheadResults.search_specialties.length && !typeaheadResults.providers.length && !typeaheadInProgress)) || (!filterText && queryHasFocus))" class="univers bold-text bg-white pb2">
+        <hr ng-if="anyCommonTerms()"/>
+        <div class="type-ahead-title" ng-if="anyCommonTerms()" ng-bind="navbarDetails.commonSearches"></div>
+        <div ng-hide="expandCommonDiv" ng-repeat="commonSearch in findDoctorSearchDetails.commonSearchTerms">
+            <div class="customer-item" ng-repeat="row in commonSearch" ng-if="$index < 3">
+                <div ng-click="goToCommonDetails(row)">
+                    <hr/><div class="type-ahead-subtitle" ng-bind="row.commonSearchTerm"></div>
+                </div>
+            </div>
+        </div>
+        <div ng-hide="!expandCommonDiv" ng-repeat="commonSearch in findDoctorSearchDetails.commonSearchTerms">
+            <div class="customer-item" ng-repeat="row in commonSearch">
+                <div ng-click="goToCommonDetails(row)">
+                    <hr/><div class="type-ahead-subtitle" ng-bind="row.commonSearchTerm"></div>
+                </div>
+            </div>
+        </div>
+        <hr ng-if="anyCommonTerms()"/>
+        <div class="type-ahead-subtitle" ng-if="moreCommonTerms()" ng-click="expandCommonTerms()">
+            <i class="text-center" ng-class="{'fc-plus-expand': !expandCommonDiv, 'fc-minus-collapse': expandCommonDiv}"></i>
+            <span class="text-left" ng-if="!expandCommonDiv" ng-bind="navbarDetails.seeMoreCommon"></span>
+            <span class="text-left" ng-if="expandCommonDiv" ng-bind="navbarDetails.seeLessCommon"></span>&nbsp;
+        </div>
+      </div>
+      <!-- End Common Searches -->
+      <div ng-show="filterText && (typeaheadResults.providers.length || typeaheadResults.search_specialties.length)" class="univers-cn bg-white">
+        <hr ng-show="typeaheadResults.providers.length"/>
+        <div ng-show="typeaheadResults.providers.length">
+          <div class="type-ahead-title" ng-bind="navbarDetails.peoplePlaces"></div>
+          <hr/>
+          <div class="customer-item"
+            ng-repeat="result in typeaheadResults.providers | limitTo: 3">
+            <div class="type-ahead-subtitle" ng-bind="result.name" ng-click="goToDetails(result)"></div>
+            <div class="type-ahead-summary" ng-bind="result.specialty"></div>
+            <hr/>
+          </div>
+          <div class="mb1 med-blue pl4">
+            &quot;<span class="text-left" ng-bind="filterText" ng-click="goToDetails(filterText)"></span>&quot;
+          </div>
+        </div>
+
+        <div ng-show="typeaheadResults.search_specialties.length">
+          <hr class="m0"/>
+            <div id="specialistsWho" class="pt2 pb1" ng-class="{'bg-beige':highlightTextSpecialists, 'bg-white':!highlightTextSpecialists}">
+              <div class="type-ahead-title" ng-bind="navbarDetails.specialistsWho"></div>
+            </div>
+          <div
+            ng-hide="expandSpecialtiesDiv"
+            class="customer-item"
+            ng-repeat="result in typeaheadResults.search_specialties | limitTo: 3">
+            <hr class="m0"/>
+            <div class="mt2 mb1 type-ahead-subtitle" ng-bind="result.name_translated[language]" ng-click="goToDetails(result)"></div>
+            <div class="mb1 type-ahead-summary" ng-bind="result.description[language]"></div>
+          </div>
+          <div
+            ng-hide="!expandSpecialtiesDiv"
+            class="customer-item"
+            ng-repeat="result in typeaheadResults.search_specialties">
+              <hr/>
+              <div class="type-ahead-subtitle" ng-bind="result.name_translated[language]" ng-click="goToDetails(result)"></div>
+              <div class="mb1 type-ahead-summary" ng-bind="result.description[language]"></div>
+          </div>
+          <hr ng-show="typeaheadResults.search_specialties.length > 3"/>
+          <div class="mb1 type-ahead-subtitle" ng-show="typeaheadResults.search_specialties.length > 3" ng-click="expandSpecialties()">
+              <i class="text-center" ng-class="{'fc-plus-expand': !expandSpecialtiesDiv, 'fc-minus-collapse': expandSpecialtiesDiv}"></i>
+              <span class="text-left" ng-if="!expandSpecialtiesDiv" ng-bind="navbarDetails.moreSpecialties"></span>&nbsp;
+              <span class="text-left" ng-if="expandSpecialtiesDiv" ng-bind="navbarDetails.lessSpecialties"></span>&nbsp;
+              &quot;<span class="text-left" ng-bind="filterText"></span>&quot;
+          </div>
+        </div>
+
+        <!-- Do no display if unauthenticated -->
+        <div id="providers" ng-if="loggedIn" ng-class="{'bg-beige':highlightTextProcedures, 'bg-white':!highlightTextProcedures}">
+            <div class="type-ahead-title" ng-bind="navbarDetails.providersPerform"></div>
+            <hr/>
+            <div class="customer-item" ng-repeat="result in typeaheadResults.procedures | limitTo: 3">
+              <div class="type-ahead-subtitle" ng-bind="result.name" ng-click="goToDetails(result)"></div>
+              <div class="type-ahead-summary" ng-bind="result.specialty"></div>
+              <hr/>
+            </div>
+            <div class="type-ahead-subtitle" ng-show="typeaheadResults.procedures.length > 3">
+              <i class="text-center fc-plus-expand"></i>
+              <span class="text-left" ng-bind="navbarDetails.moreProcedures"></span>&nbsp; &quot;
+              <span class="text-left" ng-bind="filterText"></span>&quot;
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="type-ahead-shadow" ng-if="queryHasFocus===true" ng-click="toggleQueryHasFocus(false)"></div>
+
+    <div class="navbar-shadow" ng-click="toggleMenuOpen()" ng-if="menuOpen"></div>
+    <div class="navbar-menu" ng-swipe-right="toggleMenuOpen()" ng-class="{'open': menuOpen, 'closed': menuOpen === false}">
+      <div class="navbar-menu-header"><!-- Menu head -->
+        <div class="navbar-header-item navbar-header-logo">
+          <div class="navbar-header-item full-width text-center">
+            <a class="navbar-brand full-width">
+              <span ng-bind="navbarDetails.title" ng-if="!navbarDetails.image"></span>
+              <img class="navbar-menu-header-image" ng-src="images/{{navbarDetails.image}}" ng-if="navbarDetails.image"></img>
+            </a>
+          </div>
+        </div>
+        <div class="navbar-header-item navbar-header-close">
+          <button class="navbar-toggler" type="button" ng-click="toggleMenuOpen()">
+            <i class="fc-close fc-lg"></i>
+          </button>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <ul class="navbar-menu-list"><!-- The menu -->
+        <li ng-repeat="menuItem in navbarDetails.menuItems" ng-click="toggleMenuOpen();gotoView(menuItem.link)">
+          <div class="pull-left navbar-menu-item-icon {{menuItem.class}}">
+            <i class="fc-{{menuItem.icon}} fc-lg"></i>
+          </div>
+          <div class="pull-left navbar-menu-item-title navbar-menu-item-alignment" ng-bind="menuItem.title" ng-class="{'fc-es': $root.language == 'es', 'fc-en': !$root.language == 'es'}"></div>
+          <div class="pull-right navbar-menu-item-badge" ng-class="{'badge-red': menuItem.badgeColor === 'red', 'badge-blue': menuItem.badgeColor === 'blue'}" ng-bind="menuItem.badge" ng-if="menuItem.badge"></div>
+          <div class="clearfix"></div>
+        </li>
+      </ul>
+      <div class="navbar-menu-bottom">
+        <div  ng-repeat="menu in navbarDetails.menuPolicyDescription" class="navbar-menu-item-title {{menu.class}}">
+        <span ng-click="toggleMenuOpen();openInBrowser(menu.link)" ng-bind="menu.title"></span>
+        </div>
+        <div>
+        <div class="navbar-menu-bottom-btn {{menuItem.class}}" ng-repeat="menuItem in navbarDetails.menuBottomItems" ng-click="toggleMenuOpen();gotoView(menuItem.link)">
+          <span class="navbar-menu-item-icon">
+            <i class="fc-{{menuItem.icon}} fc-sm"></i>
+          </span>
+          <span class="navbar-menu-item-title" ng-bind="menuItem.title" ng-class="{'fc-es': $root.language == 'es', 'fc-en': !$root.language == 'es'}"></span>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+</div>
+</nav>

@@ -1,0 +1,20 @@
+<basic-navbar navbar-details="navbarDetails" left-click="navbarDetails.onLeftClick()" right-click="basicNavbarRightClick()"></basic-navbar>
+<div ng-form="paymentFlowPageMethodForm" id="pf-scrollable-section" class="policy-header-margin payment-flow-phone-scroll">
+  <policy-header-gray></policy-header-gray>
+  <payment-flow-tracker tracker-info="trackerInfo" flow-is-autopay="false"></payment-flow-tracker>
+  <tracker-billing-summary tracker-billing-data="billingInfo" ng-if="!billingInfo.memberInReinstatement"></tracker-billing-summary>
+  <payment-flow-total-balance balance-info="billingInfo"></payment-flow-total-balance>
+  <payment-flow-auto-pay-setup billing-info="billingInfo" user-selected-auto-pay="paymentFlowPageMethodForm.paymentFlowPaymentFrequencyForm.frequencySelected.$modelValue === 'autopay'"></payment-flow-auto-pay-setup>
+  <payment-flow-payment-frequency balance-info="billingInfo"></payment-flow-payment-frequency>
+  <payment-flow-payment-amount billing-info="billingInfo"></payment-flow-payment-amount>
+  <payment-flow-payment-method method-info="billingInfo"></payment-flow-payment-method>
+  <payment-flow-billing-method-medicare balance-info="billingInfo" user-data="userData" ng-if="billingInfo.isMedicare"></payment-flow-billing-method-medicare>
+  <payment-flow-billing-method balance-info="billingInfo" user-data="userData" ng-if="billingInfo.isMedicare === false && billingInfo.preferences.isPaperless === false && !billingInfo.memberInReinstatement"></payment-flow-billing-method>
+  <payment-flow-paperless-agreement billing-info="billingInfo" ng-if="billingInfo.isMedicare === false && billingInfo.preferences.isPaperless === false && !billingInfo.memberInReinstatement &&
+    paymentFlowPageMethodForm.paymentFlowBillingMethodForm.billingMethodSelected.$modelValue !== 'postal'" required="true">
+  </payment-flow-paperless-agreement>
+  <div class="pl4 pr4 pb2 pt2 bg-lightest-gray">
+    <button class="btn btn-primary btn-block call-to-action-button" ng-click="validateForm(paymentFlowPageMethodForm)" ng-bind="::loc.BP_CONTINUE_TO_PAYMENT_DETAILS"></button>
+  </div>
+  <payment-flow-cancel-button></payment-flow-cancel-button>
+</div>

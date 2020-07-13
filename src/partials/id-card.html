@@ -1,0 +1,109 @@
+<div class="id-card-images-container">
+  <div id="card-container">
+    <div class="setup-idcard">
+      <div
+        class="flip setup-image-one"
+        ng-class="{'active': itemIndex === {{image.index}}, 'inactive': itemIndex !== {{image.index}}, 'setup-two' : {{image.index}} >= 1}"
+        ng-repeat="image in images"
+        ng-swipe-left="goNextImage(itemIndex + 1)"
+        ng-swipe-right="goNextImage(itemIndex - 1)"
+        ng-style="displayImage({{image.index}})"
+      >
+        <div
+          class="id-card"
+          ng-class="{'flipped':isFlipped}"
+          ng-click="flipCard();"
+          track-action="{action: 'idCardFlip', section: analyticConstants.IDCARD_SECTION}"
+        >
+          <div class="face front">
+            <img
+              ng-class="{'id-card-generated-front-img': '{{mimeType}} === data:image/svg+xml;base64'}"
+              ng-src="{{image.imageFront}}"
+            />
+          </div>
+          <div class="face back">
+            <img ng-src="{{image.imageBack}}" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <ol
+      class="id-card-carousel-indicators id-card-indicators"
+      ng-if="imageLength >= 1"
+    >
+      <li
+        data-target=".setup-idcard"
+        ng-repeat="image in images"
+        ng-class="{'active': itemIndex === {{image.index}}, 'inactive': itemIndex !== {{image.index}}}"
+      ></li>
+      <div class="id-card-carousel">
+        <span
+          ng-bind="loc.ID_CARD_VIEWING_CARD + ' ' + (itemIndex+1) +' ' + loc.OF +' '+ (imageLength+1)"
+        ></span>
+      </div>
+    </ol>
+    <div class="card-button-container center-block">
+      <div class="id-card-buttons">
+        <div class="id-card-buttons-list" ng-repeat="button in buttons">
+          <button
+            class="id-card-btn-block"
+            ng-if="button.icon === 'idcard-back-nocircle'"
+            ng-class="{'btn-disabled': itemIndex === 0}"
+            ng-disabled="itemIndex === 0"
+            ng-click="goNextImage(itemIndex - 1)"
+            track-action="{action: 'idCardViewNextCard', section: analyticConstants.IDCARD_SECTION}"
+          >
+            <i
+              class="fc-ml fc-back-nocircle"
+              ng-class="{'icon-disabled': itemIndex === 0, 'id-card-back-icon': itemIndex !== 0}"
+            ></i>
+          </button>
+          <button
+            class="id-card-btn-block"
+            ng-if="button.icon === 'idcard-full-screen'"
+            ng-click="openFullScreen(itemIndex);"
+            track-action="{action: 'idCardFullScreen', section: analyticConstants.IDCARD_SECTION}"
+          >
+            <div class="{{button.icon}}"></div>
+          </button>
+          <button
+            class="id-card-btn-block"
+            ng-if="button.icon === 'idcard-card-back'"
+            ng-click="flipCard();"
+            track-action="{action: 'idCardFlip', section: analyticConstants.IDCARD_SECTION}"
+          >
+            <div class="{{button.icon}}"></div>
+          </button>
+          <button
+            class="id-card-btn-block"
+            ng-if="button.icon === 'idcard-next-nocircle'"
+            ng-class="{'btn-disabled': itemIndex === imageLength}"
+            ng-disabled="itemIndex === imageLength"
+            ng-click="goNextImage(itemIndex + 1);"
+            track-action="{action: 'idCardViewNextCard', section: analyticConstants.IDCARD_SECTION}"
+          >
+            <i
+              class="fc-ml fc-next-nocircle"
+              ng-class="{'icon-disabled': itemIndex === imageLength, 'id-card-back-icon': itemIndex !== imageLength}"
+            ></i>
+          </button>
+          <span
+            class="id-card-btn-text"
+            ng-bind="button.title"
+            ng-if="button.icon !== 'idcard-card-back'"
+          ></span>
+          <span
+            class="id-card-btn-text"
+            ng-bind="button.title1"
+            ng-if="isFlipped && button.icon === 'idcard-card-back'"
+          ></span>
+          <span
+            class="id-card-btn-text"
+            ng-bind="button.title"
+            ng-if="!isFlipped && button.icon ==='idcard-card-back'"
+          ></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div
+  class="autopay-flow-billing-method"
+  ng-form="autopayFlowBillingMethod">
+  <payment-flow-title-bar title="{{::loc.BP_TITLE_BILLING_METHOD}}"></payment-flow-title-bar>
+  <div class="row pl4 pr4 m0 autopay-block pt2 bg-lightest-gray">
+    <div class="col-xs-12">
+      <i class="fc-paperless-billing-leaf mr4"></i>
+      <h3 class="inline med-dark-green" ng-bind="::loc.BP_SIGN_UP_FOR_PAPERLESS_BILLING"></h3>
+      <p class="mb2 med-dark-green" ng-bind="::loc.BP_MUST_ENROLL_PAPERLESS_BILLING"></p>
+    </div>
+  </div>
+  <pf-error-message ng-if="autopayFlowBillingMethod.$dirty && !billingMethodSelected" class="bg-lightest-gray">
+    {{::loc.BP_REQUIRED}}
+  </pf-error-message>
+  <payment-flow-radio-group group-value="billingMethodSelected">
+    <payment-flow-radio-button class="col-xs-12" value="email">
+      <span ng-bind="loc.BP_RECEIVE_BILLS_BY_EMAIL"></span>
+    </payment-flow-radio-button>
+    <div ng-if="billingMethodSelected === 'email'" class="col-xs-12 pl4 pr4 bg-lightest-gray">
+      <pf-error-message ng-if="autopayFlowBillingMethod.memberEmail.$error.required && autopayFlowBillingMethod.memberEmail.$dirty">{{::loc.BP_REQUIRED}}</pf-error-message>
+      <pf-error-message ng-if="autopayFlowBillingMethod.memberEmail.$dirty && autopayFlowBillingMethod.memberEmail.$error.pattern">{{::loc.BP_INVALID_EMAIL_FORMAT}}</pf-error-message>
+      <payment-flow-input
+        type="email"
+        value="userData.preferences.emailAddress"
+        form-label="memberEmail"
+        title="{{::loc.BP_BILLING_EMAIL_ADDRESS}}"
+        pattern="strictEmailRegex"
+        required="true">
+      </payment-flow-input>
+    </div>
+    <payment-flow-radio-button class="col-xs-12" value="none">
+      <span ng-bind="loc.BP_DO_NOT_SEND_COPY_OF_BILL"></span>
+    </payment-flow-radio-button>
+  </payment-flow-radio-group>
+  <input type="text" class="hidden" ng-model="billingMethodSelected" name="billingMethodSelected" />
+</div>

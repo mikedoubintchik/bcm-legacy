@@ -1,0 +1,107 @@
+<div class="home-card benefits-card">
+  <div class="home-card-header" ng-click="checkLink()" track-action="{action: 'homeViewBenefits', section: analyticConstants.HOME_SECTION}">
+    <div>
+      <h3>
+        <i class="fc-circlefill fc-xl fc-underlay white"></i>
+        <i class="fc-benefits fc-xl fc-overlay"></i>
+      </h3>
+    </div>
+    <div class="home-card-header-text">
+      <p><strong ng-bind="loc.BENEFITS_HOME"></strong></p>
+      <p ng-bind="getPolicyPlanTitle(selectedPolicy) + ' ' + getPolicyDates(selectedPolicy)" class="policy-description"></p>
+    </div>
+  </div>
+  <!-- For non Amisys users -->
+  <div class="home-card-body" ng-if="policy.sourceSystem != 'Amisys' && policySelection.choice != 'DENTAL_ONLY'">
+    <blue-bar-label class="benefits-homecard-bluebar" ng-bind="loc.HEALTH_BEN" ng-if="policySelection.type === 'COMBO'"></blue-bar-label>
+    <div ng-if="selectedPolicy.active && benefits.fundsStatusCode != 400">
+      <div ng-if="benefits.fundData == null || benefits.fundData.length == 0" class="funds-error-container">
+        <div class="benefit-error" ng-bind="benefits.fundsError"></div>
+      </div>
+      <div ng-repeat="fund in benefits.fundData">
+        <div class="home-card-fund-balance">
+          <div class="pull-left fund-balance-text" ng-if="fund.fundingAccountTypeCode === 'HSA'" ng-bind="loc.HSA_BALANCE"></div>
+          <div class="pull-left fund-balance-text" ng-if="fund.fundingAccountTypeCode === 'HRA'" ng-bind="loc.HRA_BALANCE"></div>
+          <div class="pull-left fund-balance-text" ng-if="fund.fundingAccountTypeCode === 'FSA'" ng-bind="loc.FSA_BALANCE"></div>
+          <div class="pull-left fund-balance-text" ng-if="fund.fundingAccountTypeCode === 'DCRA'" ng-bind="loc.DCRA_BALANCE"></div>
+          <div class="pull-right fund-balance-value" ng-bind="fund.fundAmount | currency"></div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-if="benefits.benefitDataEmpty" class="benefits-error-container">
+      <!-- error message for benefits not available -->
+      <blue-bar-label class="benefits-homecard-bluebar" ng-bind="loc.HEALTH_BEN" ng-if="policySelection.type === 'COMBO'"></blue-bar-label>
+      <div class="benefit-error" ng-bind="benefits.BENEFITS_USAGE_ERROR"></div>
+    </div>
+    <div ng-if="!benefits.benefitDataEmpty ">
+      <div class="benefits-heading-text">
+        <i class="fc-circle-group benefits-icon" ng-if="benefits.isFamily"></i>
+        <i class="fc-subscriber benefits-icon" ng-if="!benefits.isFamily"></i>
+        <div class="family-summary" ng-bind="benefits.itemDTO[0].headerText"></div>
+        <div class="family-progress-text" ng-bind="benefits.itemDTO[0].subHeaderText"></div>
+      </div>
+
+      <div class="benefit-table">
+        <div class= "metadata-heading" ng-bind="benefits.itemDTO[0].amountRemainingAreaLabel"></div>
+        <div class="benefit-row" ng-show="!benefits.itemDTO[0].graphData.flags.standardOOP">
+          <help-link  class="benefit-pref-deduct-replace-text" data="benefits.itemDTO[0].deductibleReplacementText" file-name="'help/benefits-select-plus-help'" ng-show="benefits.itemDTO[0].graphData.flags.preferredDeductible"> </help-link>
+          <div class="benefit-detail-text" ng-bind="benefits.itemDTO[0].amountRemainingToMeetPreferredCareDeductibleLabel" ng-show="!benefits.itemDTO[0].graphData.flags.preferredDeductible"> </div>
+          <div class="benefit-detail-amount" ng-bind="benefits.itemDTO[0].amountRemainingToMeetPreferredCareDeductibleAmount | currency:'$'" ng-show="!benefits.itemDTO[0].graphData.flags.preferredDeductible"> </div>
+        </div>
+        <div class="benefit-row" ng-show="!benefits.itemDTO[0].graphData.flags.standardDeductible">
+            <div class="benefit-detail-text" ng-bind="benefits.itemDTO[0].amountRemainingToMeetStandardCareDeductibleLabel"> </div>
+            <div class="benefit-detail-amount" ng-bind="benefits.itemDTO[0].amountRemainingToMeetStandardCareDeductibleAmount | currency:'$'"> </div>
+        </div>
+        <div class="benefit-row" ng-show="!benefits.itemDTO[0].graphData.flags.standardOOP">
+          <help-link class="benefit-pref-deduct-replace-text" data="benefits.itemDTO[0].outOfPocketReplacementText" file-name="'help/benefits-select-plus-help'" ng-show="benefits.itemDTO[0].graphData.flags.preferredOOP"> </help-link>
+          <div class="benefit-detail-text" ng-bind-html="benefits.itemDTO[0].amountRemainingToMeetPreferredCareOOPLabel" ng-show="!benefits.itemDTO[0].graphData.flags.preferredOOP"> </div>
+          <div class="benefit-detail-amount" ng-bind="benefits.itemDTO[0].amountRemainingToMeetPreferredCareOOPAmount | currency:'$'" ng-show="!benefits.itemDTO[0].graphData.flags.preferredOOP"> </div>
+        </div>
+        <div class="benefit-row">
+            <!-- <help-link  class="benefit-pref-deduct-replace-text" data="benefits.allMetReplacementText" file-name="'help/benefits-select-plus-help'" ng-show="benefits.graphData.flags.standardOOP"> </help-link> -->
+            <help-link class="benefit-pref-deduct-replace-text" data="benefits.itemDTO[0].allMetReplacementText" file-name="'help/benefits-select-plus-help'" ng-show="benefits.itemDTO[0].graphData.flags.standardOOP"> </help-link>
+            <div class="benefit-detail-text" ng-bind-html="benefits.itemDTO[0].amountRemainingToMeetStandardCareOOPLabel" ng-show="!benefits.itemDTO[0].graphData.flags.standardOOP"> </div>
+            <div class="benefit-detail-amount" ng-bind-html="benefits.itemDTO[0].amountRemainingToMeetStandardCareOOPAmount | currency:'$'" ng-show="!benefits.itemDTO[0].graphData.flags.standardOOP"> </div>
+          </div>
+      </div>
+      <div class="small-padding">
+        <button class="btn btn-default btn-block"
+          ng-bind="loc.VIEW_ALL_BENEFITS"
+          ng-click="checkLink()"
+          track-action="{action: 'homeViewAllBenefits', section: analyticConstants.HOME_SECTION}">
+        </button>
+      </div>
+    </div>
+    <div>
+      <div id="dental_single" ng-if="policySelection.showDental">
+        <blue-bar-label class="benefits-homecard-bluebar" ng-bind="loc.DENTAL_BEN"></blue-bar-label>
+        <div class=" home-card-no-secure-messages home-card-no-messages">
+          <span ng-bind="loc.INFO_DENTAL_BEN"></span>
+        </div>
+        <div class="small-padding">
+          <button class="btn btn-default btn-block"
+            ng-click="gotoDentalBenefits(policySelection.dentalSSOLink); $event.stopPropagation();"
+            track-action="{action: 'homeViewDentalBenefits', section: analyticConstants.HOME_SECTION}">
+              <span ng-bind="loc.VIEW_DENTAL_BEN"></span>
+              <i class="fc-external-link light-gray"></i>
+          </button>
+        </div>
+      </div>
+      <div id="rx_single" ng-if="policySelection.showRx">
+        <blue-bar-label class="benefits-homecard-bluebar" ng-bind="loc.RX_BEN"></blue-bar-label>
+        <div class=" home-card-no-secure-messages home-card-no-messages">
+          <span ng-bind="loc.INFO_RX_BEN"></span>
+        </div>
+        <div class="small-padding">
+          <button class="btn btn-default btn-block"
+            ng-click="gotoDrugBenefits(policySelection.rxSSOLinkBenefits); $event.stopPropagation();"
+            track-action="{action:'homeViewPrescriptionBenefits', section: analyticConstants.HOME_SECTION}">
+              <span ng-bind="loc.VIEW_RX_BEN"></span>
+              <i class="fc-external-link light-gray"></i>
+          </button>
+        </div>
+      </div>
+  </div>
+  </div>
+</div>

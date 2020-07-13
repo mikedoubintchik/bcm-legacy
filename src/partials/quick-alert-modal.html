@@ -1,0 +1,10 @@
+<div id="modal" class="quick-alert-modal" ng-class="{'bottom-nav-alert': quickAlertModal.alert.alertBottom}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body" ng-class="{'quick-alert-blue': quickAlertModal.alert.color === 'blue', 'quick-alert-green': quickAlertModal.alert.color === 'green', 'quick-alert-red': quickAlertModal.alert.color === 'red'}">
+        <i class="fc-check fc-lg" ng-if="quickAlertModal.alert.color === 'green'"></i>
+        <label ng-bind-html="quickAlertModal.alert.message"></label>
+      </div>
+    </div>
+  </div>
+</div>

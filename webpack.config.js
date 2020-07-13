@@ -13,7 +13,7 @@ module.exports = (webpackConfigEnv) => {
       rules: [
         {
           test: /\.html$/,
-          exclude: /node_modules/,
+          exclude: [/node_modules/],
           use: "raw-loader",
         },
         // {
@@ -21,6 +21,12 @@ module.exports = (webpackConfigEnv) => {
         //   exclude: /node_modules/,
         //   use: ["style-loader", "css-loader"],
         // },
+        {
+          test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/,
+          use: [
+            'file-loader',
+          ],
+        },
       ],
     },
   });

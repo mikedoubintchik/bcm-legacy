@@ -1,0 +1,53 @@
+<div class="coachmark">
+  <div class="coachmark-backdrop">
+  </div>
+
+  <div class="coachmark-image" ng-if="coachmark.pages[coachmark.currentPage].image"
+      ng-style="{
+        top: coachmark.pages[coachmark.currentPage].image.top,
+        left: coachmark.pages[coachmark.currentPage].image.left,
+        right: coachmark.pages[coachmark.currentPage].image.right,
+        width: coachmark.pages[coachmark.currentPage].image.width
+      }">
+    <img ng-src="images/{{coachmark.pages[coachmark.currentPage].image.src}}">
+  </div>
+
+  <div class="coachmark-content" ng-style="{ top: coachmark.pages[coachmark.currentPage].text.top }">
+    <h4 ng-bind="coachmark.pages[coachmark.currentPage].text.title"></h4>
+
+    <div ng-bind-html="coachmark.pages[coachmark.currentPage].text.body"></div>
+  </div>
+
+  <div class="coachmark-footer pagination-bar-container">
+    <div>
+      <span ng-bind="coachmark.currentPage + 1"></span> of <span ng-bind="coachmark.pages.length"></span>
+    </div>
+
+    <div class="pagination-bar" ng-if="coachmark.pages.length > 1">
+      <div class="pagination-bar-cell">
+        <i class="fc-lg2 fc-back"
+          ng-click="prevPage($event);"
+          ng-class="coachmark.currentPage <= 0 ? 'icon-disabled' : ''">
+        </i>
+      </div>
+      <div class="pagination-bar-cell full-width">
+        <div class="pagination-bar-page-indicators">
+          <div class="pagination-bar-page-indicator-bar">
+            <div class="pagination-bar-page-indicator-amount" ng-style="{ width: (coachmark.currentPage + 1) / coachmark.pages.length * 100 + '%' }">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagination-bar-cell">
+        <i class="fc-lg2 fc-next"
+          ng-click="nextPage($event);"
+          ng-class="(coachmark.currentPage + 1) >= coachmark.pages.length ? 'icon-disabled' : ''">
+        </i>
+      </div>
+    </div>
+
+    <button ng-click="close();">
+      {{(coachmark.currentPage + 1) >= coachmark.pages.length ? "Close" : "Skip"}} Walkthrough
+    </button>
+  </div>
+</div>

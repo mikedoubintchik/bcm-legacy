@@ -1,0 +1,169 @@
+<div id="claims" class="home-card home-card-claims">
+  <div class="home-card-header" ng-click="gotoView('/claims')"
+    track-action="{action: 'homeClaims', section: analyticConstants.HOME_SECTION}">
+    <div>
+      <h3>
+        <i class="fc-circlefill fc-xl fc-underlay white"></i>
+        <i class="fc-claims fc-xl fc-overlay"></i>
+      </h3>
+    </div>
+    <div class="home-card-header-text">
+      <p><strong ng-bind="loc.CLAIMS"></strong></p>
+      <p>
+        <span ng-bind="getClaimsTitle()"></span>
+      </p>
+    </div>
+  </div>
+  <div class="home-card-body">
+    <div id="single" ng-if="policySelection.type === 'SINGLE'">
+      <div id="med_single" ng-if="policySelection.choice === 'MEDICAL_ONLY'">
+        <div class="home-card-no-secure-messages home-card-no-messages" ng-if="claims.length === 0">
+          <span ng-bind="loc.CLAIMS_NOT_FOUND_TEXT"></span>
+        </div>
+        <div class="home-card-claim-items" ng-if="claims.length !== 0">
+          <table>
+            <tr ng-repeat="claim in claims">
+              <td class="service-type" ng-bind="claim.startServiceDate"></td>
+              <td class="claim-status">
+                <i
+                  ng-class="{'fc-pending med-dark-gray': !claim.processed, 'fc-processed med-green': claim.processed}"></i>
+                <span ng-bind="claim.claimStatus"></span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="small-padding">
+          <button class="btn btn-default btn-block" ng-bind="loc.VIEW_HEALTH_CLAIMS" ng-if="claims.length !== 0"
+            track-action="{action: 'homeViewAllClaimsButton', section: analyticConstants.HOME_SECTION}"
+            ng-click="gotoView('/claims'); $event.stopPropagation()">
+          </button>
+          <button class="btn btn-default btn-block" ng-bind="loc.GO_TO_CLAIMS"
+            track-action="{action: 'homeViewAllClaimsButton', section: analyticConstants.HOME_SECTION}"
+            ng-click="gotoView('/claims')" ng-if="claims.length === 0"></button>
+        </div>
+      </div>
+      <div id="rx_single" ng-if="policySelection.choice === 'RX_ONLY' || policySelection.choice === 'BBTRX_ONLY'">
+        <div class=" home-card-no-secure-messages home-card-no-messages">
+          <span ng-hide="policySelection.isState" ng-bind="loc.PRESCRIP_CLAIM_INFO"></span>
+          <span ng-if="policySelection.isState" ng-bind="loc.PRESCRIP_CLAIM_INFO_SHP"></span>
+        </div>
+        <div class="small-padding">
+          <button class="btn btn-default btn-block"
+            ng-click="gotoDrugClaims(policySelection.rxSSOLink); $event.stopPropagation()"
+            track-action="{action: 'homeViewPrescriptionClaims', section: analyticConstants.HOME_SECTION}">
+            <span ng-bind="loc.VIEW_PRESCRIP_CLAIMS"></span>
+            <i class="fc-external-link"></i>
+          </button>
+        </div>
+      </div>
+      <div id="dental_single" ng-if="policySelection.choice === 'DENTAL_ONLY'">
+        <div class=" home-card-no-secure-messages home-card-no-messages">
+          <span ng-bind="loc.DENTAL_CLAIM_INFO"></span>
+        </div>
+        <div class="small-padding">
+          <button class="btn btn-default btn-block"
+            track-action="{action: 'homeViewDentalClaims', section: analyticConstants.HOME_SECTION}"
+            ng-click="gotoDentalClaims(policySelection.dentalSSOLink); $event.stopPropagation()">
+            <span ng-bind="loc.VIEW_DENTAL_CLAIMS"></span>
+            <i class="fc-external-link light-gray"></i>
+          </button>
+        </div>
+      </div>
+      <div id="dental_single" ng-if="policySelection.choice === 'VISION_ONLY'">
+        <div class=" home-card-no-secure-messages home-card-no-messages">
+          <span ng-bind="loc.BLUE2020_CLAIMS_SSO_OUT_MESSAGE"></span>
+        </div>
+        <div class="small-padding">
+          <button class="btn btn-default btn-block"
+            ng-click="gotoVisionClaims(policySelection.visionClaimsSSOLink); $event.stopPropagation()">
+            <span ng-bind="loc.BLUE2020_CLAIMS_BUTTON_VIEW_VISION_CLAIMS"></span>
+            <i class="fc-external-link"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="COMBO" ng-if="policySelection.type === 'COMBO'">
+      <div id="med_combo">
+        <blue-bar-label class="claims-homecard-bluebar" ng-bind="loc.HEALTH_CLAIMS"></blue-bar-label>
+        <div class=" home-card-no-secure-messages home-card-no-messages" ng-if="claims.length === 0 && !claimsTitle">
+          <span ng-bind="loc.CLAIMS_NOT_FOUND_TEXT"></span>
+        </div>
+        <div class="home-card-no-secure-messages home-card-no-messages" ng-if="claims.length === 0 && claimsTitle">
+          <span ng-bind="claimsTitle"></span>
+        </div>
+        <div class="home-card-claim-items" ng-if="claims.length !== 0">
+          <table>
+            <tr ng-repeat="claim in claims">
+              <td class="service-type" ng-bind="claim.startServiceDate"></td>
+              <td class="claim-status">
+                <i
+                  ng-class="{'fc-pending med-dark-gray': !claim.processed, 'fc-processed med-green': claim.processed}"></i>
+                <span ng-bind="claim.claimStatus"></span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="small-padding" ng-if="!claimsTitle">
+          <button class="btn btn-default btn-block" ng-bind="loc.VIEW_HEALTH_CLAIMS" ng-if="claims.length !== 0"
+            track-action="{action: 'homeViewAllClaimsButton', section: analyticConstants.HOME_SECTION}"
+            ng-click="gotoView('/claims'); $event.stopPropagation()">
+          </button>
+          <button class="btn btn-default btn-block" ng-bind="loc.GO_TO_CLAIMS"
+            track-action="{action: 'homeViewAllClaimsButton', section: analyticConstants.HOME_SECTION}"
+            ng-click="gotoView('/claims')" ng-if="claims.length === 0"></button>
+        </div>
+      </div>
+      <div id="rx_combo" ng-if="policySelection.choice === 'MEDICAL_RX'">
+        <blue-bar-label class="claims-homecard-bluebar" ng-bind="loc.PRESCRIPTION_CLAIMS"></blue-bar-label>
+        <div class=" home-card-no-secure-messages home-card-no-messages">
+          <span ng-hide="policySelection.isState" ng-bind="loc.PRESCRIP_CLAIM_INFO"></span>
+          <span ng-if="policySelection.isState" ng-bind="loc.PRESCRIP_CLAIM_INFO_SHP"></span>
+        </div>
+        <div class="small-padding">
+          <button class="btn btn-default btn-block"
+            ng-click="gotoDrugClaims(policySelection.rxSSOLink); $event.stopPropagation()"
+            track-action="{action: 'homeViewPrescriptionClaims', section: analyticConstants.HOME_SECTION}">
+            <span ng-bind="loc.VIEW_PRESCRIP_CLAIMS"></span>
+            <i class="fc-external-link light-gray"></i>
+          </button>
+        </div>
+      </div>
+      <div id="dental_combo" ng-if="policySelection.choice === 'MEDICAL_DENTAL'">
+        <blue-bar-label class="claims-homecard-bluebar" ng-bind="loc.DENTAL_CLAIMS"></blue-bar-label>
+        <div class="home-card-no-secure-messages home-card-no-messages">
+          <span ng-bind="loc.DENTAL_CLAIM_INFO"></span>
+        </div>
+        <div class="small-padding">
+          <button class="btn btn-default btn-block"
+            ng-click="gotoDentalClaims(policySelection.dentalSSOLink); $event.stopPropagation()"
+            track-action="{action: 'homeViewDentalClaims', section: analyticConstants.HOME_SECTION}">
+            <span ng-bind="loc.VIEW_DENTAL_CLAIMS"></span>
+            <i class="fc-external-link light-gray"></i>
+          </button>
+        </div>
+      </div>
+      <div id="dental_RX_combo" ng-if="policySelection.choice === 'MEDICAL_DENTAL_RX'">
+        <blue-bar-label class="claims-homecard-bluebar" ng-bind="loc.DENTAL_AND_PRESCRIP_CLAIMS"></blue-bar-label>
+        <div style="font-weight:500; padding: .5rem .5rem .5rem 1.5rem;" class="home-card-no-messages">
+          <span ng-bind="loc.DENTAL_AND_PRESCRIP_CLAIM_INFO"></span>
+        </div>
+        <div class="small-padding">
+          <button class="btn btn-default btn-block"
+            ng-click="gotoDentalClaims(policySelection.dentalSSOLink); $event.stopPropagation()"
+            track-action="{action: 'homeViewDentalClaims', section: analyticConstants.HOME_SECTION}">
+            <span ng-bind="loc.VIEW_DENTAL_CLAIMS"></span>
+            <i class="fc-external-link light-gray"></i>
+          </button>
+        </div>
+        <div class="small-padding">
+          <button class="btn btn-default btn-block"
+            ng-click="gotoDrugClaims(policySelection.rxSSOLink); $event.stopPropagation()"
+            track-action="{action: 'homeViewPrescriptionClaims', section: analyticConstants.HOME_SECTION}">
+            <span ng-bind="loc.VIEW_PRESCRIP_CLAIMS"></span>
+            <i class="fc-external-link light-gray"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

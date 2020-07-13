@@ -1,0 +1,58 @@
+<div ng-if="totalAmntCtrl.available" ng-form="paymentFlowPaymentAmountForm">
+  <payment-flow-title-bar title="{{(billingInfo.memberInReinstatement && billingInfo.reinstatementAmount > 0) ? loc.BP_REINSTATEMENT_AMOUNT: loc.BP_TITLE_PAYMENT_AMOUNT}}"></payment-flow-title-bar>
+  <pf-error-message
+  ng-show="paymentFlowPaymentAmountForm.desiredPaymentAmount.$error.required && paymentFlowPaymentAmountForm.desiredPaymentAmount.$dirty">
+    {{::loc.BP_REQUIRED}}
+  </pf-error-message>
+    <!-- If entering Set Up AutoPay flow display this message -->
+    <div class="row m0 pl4 pr4 bg-lightest-gray" ng-if="paymentFlowPaymentAmountForm.$$parentForm.paymentFlowPaymentFrequencyForm.frequencySelected.$modelValue === 'autopay'">
+        <div class="col-xs-12 pt2">
+            <p class="reinstatement-description dark-gray mb0" ng-bind="::loc.BP_SETTING_UP_AUTOPAY"></p>
+        </div>
+    </div>
+    <!-- End AutoPay message -->
+  <div class="row m0 pl4 pr4 bg-lightest-gray" ng-if="billingInfo.memberInReinstatement === true && billingInfo.reinstatementAmount > 0">
+    <div class="col-xs-12 pt2">
+      <p class="reinstatement-description dark-gray" ng-bind="::loc.BP_REINSTATMENT_IMMEDIATE_PAYMENT"></p>
+    </div>
+  </div>
+  <payment-flow-radio-group group-value="desiredPaymentAmount">
+    <div ng-if="billingInfo.memberInReinstatement === false && (billingInfo.reinstatementAmount === null || billingInfo.reinstatementAmount <= 0)">
+        <payment-flow-radio-button
+        ng-if="billingInfo.isPaymentProcessing === false"
+        value="{{billingInfo.currentInvoice.totalDueAmount}}">
+        {{loc.BP_TOTAL_ACCOUNT_BALANCE + ' '}}
+        <span class="bold-label" ng-bind="padAmt(billingInfo.currentInvoice.totalDueAmount)"></span>
+            <span ng-if="paymentFlowPaymentAmountForm.$$parentForm.paymentFlowPaymentFrequencyForm.frequencySelected.$modelValue === 'autopay'" ng-bind="' (' + loc.BP_PROCESSED_TODAY + ')'"></span>
+        </payment-flow-radio-button>
+        <payment-flow-radio-button
+          ng-if="billingInfo.isPaymentProcessing === true"
+          value="{{billingInfo.currentInvoice.remainingBalance}}">
+          {{loc.BP_PAY_REMAINING_BALANCE + ' '}}
+          <span class="bold-label" ng-bind="padAmt(billingInfo.currentInvoice.remainingBalance)"></span>
+            <span ng-if="paymentFlowPaymentAmountForm.$$parentForm.paymentFlowPaymentFrequencyForm.frequencySelected.$modelValue === 'autopay'" ng-bind="' (' + loc.BP_PROCESSED_TODAY + ')'"></span>
+        </payment-flow-radio-button>
+        <payment-flow-radio-button
+          ng-if="billingInfo.isPaymentProcessing === false && billingInfo.currentInvoice.balanceForwardAmount > 0 && paymentFlowPaymentAmountForm.$$parentForm.paymentFlowPaymentFrequencyForm.frequencySelected.$modelValue === 'oneTimePayment'"
+          value="{{billingInfo.currentInvoice.balanceForwardAmount}}">
+          {{loc.BP_PAST_DUE_AMOUNT + ' '}}
+          <span class="bold-label" ng-bind="padAmt(billingInfo.currentInvoice.balanceForwardAmount)"></span>
+        </payment-flow-radio-button>
+        <payment-flow-radio-button
+        ng-if="!billingInfo.isPaymentProcessing && minAmountDue && selectedPolicy.sourceSystem == 'Amisys'"
+        value="{{billingInfo.currentInvoice.minAmountDue}}">
+        {{loc.BP_MINIMUM_AMOUNT_DUE + ' '}}
+        <span class="bold-label" ng-bind="padAmt(billingInfo.currentInvoice.minAmountDue)"></span>
+            <span ng-if="paymentFlowPaymentAmountForm.$$parentForm.paymentFlowPaymentFrequencyForm.frequencySelected.$modelValue === 'autopay'" ng-bind="' (' + loc.BP_PROCESSED_TODAY + ')'"></span>
+        </payment-flow-radio-button>        
+    </div>
+    <div ng-if="billingInfo.memberInReinstatement === true && billingInfo.reinstatementAmount > 0">
+      <payment-flow-radio-button
+        value="{{billingInfo.reinstatementAmount}}">
+        {{loc.BP_TOTAL_REINSTATEMENT_AMOUNT + ' '}}
+        <span class="bold-label" ng-bind="padAmt(billingInfo.reinstatementAmount)"></span>
+      </payment-flow-radio-button>
+    </div>
+  </payment-flow-radio-group>
+  <input class="hidden" type="text" name="desiredPaymentAmount" ng-model="desiredPaymentAmount" required>
+</div>

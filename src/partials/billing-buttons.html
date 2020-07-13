@@ -1,0 +1,22 @@
+<div class="bg-white">
+    <div class="small-padding">
+        <list-messaging  class="text-center med-gray" ng-bind="billingButtonsInfo.medicareSSAMessage" ng-if="billingButtonsInfo.medicareSSA"></list-messaging>
+        <div class="m2 mt4 mb4">
+            <cta-button ng-if="selectedPolicy.active && billingButtonsInfo.autopay && !billingButtonsInfo.medicareSSA && !billingButtonsInfo.isPolicyTerminated"  ng-click="gotoView('/billing-preferences')" class="mt1 white">
+                <span ng-bind="::loc.BP_EDIT_BILLING_PREFERNCES"></span>
+            </cta-button>
+
+            <cta-button ng-click="gotoView('/billing-invoice-history')" class="mt1 white">
+                <span ng-bind="::loc.BILLING_PAYMENTS_HIST"></span>
+            </cta-button>
+
+            <cta-button ng-if="!billingButtonsInfo.paperless && selectedPolicy.active && selectedPolicy.sourceSystem !== 'Amisys' && !billingButtonsInfo.medicareSSA && !billingButtonsInfo.isPolicyTerminated && !billingButtonsInfo.autopay" ng-click="gotoView('/edit-billing-method')" class="mt1 white">
+                <span ng-bind="::loc.BILLING_PAYMENTS_PAPER"></span>
+            </cta-button>
+
+            <cta-button ng-click="gotoView('/faq?expand=BILLING_PAYMENTS')" class="mt1 white">
+                <span ng-bind="::loc.BILLING_PAYMENTS_FAQ"></span>
+            </cta-button>
+        </div>
+    </div>
+</div>
